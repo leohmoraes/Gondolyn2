@@ -1,0 +1,97 @@
+
+/*
+|--------------------------------------------------------------------------
+| Small Raw-Grid
+|--------------------------------------------------------------------------
+*/
+
+.raw-small-device div.rg-inner-1 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(8.97% - 24px);
+}
+
+.raw-small-device div.rg-inner-2 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(17.93% - 24px);
+}
+
+.raw-small-device div.rg-inner-3 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(26.90% - 24px);
+}
+
+.raw-small-device div.rg-inner-4 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(35.90% - 24px);
+}
+
+.raw-small-device div.rg-inner-5 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(44.86% - 24px);
+}
+
+.raw-small-device div.rg-inner-6 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(53.80% - 24px);
+}
+
+.raw-small-device div.rg-inner-7 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(62.8% - 24px);
+}
+
+.raw-small-device div.rg-inner-8 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(71.68% - 24px);
+}
+
+.raw-small-device div.rg-inner-9 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(72.98%);
+}
+
+.raw-small-device div.rg-inner-10 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(81.92%);
+}
+
+.raw-small-device div.rg-inner-11 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(90.98%);
+}
+
+.raw-small-device div.rg-inner-12 {
+     margin: 0 0 0 24px;
+     float: left;
+    width: calc(100%);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Standards
+|--------------------------------------------------------------------------
+*/
+
+.rg-row {
+    width: 100%;
+    float: left;
+}
+
+.rg-row div[class^="rg-col-"]:first-child {
+    margin-left: 0;
+}
+
+div div[class^="rg-inner-"]:first-child {
+    margin-left: 0;
+}

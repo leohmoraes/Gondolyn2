@@ -1,0 +1,164 @@
+.raw-device {
+    width: 984px;
+}
+
+.raw-t-hide {
+    display: block;
+}
+
+.raw-m-hide {
+    display: block;
+}
+
+.rg-row {
+    width: 100%;
+    float: left;
+}
+
+.rg-col-1 {
+    width: 60px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-2 {
+    width: 144px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-3 {
+    width: 228px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-4 {
+    width: 312px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-5 {
+    width: 396px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-6 {
+    width: 480px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-7 {
+    width: 564px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-8 {
+    width: 648px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-9 {
+    width: 732px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-10 {
+    width: 816px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-11 {
+    width: 900px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-col-12 {
+    width: 984px;
+    margin: 0 0 0 24px;
+    float: left;
+}
+
+.rg-inner-1 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(8.54% - 24px);
+}
+
+.rg-inner-2 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(17.08% - 24px);
+}
+
+.rg-inner-3 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(25.63% - 24px);
+}
+
+.rg-inner-4 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(34.16% - 24px);
+}
+
+.rg-inner-5 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(42.7% - 24px);
+}
+
+.rg-inner-6 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(51.25% - 24px);
+}
+
+.rg-inner-7 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(59.8% - 24px);
+}
+
+.rg-inner-8 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(68.35% - 24px);
+}
+
+.rg-inner-9 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(74.35%);
+}
+
+.rg-inner-10 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(82.92%);
+}
+
+.rg-inner-11 {
+    margin: 0 0 0 24px;
+    float: left;
+    width: calc(91.46%);
+}
+
+.rg-inner-12 {
+     margin: 0 0 0 24px;
+     float: left;
+    width: calc(100%);
+}
+
+.rg-row div[class^="rg-col-"]:first-child {
+    margin-left: 0 !important;
+}

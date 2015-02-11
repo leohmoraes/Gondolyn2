@@ -1,0 +1,27 @@
+/**
+ * rawCSS
+ *
+ * A simple CSS structuring tool
+ *
+ * @package     rawCSS
+ * @author      Matt Lantz
+ * @copyright   Copyright (c) 2013-2014 Matt Lantz
+ * @license     https://ottacon.co/docs/rawcss/license.html
+ * @link        https://ottacon.co/docs/rawcss
+ * @since       Version 1.0
+ *
+ */
+
+.raw-grid-row{width:100%;float:left;}.raw-grid-col-1{width:60px;margin:0 0 0 24px;float:left;}.raw-grid-col-2{width:144px;margin:0 0 0 24px;float:left;}.raw-grid-col-3{width:228px;margin:0 0 0 24px;float:left;}.raw-grid-col-4{width:312px;margin:0 0 0 24px;float:left;}.raw-grid-col-5{width:396px;margin:0 0 0 24px;float:left;}.raw-grid-col-6{width:480px;margin:0 0 0 24px;float:left;}.raw-grid-col-7{width:564px;margin:0 0 0 24px;float:left;}.raw-grid-col-8{width:648px;margin:0 0 0 24px;float:left;}.raw-grid-col-9{width:732px;margin:0 0 0 24px;float:left;}.raw-grid-col-10{width:816px;margin:0 0 0 24px;float:left;}.raw-grid-col-11{width:900px;margin:0 0 0 24px;float:left;}.raw-grid-col-12{width:984px;margin:0 0 0 24px;float:left;}
+
+@media screen and (min-width:984px){
+    .raw-device{width:984px;}.raw-t-hide{display:block;}.raw-m-hide{display:block;}
+}
+@media screen and (min-width:732px) and (max-width:984px){
+    .raw-device{width:732px;}.raw-t-hide{display:none;}.raw-m-hide{display:block;}.raw-grid-col-10{width:100%;float:left;}.raw-grid-col-11{width:100%;float:left;}.raw-grid-col-12{width:100%;float:left;}
+}
+@media screen and (max-width:732px){
+    .raw-device{width:312px;}.raw-t-hide{display:block;}.raw-m-hide{display:none;}.raw-m-hide{display:none;}.raw-grid-col-4{width:100%;float:left;}.raw-grid-col-5{width:100%;float:left;}.raw-grid-col-6{width:100%;float:left;}.raw-grid-col-7{width:100%;float:left;}.raw-grid-col-8{width:100%;float:left;}.raw-grid-col-9{width:100%;float:left;}.raw-grid-col-10{width:100%;float:left;}.raw-grid-col-11{width:100%;float:left;}.raw-grid-col-12{width:100%;float:left;}
+}
+
+.raw-grid-row div[class^="raw-grid-col-"]:first-child { margin-left:0 !important; }
