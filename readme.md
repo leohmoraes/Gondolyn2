@@ -1,13 +1,14 @@
 ## Gondolyn
 
 ![CodeShip Status](https://www.codeship.io/projects/fbbc0390-c6c2-0131-e065-0277a4446f20/status)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mlantz/gondolyn2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Gondolyn is a seed application built with [Laravel](http://laravel.com), [Bootstrap](http://getbootstrap.com), [RawCSS](https://github.com/mlantz/rawCSS) and [jQuery](http://jquery.com). It comes with Oauth set so that logins can be done with Email, Facebook or Twitter. It comes with an SQLite database with the user table pre-built. Gondolyn also utilizes the [Creolab modules package](https://github.com/creolab/laravel-modules), allowing for HMVC application structure. Finally it comes with API structure featuring the login method.
 
 #Installation & Setup
 
 ```
-composer create-project mlantz/gondolyn
+composer create-project mlantz/gondolyn2
 ```
 
 If you wish to switch to a MySQL databse, set the database parameters in app/config/database and then run the following commands:
