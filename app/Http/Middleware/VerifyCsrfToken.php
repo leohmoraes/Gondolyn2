@@ -12,6 +12,11 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken {
 
     public function handle($request, Closure $next)
     {
+        if (env('APP_ENV') === 'testing')
+        {
+            return $next($request);
+        }
+
         foreach($this->openRoutes as $route)
         {
             if ($request->is($route))

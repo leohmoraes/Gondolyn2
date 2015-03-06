@@ -5,7 +5,7 @@
     <div class="raw50 raw-left">
         <h2>Error</h2>
         <br>
-        <p>{{ $error }}</p>
+        <p>{!! $error !!}</p>
     </div>
 </div>
 

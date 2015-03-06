@@ -27,8 +27,20 @@ class Handler extends ExceptionHandler {
 		return parent::report($e);
 	}
 
+	// *
+	//  * Render an exception into an HTTP response.
+	//  *
+	//  * @param  \Illuminate\Http\Request  $request
+	//  * @param  \Exception  $e
+	//  * @return \Illuminate\Http\Response
+
+	// public function render($request, Exception $e)
+	// {
+	// 	return parent::render($request, $e);
+	// }
+
 	/**
-	 * Render an exception into an HTTP response.
+	 * Render an exception into a response.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \Exception  $e
@@ -36,7 +48,11 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-		return parent::render($request, $e);
+	    if (is_a($e, 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'))
+	    {
+	        return redirect('errors/general');
+	    }
+	    return parent::render($request, $e);
 	}
 
 }

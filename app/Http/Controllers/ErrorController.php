@@ -40,7 +40,7 @@ class ErrorController extends BaseController {
             "content"           => View::make('errors.general', $data),
         ];
 
-        return view($this->layout, $layoutData);
+        return view($this->layout, $layoutData, [], 404);
 	}
 
     public function critical()
@@ -73,7 +73,7 @@ class ErrorController extends BaseController {
             return redirect('errors/general');
         }
 
-        $data['error'] = "You've encountered a critical error. A notification has been sent to the AFBS IT team, we're sorry for any inconvenience";
+        $data['error'] = "You've encountered a critical error. A notification has been sent to the IT team, we're sorry for any inconvenience";
 
         Session::flush();
 
@@ -85,7 +85,7 @@ class ErrorController extends BaseController {
             "content"           => View::make('errors.critical', $data),
         ];
 
-        return view($this->layout, $layoutData);
+        return view($this->layout, $layoutData, [], 500);
     }
 
 }
