@@ -261,7 +261,7 @@ class UserController extends BaseController {
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['validationErrors'] = Validation::errors() ?: false;
+        Session::flash('notification', Validation::errors() ?: false);
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),

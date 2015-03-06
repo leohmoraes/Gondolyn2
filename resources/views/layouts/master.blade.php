@@ -92,10 +92,7 @@
             <?php
 
                 $notification = Session::get("notification");
-
-                echo 'if ("'.$notification.'" != "") {';
-                echo 'gondolynNotify("'.$notification.'");';
-                echo '}';
+                if ($notification) echo 'gondolynNotify("'.$notification.'");';
 
             ?>
 
