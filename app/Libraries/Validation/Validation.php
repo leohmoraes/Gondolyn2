@@ -37,7 +37,7 @@ class Validation {
             }
         }
 
-        $result["redirect"] = Redirect::to($form)->with('validationErrors', $errors);
+        $result["redirect"] = redirect($form)->with('validationErrors', $errors);
         if ( ! empty($errors)) $result["errors"] = $errors;
 
         return $result;

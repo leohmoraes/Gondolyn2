@@ -61,7 +61,7 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
         if ($newPassword)
@@ -81,7 +81,7 @@ class UserController extends BaseController {
             Session::flash("notification", Lang::get("notification.general.failed_new_password"));
         }
 
-        return Redirect::to('');
+        return redirect('');
     }
 
     /*
@@ -169,10 +169,10 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", Lang::get("notification.general.error"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('user/settings');
+        return redirect('user/settings');
     }
 
     public function updatePassword()
@@ -188,10 +188,10 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", Lang::get("notification.general.error"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('user/settings');
+        return redirect('user/settings');
     }
 
     public function setSubscription()
@@ -207,10 +207,10 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", $e->getMessage());
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('user/settings');
+        return redirect('user/settings');
     }
 
     public function updateSubscription()
@@ -226,10 +226,10 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", Lang::get("notification.general.error"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('user/settings');
+        return redirect('user/settings');
     }
 
     public function cancelSubscription()
@@ -245,10 +245,10 @@ class UserController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", Lang::get("notification.general.error"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('user/settings');
+        return redirect('user/settings');
     }
 
     /*
@@ -290,7 +290,7 @@ class UserController extends BaseController {
             if ( ! $user)
             {
                 Session::flash("notification", Lang::get("notification.login.fail"));
-                return Redirect::to('errors/general');
+                return redirect('errors/general');
             }
             else
             {
@@ -298,13 +298,13 @@ class UserController extends BaseController {
             }
 
             Session::flash("notification", Lang::get("notification.login.success"));
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
 
         }
         catch (Exception $e)
         {
             Session::flash("notification", $e->getMessage());
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
     }
 
@@ -328,7 +328,7 @@ class UserController extends BaseController {
             catch (Exception $e)
             {
                 Session::flash("notification", $e->getMessage());
-                return Redirect::to('errors/general');
+                return redirect('errors/general');
             }
         }
         else
@@ -355,7 +355,7 @@ class UserController extends BaseController {
                     Session::put("twitterID", $result->id);
                     Session::put("twitterScreenName", $result->nickname);
 
-                    return Redirect::to("login/twitter/verify/");
+                    return redirect("login/twitter/verify/");
                 }
 
                 return $this->process($user);
@@ -363,7 +363,7 @@ class UserController extends BaseController {
             catch (Exception $e)
             {
                 Session::flash("notification", $e->getMessage());
-                return Redirect::to('errors/general');
+                return redirect('errors/general');
             }
         }
         else
@@ -406,7 +406,7 @@ class UserController extends BaseController {
         Cookie::forget('email');
         Cookie::forget('password');
 
-        return Redirect::to("/");
+        return redirect("/");
     }
 
     public function deleteUserAccount()
@@ -421,7 +421,7 @@ class UserController extends BaseController {
 
         Session::flash("notification", Lang::get("notification.login.deleted"));
 
-        return Redirect::to("/");
+        return redirect("/");
     }
 
     /*
@@ -447,7 +447,7 @@ class UserController extends BaseController {
 
         Session::put($sessionData, null);
 
-        return Redirect::to($user->user_role."/home");
+        return redirect($user->user_role."/home");
     }
 
 }

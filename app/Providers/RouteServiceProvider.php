@@ -43,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider {
 		    if ( ! Session::get("logged_in"))
 		    {
 		        Session::flash("notification", "You're not currently logged in.");
-		        return Redirect::to("errors/general");
+		        return redirect("errors/general");
 		    }
 		});
 
@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider {
 		    if (Session::get("role") != "member")
 		    {
 		        Session::flash("notification", "You're not currently logged in.");
-		        return Redirect::to("errors/general");
+		        return redirect("errors/general");
 		    }
 		});
 
@@ -61,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider {
 		    if (Session::get("role") != "admin")
 		    {
 		        Session::flash("notification", "You're not currently logged in.");
-		        return Redirect::to("errors/general");
+		        return redirect("errors/general");
 		    }
 		});
 	}

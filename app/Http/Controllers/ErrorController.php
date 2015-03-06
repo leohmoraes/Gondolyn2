@@ -70,7 +70,7 @@ class ErrorController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("data", $e->getMessage());
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
         $data['error'] = "You've encountered a critical error. A notification has been sent to the AFBS IT team, we're sorry for any inconvenience";

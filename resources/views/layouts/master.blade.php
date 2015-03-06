@@ -24,9 +24,9 @@
 
         <!-- Gondolyn style -->
         {!! Minify::stylesheet('/css/general-style.css') !!}
-        {!! Minify::stylesheet('/css/desktop-style.css', array("media" => 'screen and (min-width: 984px)')) !!}
-        {!! Minify::stylesheet('/css/tablet-style.css', array("media" => 'screen and (min-width: 732px)')) !!}
-        {!! Minify::stylesheet('/css/mobile-style.css', array("media" => 'screen and (max-width: 732px)')) !!}
+        {!! Minify::stylesheet('/css/desktop-style.css', array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
+        {!! Minify::stylesheet('/css/tablet-style.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
+        {!! Minify::stylesheet('/css/mobile-style.css', array("media" => 'screen and (max-width: 696px)')) !!}
 
         <!-- Card JS -->
         {!! Minify::stylesheet('/css/card.css') !!}

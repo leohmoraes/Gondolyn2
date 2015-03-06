@@ -1,20 +1,26 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as LaravelsVerifyCsrfToken;
 
-class VerifyCsrfToken extends BaseVerifier {
+class VerifyCsrfToken extends LaravelsVerifyCsrfToken {
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		return parent::handle($request, $next);
-	}
+    private $openRoutes = [
+        'api/login'
+    ];
 
-}
+    public function handle($request, Closure $next)
+    {
+        foreach($this->openRoutes as $route)
+        {
+            if ($request->is($route))
+            {
+                return $next($request);
+            }
+        }
+
+        return parent::handle($request, $next);
+    }
+
+};

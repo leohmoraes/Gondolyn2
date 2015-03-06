@@ -84,10 +84,10 @@ class AdminController extends BaseController {
         catch (Exception $e)
         {
             Session::flash("notification", "We seem to have encountered an error");
-            return Redirect::to('errors/general');
+            return redirect('errors/general');
         }
 
-        return Redirect::to('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
 
     public function deactivate()
@@ -96,7 +96,7 @@ class AdminController extends BaseController {
 
         Users::modifyUserStatus($user->id, "inactive");
 
-        return Redirect::to('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
 
     public function activate()
@@ -105,7 +105,7 @@ class AdminController extends BaseController {
 
         Users::modifyUserStatus($user->id, "active");
 
-        return Redirect::to('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
 
     /**
@@ -121,6 +121,6 @@ class AdminController extends BaseController {
 
         Session::flash("notification", "The user was successfully deleted");
 
-        return Redirect::to('admin/users');
+        return redirect('admin/users');
     }
 }

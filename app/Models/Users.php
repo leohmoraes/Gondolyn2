@@ -62,7 +62,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         $user->user_email = Input::get("email");
         $user->user_name = Input::get("username");
         $user->user_alt_email = Input::get("alt_email");
-        $user->user_role = Input::get("role");
+        $user->user_role = Input::get("role") ?: 'member';
         $user->save();
 
         return true;
