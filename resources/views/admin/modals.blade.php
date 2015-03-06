@@ -13,7 +13,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a id="deleteBtn" type="button" class="btn btn-danger" href="{{ URL::to('admin/delete/user'); }}">Confirm Delete</a>
+                <a id="deleteBtn" type="button" class="btn btn-danger" href="{!! URL::to('admin/delete/user') !!}">Confirm Delete</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a id="deleteBtn" type="button" class="btn btn-warning" href="{{ URL::to('admin/deactivate'); }}">Confirm Deactivation</a>
+                <a id="deleteBtn" type="button" class="btn btn-warning" href="{!! URL::to('admin/deactivate') !!}">Confirm Deactivation</a>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a id="deleteBtn" type="button" class="btn btn-success" href="{{ URL::to('admin/activate'); }}">Confirm Activation</a>
+                <a id="deleteBtn" type="button" class="btn btn-success" href="{!! URL::to('admin/activate') !!}">Confirm Activation</a>
             </div>
         </div>
     </div>
