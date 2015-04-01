@@ -78,7 +78,7 @@ html, body {
     width: 100%;
     height: 100%;
     opacity: 0.9;
-    background-color: #DDD;
+    background-color: rgba(0,0,0,0.9);
     position: absolute;
     z-index: 100000;
     display: none;
@@ -115,24 +115,32 @@ html, body {
     -o-transform: translate(0, 360px);
     transform: translate(0, 360px);
 }
-
-.gondolyn-login-icon {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 16px;
+.gondolyn-login-icon-wrapper {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    border-radius: 96px;
+    border: 8px solid #FFF;
+    text-align: center;
 }
 
-    .gondolyn-login-email {
-        background-image: url(/img/logins/email.png);
+    span.gondolyn-login-icon {
+        display: block;
+        line-height: 82px !important;
+        font-size: 36px;
+        color: #FFF;
     }
 
-    .gondolyn-login-facebook {
-        background-image: url(/img/logins/facebook.png);
+    span.gondolyn-login-text {
+        display: block;
+        margin-top: 8px;
+        font-size: 24px;
+        color: #FFF;
     }
 
-    .gondolyn-login-twitter {
-        background-image: url(/img/logins/twitter.png);
-    }
+        .gondolyn-login a:hover {
+            text-decoration: none;
+        }
 
 /*
 |--------------------------------------------------------------------------

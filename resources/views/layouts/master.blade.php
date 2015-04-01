@@ -17,6 +17,7 @@
         {!! Minify::stylesheet('/css/raw-grid/raw-grid-desktop.css', array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
         {!! Minify::stylesheet('/css/raw-grid/raw-grid-tablet.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
         {!! Minify::stylesheet('/css/raw-grid/raw-grid-mobile.css', array("media" => 'screen and (max-width: 696px)')) !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-offset.css') !!}
         {!! Minify::stylesheet('/css/raw-grid/raw-grid.css') !!}
         {!! Minify::stylesheet('/css/raw-t.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
         {!! Minify::stylesheet('/css/raw-m.css', array("media" => 'screen and (max-width: 732px)')) !!}
@@ -30,6 +31,9 @@
 
         <!-- Card JS -->
         {!! Minify::stylesheet('/css/card.css') !!}
+
+        <!-- Font Awesome -->
+        {!! Minify::stylesheet('/font-awesome/css/font-awesome.css') !!}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -2,21 +2,21 @@
 
 class ErrorController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Error Controller
-	|--------------------------------------------------------------------------
-	|
-	| Error pages that are generated for the users.
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Error Controller
+    |--------------------------------------------------------------------------
+    |
+    | Error pages that are generated for the users.
+    |
+    */
 
-	/**
+    /**
      * The layout that should be used for all regular error responses.
      */
     protected $layout = 'layouts.master';
 
-	public function general()
+    public function general()
     {
         $data = array(
             "page_title" => "General Error",
@@ -41,7 +41,7 @@ class ErrorController extends BaseController {
         ];
 
         return view($this->layout, $layoutData, [], 404);
-	}
+    }
 
     public function critical()
     {

@@ -2,15 +2,6 @@
 
 class ApiController extends BaseController {
 
-    public function __construct()
-    {
-        if (Session::get('logged_in'))
-        {
-            if (Tools::get_header("Token") != Session::get('token')) return Gondolyn::response("error", Lang::get("notification.api.bad_token"));
-        }
-
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Login / Logout
@@ -26,15 +17,16 @@ class ApiController extends BaseController {
 
             if ( ! $user)
             {
-                return Gondolyn::response("success", Lang::get("notification.login.failed"));
+                return Gondolyn::response("error", Lang::get("notification.login.fail"));
+            }
+            else if ($user)
+            {
+                return Gondolyn::response("success", $this->process($user));
             }
             else
             {
-                return $this->process($user);
+                return Gondolyn::response("success", Lang::get("notification.login.success"));
             }
-
-            return Gondolyn::response("success", Lang::get("notification.login.success"));
-
         }
         catch (Exception $e)
         {
@@ -42,31 +34,22 @@ class ApiController extends BaseController {
         }
     }
 
-    public function getUserData()
-    {
-        $data = array(
-            "logged_in" => Session::get("logged_in"),
-            "id" => Session::get("id"),
-            "role" => Session::get("role"),
-            "token" => Session::get("token"),
-            "plan" => Session::get("plan"),
-            "subscribed" => Session::get("subscribed"),
-            "last_activity" => Session::get("last_activity"),
-            "username" => Session::get("username"),
-            "email" => Session::get("email")
-        );
-
-        return Gondolyn::response("success", $data);
-    }
-
     public function logout()
     {
+        if ( ! Session::get("logged_in"))
+        {
+            return Gondolyn::response("error", Lang::get("notification.api.not_logged_in"));
+        }
+
         Session::flush();
+
         return Gondolyn::response("success", Lang::get("notification.api.logout"));
     }
 
-    private function process($user)
+    protected function process($user)
     {
+        Session::flush();
+
         $username = ($user->user_name == "") ? $user->user_email : $user->user_name;
 
         $sessionData = array(
@@ -83,7 +66,35 @@ class ApiController extends BaseController {
 
         Session::put($sessionData, null);
 
-        return Gondolyn::response("success", $user->user_api_token);
+        return $user->user_api_token;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | User Actions
+    |--------------------------------------------------------------------------
+    */
+
+    public function getUserData()
+    {
+        if ( ! Session::get("logged_in"))
+        {
+            return Gondolyn::response("error", Lang::get("notification.api.not_logged_in"));
+        }
+
+        $data = array(
+            "logged_in" => Session::get("logged_in"),
+            "id" => Session::get("id"),
+            "role" => Session::get("role"),
+            "token" => Session::get("token"),
+            "plan" => Session::get("plan"),
+            "subscribed" => Session::get("subscribed"),
+            "last_activity" => Session::get("last_activity"),
+            "username" => Session::get("username"),
+            "email" => Session::get("email")
+        );
+
+        return Gondolyn::response("success", $data);
     }
 
 }

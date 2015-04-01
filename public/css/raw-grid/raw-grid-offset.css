@@ -1,47 +1,222 @@
+/*
+|--------------------------------------------------------------------------
+| Large Desktop
+|--------------------------------------------------------------------------
+*/
+
 .rg-offset-1 {
-    margin: 0 0 0 84px !important;
+    margin: 0 0 0 108px;
 }
 
 .rg-offset-2 {
-    margin: 0 0 0 168px !important;
+    margin: 0 0 0 216px;
 }
 
 .rg-offset-3 {
-    margin: 0 0 0 252px !important;
+    margin: 0 0 0 324px;
 }
 
 .rg-offset-4 {
-    margin: 0 0 0 336px !important;
+    margin: 0 0 0 432px;
 }
 
 .rg-offset-5 {
-    margin: 0 0 0 420px !important;
+    margin: 0 0 0 540px;
 }
 
 .rg-offset-6 {
-    margin: 0 0 0 504px !important;
+    margin: 0 0 0 648px;
 }
 
 .rg-offset-7 {
-    margin: 0 0 0 588px !important;
+    margin: 0 0 0 756px;
 }
 
 .rg-offset-8 {
-    margin: 0 0 0 672px !important;
+    margin: 0 0 0 864px;
 }
 
 .rg-offset-9 {
-    margin: 0 0 0 756px !important;
+    margin: 0 0 0 972px;
 }
 
 .rg-offset-10 {
-    margin: 0 0 0 840px !important;
+    margin: 0 0 0 1080px;
 }
 
 .rg-offset-11 {
-    margin: 0 0 0 924px !important;
+    margin: 0 0 0 1188px;
 }
 
 .rg-offset-12 {
-    margin: 0 0 0 984px !important;
+    margin: 0 0 0 1272px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Desktop
+|--------------------------------------------------------------------------
+*/
+
+@media only screen and (min-width: 984px) and (max-width: 1272px) {
+    .rg-offset-1 {
+        margin: 0 0 0 84px !important;
+    }
+
+    .rg-offset-2 {
+        margin: 0 0 0 168px !important;
+    }
+
+    .rg-offset-3 {
+        margin: 0 0 0 252px !important;
+    }
+
+    .rg-offset-4 {
+        margin: 0 0 0 336px !important;
+    }
+
+    .rg-offset-5 {
+        margin: 0 0 0 420px !important;
+    }
+
+    .rg-offset-6 {
+        margin: 0 0 0 504px !important;
+    }
+
+    .rg-offset-7 {
+        margin: 0 0 0 588px !important;
+    }
+
+    .rg-offset-8 {
+        margin: 0 0 0 672px !important;
+    }
+
+    .rg-offset-9 {
+        margin: 0 0 0 756px !important;
+    }
+
+    .rg-offset-10 {
+        margin: 0 0 0 840px !important;
+    }
+
+    .rg-offset-11 {
+        margin: 0 0 0 924px !important;
+    }
+
+    .rg-offset-12 {
+        margin: 0 0 0 1008px !important;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Tablet
+|--------------------------------------------------------------------------
+*/
+
+@media only screen and (min-width: 696px) and (max-width: 984px) {
+    .rg-offset-1 {
+        margin: 0 0 0 60px !important;
+    }
+
+    .rg-offset-2 {
+        margin: 0 0 0 120px !important;
+    }
+
+    .rg-offset-3 {
+        margin: 0 0 0 180px !important;
+    }
+
+    .rg-offset-4 {
+        margin: 0 0 0 240px !important;
+    }
+
+    .rg-offset-5 {
+        margin: 0 0 0 300px !important;
+    }
+
+    .rg-offset-6 {
+        margin: 0 0 0 360px !important;
+    }
+
+    .rg-offset-7 {
+        margin: 0 0 0 420px !important;
+    }
+
+    .rg-offset-8 {
+        margin: 0 0 0 480px !important;
+    }
+
+    .rg-offset-9 {
+        margin: 0 0 0 540px !important;
+    }
+
+    .rg-offset-10 {
+        margin: 0 0 0 600px !important;
+    }
+
+    .rg-offset-11 {
+        margin: 0 0 0 660px !important;
+    }
+
+    .rg-offset-12 {
+        margin: 0 0 0 720px !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media only screen and (max-width: 696px) {
+    .rg-offset-1 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-2 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-3 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-4 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-5 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-6 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-7 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-8 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-9 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-10 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-11 {
+        margin: 0 0 0 0 !important;
+    }
+
+    .rg-offset-12 {
+        margin: 0 0 0 0 !important;
+    }
 }

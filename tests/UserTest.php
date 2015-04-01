@@ -1,5 +1,7 @@
 <?php
 
+use Session;
+
 class UserTest extends TestCase {
 
     /**
@@ -33,12 +35,52 @@ class UserTest extends TestCase {
      */
     public function testForgotPasswordAction()
     {
+        Session::start();
+
         $response = $this->call('POST', 'forgot/passowrd/request', array(
-            'email' => 'what@who.com',
+            'email' => 'foo@bar.com',
             '_token' => Session::token(),
         ));
 
         $this->assertRedirectedTo('errors/general');
+    }
+
+    /**
+     * Check log in
+     *
+     * @return void
+     */
+    public function testLoginFail()
+    {
+        Session::start();
+
+        $response = $this->call('POST', 'login/request', array(
+            'email' => 'foo@bar.com',
+            'password' => 'testing',
+            '_token' => Session::token(),
+        ));
+
+        $this->assertRedirectedTo('login/email');
+    }
+
+    /**
+     * Check log in
+     *
+     * @return void
+     */
+    public function testLoginSuccess()
+    {
+        Session::start();
+
+        $inputs = array(
+            'email' => 'what@who.com',
+            'password' => 'testing1234',
+            '_token' => Session::token(),
+        );
+
+        $response = $this->call('POST', 'login/request', $inputs);
+
+        $this->assertRedirectedTo('member/home');
     }
 
 }

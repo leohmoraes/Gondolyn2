@@ -10,9 +10,13 @@ return array(
         'mon1ROG3aobtj2xN2utYcQ2PlG1x1b'
     ),
 
+    'openRoutes' => [
+        'api/login',
+    ],
+
     'remember_me_duration' => 20160,
 
-	'basic-app-info' => array(
+    'basic-app-info' => array(
         "page_title" => "A seed application for Laravel 4",
         "page_keywords" => "Gondolyn, gondolin, Laravel 4, Seed",
         "page_description" => "A clean seed application for Laravel 4",

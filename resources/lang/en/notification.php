@@ -2,14 +2,14 @@
 
 return array(
 
-	/*
-	|--------------------------------------------------------------------------
-	| App Notifications
-	|--------------------------------------------------------------------------
-	|
-	| The following language lines are the standard app notification lines
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | App Notifications
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are the standard app notification lines
+    |
+    */
 
     "fourofour" => array(
         "general" => "Well, these aren't the droids you're looking for.",
@@ -23,11 +23,11 @@ return array(
     ),
 
     "general" => array(
-		"error" => "We seem to have encountered an error",
+        "error" => "We seem to have encountered an error",
         "cannot_find_user" => "Seems we cannot find your account.",
         "new_password" => "You have been sent a new password",
         "failed_new_password" => "We were unable to send you a new password",
-	),
+    ),
 
     "profile" => array(
         "update_success" => "Your profile was successfully updated.",
@@ -37,15 +37,16 @@ return array(
     ),
 
     "subscription" => array(
-		"success" => "Your subscription was successfully updated.",
+        "success" => "Your subscription was successfully updated.",
         "failed" => "Your subscription failed to update.",
         "cancel_success" => "Your subscription was successfully cancelled.",
-		"cancel_failed" => "Your subscription failed to cancel.",
-	),
+        "cancel_failed" => "Your subscription failed to cancel.",
+    ),
 
     "api" => array(
         "logout" => "You're logged out.",
         "bad_token" => "Sorry but your token is incorrect",
+        "not_logged_in" => "Sorry but you're not logged in",
     ),
 
 );

@@ -13,7 +13,7 @@ return array(
     */
 
     'ignore_environments' => array(
-	    'local',
+        'local',
     ),
 
     /*
@@ -44,14 +44,14 @@ return array(
 
     'js_build_path' => '/js/builds/',
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Base URL
     |--------------------------------------------------------------------------
     |
-    | You can set the base URL for the links generated with the configuration 
-	| value. By default if empty HTTP_HOST would be used.
+    | You can set the base URL for the links generated with the configuration
+    | value. By default if empty HTTP_HOST would be used.
     |
     */
-	'base_url' => ''
+    'base_url' => ''
 );

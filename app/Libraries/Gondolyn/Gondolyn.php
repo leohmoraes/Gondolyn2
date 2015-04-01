@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Lang;
 
 class Gondolyn {
 
@@ -11,7 +12,7 @@ class Gondolyn {
         return Response::json(array("status" => $type, "data" => $message));
     }
 
-    public function valid_api_request()
+    public function valid_api_key()
     {
         $headers = getallheaders();
 
@@ -26,18 +27,35 @@ class Gondolyn {
         return true;
     }
 
+    public function valid_api_token()
+    {
+        $headers = getallheaders();
+
+        $requestToken = @$headers['Token'];
+
+        $userToken = Session::get('token');
+
+        if ($requestToken !== $userToken) return false;
+
+        return true;
+    }
+
     public static function version()
     {
-        if (php_sapi_name() != "cli")
+        if (php_sapi_name() !== "cli")
         {
             $changelog = json_decode(file_get_contents("../build.json"));
             return $changelog[count($changelog) - 1]->version;
+        }
+        else
+        {
+            return 'cli';
         }
     }
 
     public function getModuleMenus()
     {
-        $modules = app_path()."/modules/";
+        $modules = app_path()."/Modules/";
 
         $files = glob($modules . "*");
 
@@ -45,9 +63,7 @@ class Gondolyn {
         {
             if (is_dir($file))
             {
-                $moduleDetails = json_decode(file_get_contents($file.'/module.json'));
-
-                if (file_exists($file.'/menu.php') && $moduleDetails->enabled)
+                if (file_exists($file.'/menu.php'))
                 {
                     @include($file.'/menu.php');
                 }

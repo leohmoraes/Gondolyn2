@@ -28,7 +28,7 @@ class Tools {
     {
         $headers = getallheaders();
 
-        return $headers[$key];
+        return @$headers[$key];
     }
 
     public function raw_json_input($key)
@@ -36,6 +36,7 @@ class Tools {
         $post = json_decode($this->get_raw_post());
 
         if (isset($post->$key)) return $post->$key;
+
         return false;
     }
 

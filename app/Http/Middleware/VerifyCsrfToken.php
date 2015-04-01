@@ -1,31 +1,35 @@
 <?php namespace App\Http\Middleware;
 
+use Config;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as LaravelsVerifyCsrfToken;
 
 class VerifyCsrfToken extends LaravelsVerifyCsrfToken {
 
-    private $openRoutes = [
-        'api/login'
-    ];
-
     public function handle($request, Closure $next)
     {
-        if (env('APP_ENV') === 'testing')
+        if ($this->isReading($request) || $this->excludedRoutes($request) || $this->tokensMatch($request))
         {
-            return $next($request);
+            return $this->addCookieToResponse($request, $next($request));
         }
 
-        foreach($this->openRoutes as $route)
+        throw new TokenMismatchException;
+    }
+
+    protected function excludedRoutes($request)
+    {
+        $routes = Config::get('gondolyn.openRoutes');
+
+        foreach($routes as $route)
         {
             if ($request->is($route))
             {
-                return $next($request);
+                return true;
             }
-        }
 
-        return parent::handle($request, $next);
+            return false;
+        }
     }
 
 };

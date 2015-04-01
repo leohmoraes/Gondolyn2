@@ -30,12 +30,15 @@ Route::group(array('prefix' => 'errors'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'api', 'before' => 'validator'), function()
+Route::group(array('prefix' => 'api'), function()
 {
     Route::put('login', "ApiController@request");
 
-    Route::get('logout', "ApiController@logout");
-    Route::get('user', "ApiController@getUserData");
+    Route::group(array('before' => array('valid_api_key', 'valid_api_token')), function()
+    {
+        Route::get('logout', "ApiController@logout");
+        Route::get('user', "ApiController@getUserData");
+    });
 });
 
 /*

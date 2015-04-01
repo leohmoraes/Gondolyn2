@@ -6,7 +6,7 @@ class AdminController extends BaseController {
 
     public function __construct()
     {
-        // Constructor Args
+        $this->middleware('auth');
     }
 
     public function home()

@@ -158,6 +158,13 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
     public function login_with_email($useremail, $password, $remember_me)
     {
+        if ($useremail === '' || $password === '')
+        {
+            throw new Exception("Missing login credentials", 1);
+
+            return false;
+        }
+
         $user = Users::where('user_email', '=', $useremail)->first();
 
         if (is_object($user))
