@@ -1,7 +1,5 @@
 <?php
 
-use Session;
-
 class ApiTest extends TestCase {
 
     public function __construct()

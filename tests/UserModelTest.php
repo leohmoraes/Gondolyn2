@@ -22,7 +22,7 @@ class UserModelTest extends TestCase {
      */
     public function testGetProfileByEmail()
     {
-        $test = Users::getMyProfileByEmail('mattlantz@gmail.com');
+        $test = Users::getMyProfileByEmail('foo@bar.com');
         $this->assertInstanceOf('Users', $test);
     }
 
