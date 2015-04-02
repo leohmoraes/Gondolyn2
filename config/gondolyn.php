@@ -10,7 +10,7 @@ return array(
         'mon1ROG3aobtj2xN2utYcQ2PlG1x1b'
     ),
 
-    'openRoutes' => [
+    'csrfIgnoredRoutes' => [
         'api/login',
     ],
 
