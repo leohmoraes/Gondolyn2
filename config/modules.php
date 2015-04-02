@@ -3,7 +3,7 @@
 return [
 
     'modules' => array(
-        "sample",
+        "Sample",
     ),
 
 ];
