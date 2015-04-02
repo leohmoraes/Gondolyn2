@@ -85,8 +85,7 @@ class ApiTest extends TestCase {
         $creds = [
             'email' => 'foo@bar.com',
             'password' => 'testing',
-            'remember' => 'on',
-            '_token' => Session::token()
+            'remember_me' => 'on',
         ];
 
         $headers = [
@@ -94,8 +93,6 @@ class ApiTest extends TestCase {
         ];
 
         $response = $this->call('PUT', '/api/login', [], [], [], $headers, json_encode($creds));
-
-        $this->token = json_decode($response->getContent())->data;
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('success', json_decode($response->getContent())->status);
