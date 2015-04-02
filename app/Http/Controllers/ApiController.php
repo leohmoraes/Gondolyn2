@@ -15,6 +15,8 @@ class ApiController extends BaseController {
             $Login = new Users;
             $user = $Login->login_with_email(Tools::raw_json_input("email"), Tools::raw_json_input("password"), Tools::raw_json_input("remember"));
 
+            dd($user);
+
             if ( ! $user)
             {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
