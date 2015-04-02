@@ -80,10 +80,13 @@ class ApiTest extends TestCase {
      */
     public function testLogin()
     {
+        $this->startSession();
+
         $creds = [
             'email' => 'foo@bar.com',
             'password' => 'testing',
-            'remember' => 'on'
+            'remember' => 'on',
+            '_token' => Session::token()
         ];
 
         $headers = [
