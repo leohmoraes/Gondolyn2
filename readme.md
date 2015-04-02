@@ -1,4 +1,4 @@
-## Gondolyn
+## Gondolyn2
 
 ![CodeShip Status](https://www.codeship.io/projects/fbbc0390-c6c2-0131-e065-0277a4446f20/status)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mlantz/gondolyn2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
@@ -14,7 +14,7 @@ composer create-project mlantz/gondolyn2
 If you wish to switch to a MySQL databse, set the database parameters in app/config/database and then run the following commands:
 
 ```
-php artisan dbuild
+php artisan command:dbuild
 php artisan migrate
 ```
 
@@ -26,7 +26,7 @@ Documentation for the entire framework can be found on the [Laravel website](htt
 
 Documentation for the entire framework can be found on the [Gondolyn website](http://mlantz.github.io/Gondolyn/).
 
-### Contributing To Gondolyn
+### Contributing To Gondolyn2
 
 **All issues and pull requests will be reviewed in a timely manner.**
 
