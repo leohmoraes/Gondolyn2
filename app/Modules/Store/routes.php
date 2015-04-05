@@ -6,13 +6,14 @@
     |--------------------------------------------------------------------------
     */
 
-    Route::group(array('module' => 'Sample', 'namespace' => 'App\Modules\Sample\Controllers'), function()
+    Route::group(array('module' => 'Store', 'namespace' => 'App\Modules\Store\Controllers'), function()
     {
-        Route::get('sample',  array('uses' => 'SampleController@main'));
+        Route::get('store',  array('uses' => 'StoreController@main'));
 
         // API actions
         Route::group(array('prefix' => 'api', 'before' => array('valid_api_key', 'valid_api_token')), function()
         {
-            Route::get('sample',  array('uses' => 'SampleController@api'));
+            Route::get('store',  array('uses' => 'StoreController@api'));
         });
+
     });

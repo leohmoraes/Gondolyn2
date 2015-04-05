@@ -15,8 +15,15 @@ composer create-project mlantz/gondolyn2
 If you wish to switch to a MySQL databse, set the database parameters in app/config/database and then run the following commands:
 
 ```
-php artisan command:dbuild
+php artisan gondolyn:dbuild
 php artisan migrate
+```
+
+#Commands
+
+```
+// Builds a module
+php artisan gondolyn:module <name> <option (--table=true - creates a basic database table as well)>
 ```
 
 ## Official Documentation for Laravel
