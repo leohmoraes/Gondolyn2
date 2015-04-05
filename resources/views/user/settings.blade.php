@@ -36,7 +36,9 @@
     <div class="raw100 rg-row raw-margin-top-24">
         <div class="rg-col-4 text-center raw-block-300">
             <div class="raw100 raw-left raw-margin-top-24">
-                <img src="http://www.gravatar.com/avatar/{{ $gravatar }}?s=200" />
+                <div class="gondolyn-profile">
+                    <img src="http://www.gravatar.com/avatar/{{ $gravatar }}?s=300" />
+                </div>
             </div>
             <div class="raw100 raw-left raw-margin-top-24">
                 <a href="http://www.gravatar.com" taregt="_blank">Update on Gravatar</a>
@@ -76,7 +78,7 @@
                 </div>
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="username" class="raw-margin-top-8 raw-right">Alt. Email Address</label>
+                        <label for="alt_email" class="raw-margin-top-8 raw-right">Alt. Email Address</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
@@ -95,7 +97,7 @@
                 @if (Session::get('role') == 'admin')
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="username" class="raw-margin-top-8 raw-right">Role</label>
+                        <label for="role" class="raw-margin-top-8 raw-right">Role</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
@@ -104,15 +106,16 @@
                 </div>
                 @endif
 
-                <div class="raw50 raw-right raw-margin-top-24">
-                    <input id="update" type="submit" class="btn btn-primary raw-right" value="Save Settings">
+                <div class="raw50 raw-right raw-margin-top-24 text-right">
+                    <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-left-24" value="Save Settings">
+                    @if ( ! isset($adminEditorMode))
+                        <a href="{{ URL::to('user/settings/password') }}" class="btn btn-info">Change Password</a>
+                    @endif
                 </div>
             </form>
 
             <div class="raw50 raw-left raw-margin-top-24">
-                @if ( ! isset($adminEditorMode))
-                    <a href="{{ URL::to('user/settings/password') }}" class="raw-left btn btn-info">Change Password</a>
-                @endif
+
             </div>
         </div>
     </div>

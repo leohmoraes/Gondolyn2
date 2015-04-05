@@ -153,6 +153,7 @@ return [
         'Validation\ValidationServiceProvider',
         'Crypto\CryptoServiceProvider',
         'Gondolyn\GondolynServiceProvider',
+        'Prototype\PrototypeServiceProvider',
         'Devfactory\Minify\MinifyServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',

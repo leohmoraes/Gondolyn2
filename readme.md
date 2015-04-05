@@ -4,7 +4,7 @@
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mlantz/gondolyn2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-Gondolyn is a seed application built with [Laravel](http://laravel.com), [Bootstrap](http://getbootstrap.com), [RawCSS](https://github.com/mlantz/rawCSS) and [jQuery](http://jquery.com). It comes with Oauth set so that logins can be done with Email, Facebook or Twitter. It comes with an SQLite database with the user table pre-built. Gondolyn also utilizes the [Creolab modules package](https://github.com/creolab/laravel-modules), allowing for HMVC application structure. Finally it comes with API structure featuring the login method.
+Gondolyn2 is a seed application built with [Laravel](http://laravel.com), [Bootstrap](http://getbootstrap.com), [RawCSS](https://github.com/mlantz/rawCSS) and [jQuery](http://jquery.com). It comes with Oauth set so that logins can be done with Email, Facebook or Twitter, or others. It comes with an SQLite database with the user table pre-built. Allowing for HMVC application structure Gondolyn2 enables developers to reuse components and add them via composer. It also uses a methodology called MPCR (Model - Prototype - Controller - Response), this makes unit testing even easier since you can build your code focusing all your tests on the prototype layer which would contain all the buisness logic of your application. This means that controllers and responses/views are doing little more the moving processed information around and displaying it. Finally it comes with basic Token API structure featuring the login, user data, and logout methods. For more information about Gondolyn2 and some of the modules available for the structure please checkout: [http://gondolyn.com](http://gondolyn.com).
 
 #Installation & Setup
 
@@ -23,9 +23,9 @@ php artisan migrate
 
 Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
 
-### Gondolyn Documentation
+### Gondolyn2 Documentation
 
-Documentation for the entire framework can be found on the [Gondolyn website](http://mlantz.github.io/Gondolyn/).
+Documentation for the entire framework can be found on the [Gondolyn2 website](http://gondolyn.com).
 
 ### Contributing To Gondolyn2
 
@@ -37,5 +37,5 @@ Documentation for the entire framework can be found on the [Gondolyn website](ht
 
 ### License
 
-The Gondolyn seed application is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Gondolyn2 seed application is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

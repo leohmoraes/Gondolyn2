@@ -6,7 +6,7 @@ class Samples extends \Eloquent {
 
     public static function getASample($id)
     {
-        //return Samples::findOrFail($id);
+        return Samples::findOrFail($id);
     }
 
 }

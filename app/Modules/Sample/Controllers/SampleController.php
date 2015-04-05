@@ -6,7 +6,7 @@ use Redirect;
 use View;
 use Config;
 use Session;
-use Gondolyn;
+use App\Modules\Sample\Prototypes\SamplePrototype;
 use App\Modules\Sample\Models\Samples;
 
 /**
@@ -23,15 +23,23 @@ class SampleController extends \BaseController {
 
     public function main()
     {
-        $data                   = Config::get("gondolyn.basic-app-info");
-        $data['info']           = Samples::getASample(1);
-        $data['notification']   = Session::get("notification");
+        $prototype = new SamplePrototype;
+
+        $sysData = [
+            'config'        => Config::get("gondolyn.basic-app-info"),
+            'notification'  => Session::get("notification"),
+            'welcome'       => 'Welcome to the Sample module '.Session::get("username").' the sample module demonstrates the use of prototypes which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to prototypes, to views.'
+        ];
+
+        $modelData      = Samples::getASample(1);
+        $prototypeData  = $prototype->dataModifier($modelData)->output;
+        $data           = $prototype->processData($prototypeData, $sysData)->toArray();
 
         $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('sample', $data),
+            "metadata"    => View::make('metadata', $data),
+            "general"     => View::make('common', $data),
+            "nav_bar"     => View::make('navbar', $data),
+            "content"     => View::make('sample', $data),
         ];
 
         return view($this->layout, $layoutData);
