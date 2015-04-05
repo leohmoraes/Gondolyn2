@@ -7,7 +7,7 @@
         <meta name="description" content="@yield('page_description')" />
         <meta name="keywords" content="@yield('page_keywords')" />
 
-        <title>{{ trans("content.app") }} - @yield('page_title')</title>
+        <title>{{ trans("content.app.title") }} - @yield('page_title')</title>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="<?= asset('css/bootstrap.min.css'); ?>">
