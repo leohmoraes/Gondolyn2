@@ -6,6 +6,7 @@ use Redirect;
 use View;
 use Config;
 use Session;
+use Gondolyn;
 use App\Modules\Sample\Prototypes\SamplePrototype;
 use App\Modules\Sample\Models\Samples;
 

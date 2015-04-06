@@ -1,6 +1,7 @@
 <?php namespace App\Console\Commands;
 
 use Schema;
+use DB;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -66,6 +67,12 @@ class dbuild extends Command {
                 $table->string('updated_at');
                 $table->string('created_at');
             });
+
+            DB::table('samples')->insert([
+                'id' => 1,
+                'created_at' => date('Y-m-d h:i:s'),
+                'updated_at' => date('Y-m-d h:i:s')
+            ]);
 
             $this->info("Your database has been constructed");
         }
