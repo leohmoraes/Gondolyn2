@@ -19,7 +19,9 @@ class UserController extends BaseController {
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['user'] = Session::get("username");
+        $user = Session::get("username");
+
+        $data['message'] = AppPrototype::welcomeMessage($user);
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
@@ -311,8 +313,6 @@ class UserController extends BaseController {
     public function withFacebook()
     {
         $code = Input::get('code');
-
-        // $fb = OAuth::consumer('Facebook');
 
         if ( ! empty($code))
         {

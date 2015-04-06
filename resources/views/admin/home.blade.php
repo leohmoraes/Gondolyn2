@@ -3,7 +3,7 @@
 <div class="raw100">
     <h2>Admin</h2>
     <br>
-    <p>Welcome back {{ $user }}</p>
+    <p>{{ $message }}</p>
 </div>
 
 @stop
