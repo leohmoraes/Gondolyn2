@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class MemberController extends BaseController {
-
+class MemberController extends BaseController
+{
     protected $layout = 'layouts.master';
 
     public function __construct()

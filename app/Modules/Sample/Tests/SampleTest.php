@@ -1,7 +1,7 @@
 <?php
 
-class SampleTest extends TestCase {
-
+class SampleTest extends TestCase
+{
     /**
      * Sample main test
      *

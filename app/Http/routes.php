@@ -17,8 +17,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'errors'), function()
-{
+Route::group(array('prefix' => 'errors'), function () {
     Route::get('/', "ErrorController@general");
     Route::get('/general', "ErrorController@general");
     Route::get('/critical', "ErrorController@critical");
@@ -30,12 +29,10 @@ Route::group(array('prefix' => 'errors'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'api'), function()
-{
+Route::group(array('prefix' => 'api'), function () {
     Route::put('login', "ApiController@request");
 
-    Route::group(array('before' => array('valid_api_key', 'valid_api_token')), function()
-    {
+    Route::group(array('before' => array('valid_api_key', 'valid_api_token')), function () {
         Route::get('logout', "ApiController@logout");
         Route::get('user', "ApiController@getUserData");
     });
@@ -47,8 +44,7 @@ Route::group(array('prefix' => 'api'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('before' => 'is_admin_logged_in'), function()
-{
+Route::group(array('before' => 'is_admin_logged_in'), function () {
     Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
     Route::get('admin/home', "AdminController@home");
@@ -68,8 +64,7 @@ Route::group(array('before' => 'is_admin_logged_in'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('before' => 'is_member_logged_in'), function()
-{
+Route::group(array('before' => 'is_member_logged_in'), function () {
     Route::get('/member/home', "MemberController@home");
 });
 
@@ -79,8 +74,7 @@ Route::group(array('before' => 'is_member_logged_in'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'user', 'before' => 'is_logged_in'), function()
-{
+Route::group(array('prefix' => 'user', 'before' => 'is_logged_in'), function () {
     Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
     Route::get('settings', "UserController@settings");
@@ -137,8 +131,7 @@ Route::get('logout', "UserController@logout");
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'forgot'), function()
-{
+Route::group(array('prefix' => 'forgot'), function () {
     Route::get('password', "UserController@forgotPassword");
     Route::post('password/request', "UserController@generateNewPassword");
 });

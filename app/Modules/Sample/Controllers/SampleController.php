@@ -13,8 +13,8 @@ use App\Modules\Sample\Models\Samples;
 /**
  * Sample Module Controller
  */
-class SampleController extends \BaseController {
-
+class SampleController extends \BaseController
+{
     protected $layout = 'layouts.master';
 
     public function __construct()

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 
-class Crypto {
-
+class Crypto
+{
     public static function encrypt($value)
     {
         $config_key = Config::get('app.key');
@@ -57,5 +57,3 @@ class Crypto {
 }
 
 //End of File
-
-?>

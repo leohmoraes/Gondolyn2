@@ -5,12 +5,11 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as LaravelsVerifyCsrfToken;
 
-class VerifyCsrfToken extends LaravelsVerifyCsrfToken {
-
+class VerifyCsrfToken extends LaravelsVerifyCsrfToken
+{
     public function handle($request, Closure $next)
     {
-        if ($this->isReading($request) || $this->excludedRoutes($request) || $this->tokensMatch($request))
-        {
+        if ($this->isReading($request) || $this->excludedRoutes($request) || $this->tokensMatch($request)) {
             return $this->addCookieToResponse($request, $next($request));
         }
 
@@ -21,10 +20,8 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken {
     {
         $routes = Config::get('gondolyn.csrfIgnoredRoutes');
 
-        foreach($routes as $route)
-        {
-            if ($request->is($route))
-            {
+        foreach($routes as $route) {
+            if ($request->is($route)) {
                 return true;
             }
 

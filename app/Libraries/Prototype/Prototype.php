@@ -1,7 +1,7 @@
 <?php namespace Prototype;
 
-class Prototype {
-
+class Prototype
+{
     public $output;
 
     public function __construct()

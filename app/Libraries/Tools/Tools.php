@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Request;
 
-class Tools {
-
+class Tools
+{
     public function add_salt($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -42,4 +42,3 @@ class Tools {
 
 }
 //End of File
-?>

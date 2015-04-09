@@ -5,8 +5,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class module extends Command {
-
+class module extends Command
+{
     /**
      * The console command name.
      *
@@ -79,13 +79,11 @@ class module extends Command {
     |--------------------------------------------------------------------------
     */
 
-    Route::group(array(\'module\' => \''.$module.'\', \'namespace\' => \'App\Modules\\'.$module.'\Controllers\'), function()
-    {
+    Route::group(array(\'module\' => \''.$module.'\', \'namespace\' => \'App\Modules\\'.$module.'\Controllers\'), function () {
         Route::get(\''.lcfirst($module).'\',  array(\'uses\' => \''.$module.'Controller@main\'));
 
         // API actions
-        Route::group(array(\'prefix\' => \'api\', \'before\' => array(\'valid_api_key\', \'valid_api_token\')), function()
-        {
+        Route::group(array(\'prefix\' => \'api\', \'before\' => array(\'valid_api_key\', \'valid_api_token\')), function () {
             Route::get(\''.lcfirst($module).'\',  array(\'uses\' => \''.$module.'Controller@api\'));
         });
 
@@ -312,19 +310,15 @@ class '.$module.'ApiTest extends TestCase {
 
         $this->info('Your '.$module.' module has been generated.');
 
-        if ($this->option('table'))
-        {
-            Schema::create(lcfirst($module), function($table)
-            {
+        if ($this->option('table')) {
+            Schema::create(lcfirst($module), function ($table) {
                 $table->increments('id');
                 $table->string('updated_at');
                 $table->string('created_at');
             });
 
             $this->info('Your '.$module.' module table has been generated.');
-        }
-        else
-        {
+        } else {
             $this->info('Please build a migration for your module: php artisan make:migration added_'.lcfirst($module).'_module');
         }
 

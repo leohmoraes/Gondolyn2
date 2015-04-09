@@ -1,4 +1,4 @@
-<?php
+<?php namespace App\Http\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -8,8 +8,8 @@ use Laravel\Cashier\Billable;
 use Laravel\Cashier\Contracts\Billable as BillableContract;
 use Carbon\Carbon;
 
-class Users extends Eloquent implements AuthenticatableContract, CanResetPasswordContract, BillableContract {
-
+class Users extends Eloquent implements AuthenticatableContract, CanResetPasswordContract, BillableContract
+{
     use Billable;
     use Authenticatable;
     use CanResetPassword;
@@ -95,8 +95,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         $salt = substr($pwd, 0, 10);
         $realPasswd = substr($pwd, 10);
 
-        if ($realPasswd == hash("sha256", Input::get("old_password")))
-        {
+        if ($realPasswd == hash("sha256", Input::get("old_password"))) {
             $user->user_passwd = Crypt::encrypt($user->user_salt.hash("sha256", Input::get("new_password")));
             $result = $user->save();
 
@@ -120,8 +119,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         if ($user->cancelled()) $user->subscription($myplan['stripe_id'])->resume($creditCardToken);
         else $user->subscription($myplan['stripe_id'])->create($creditCardToken);
 
-        if ($trial > 0)
-        {
+        if ($trial > 0) {
             $user->trial_ends_at = Carbon::now()->addDays($trial);
             $user->save();
         }
@@ -158,8 +156,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
     public function login_with_email($useremail, $password, $remember_me)
     {
-        if ($useremail === '' || $password === '')
-        {
+        if ($useremail === '' || $password === '') {
             throw new Exception("Missing login credentials", 1);
 
             return false;
@@ -167,23 +164,20 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
         $user = Users::where('user_email', '=', $useremail)->first();
 
-        if (is_object($user))
-        {
+        if (is_object($user)) {
             $pwd = Crypt::decrypt($user->user_passwd);
 
             $exp = substr($pwd, 0, 10);
             $realPasswd = substr($pwd, 10);
 
-            if ($exp == $user->user_salt && $realPasswd == hash("sha256", $password) && $user->user_role !== 'inactive')
-            {
+            if ($exp == $user->user_salt && $realPasswd == hash("sha256", $password) && $user->user_role !== 'inactive') {
                 // Check for remember me
                 $remember = ($remember_me === "on") ? TRUE : FALSE;
 
                 // Minutes for the remember me
                 $minutes = Config::get("gondolyn.remember_me_duration");
 
-                if ($remember)
-                {
+                if ($remember) {
                     Cookie::queue('email', $useremail, $minutes);
                     Cookie::queue('password', $password, $minutes);
                 }
@@ -196,21 +190,15 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
                 $user->save();
 
                 return $user;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        else if (is_null($user) && Config::get("gondolyn.signup"))
-        {
+        } elseif (is_null($user) && Config::get("gondolyn.signup")) {
             $data['email'] = $useremail;
             $data['password'] = $password;
 
             return $this->makeNewUser($data, "email");
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -227,30 +215,21 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         // Attempt to find a matching ID
         $user = Users::where($account_id, '=', $userID)->first();
 
-        if (is_object($user) && ! is_null($user))
-        {
+        if (is_object($user) && ! is_null($user)) {
             return $user;
-        }
-        else
-        {
+        } else {
             // Look for a matching Email
-            if (isset($data['user']['email']))
-            {
+            if (isset($data['user']['email'])) {
                 $user = Users::where('user_email', '=', $data['user']['email'])->first();
 
                 if (is_object($user) && $user->user_role !== 'inactive') return $user;
-                else if (Config::get("gondolyn.signup") && ! is_object($user))
-                {
+                else if (Config::get("gondolyn.signup") && ! is_object($user)) {
                     return $this->makeNewUser($data, $account);
-                }
-                else
-                {
+                } else {
                     throw new Exception("We're sorry either your account has been deactivated or you have not registered with us before.", 1);
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 // means the service doesn't have an email provided by the API
                 return true;
             }
@@ -263,17 +242,14 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
         $user = Users::where('user_email', '=', $email)->first();
 
-        if (is_object($user))
-        {
+        if (is_object($user)) {
             $user->$account_id = Session::get("twitterID");
             $user->save();
 
             Session::forget("twitterID");
 
             return $user;
-        }
-        else
-        {
+        } else {
             $data['email'] = $email;
             $data['id'] = Session::get("twitterID");
             $data['screen_name'] = Session::get("twitterScreenName");
@@ -281,12 +257,9 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
             Session::forget("twitterID");
             Session::forget("twitterScreenName");
 
-            if (Config::get("gondolyn.signup"))
-            {
+            if (Config::get("gondolyn.signup")) {
                 return $this->makeNewUser($data, $account);
-            }
-            else
-            {
+            } else {
                 throw new Exception("We're sorry we cannot find you and this application is not currently accepting sign ups.", 1);
                 return false;
             }
@@ -305,22 +278,18 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
     public function deleteMyAccount($id)
     {
-        if (Session::get("id") == $id)
-        {
+        if (Session::get("id") == $id) {
             $user = Users::find($id);
             return $user->delete();
-        }
-        else return false;
+        } else return false;
     }
 
     public static function deleteAccount($id)
     {
-        if (Session::get("role") == "admin")
-        {
+        if (Session::get("role") == "admin") {
             $user = Users::find($id);
             return $user->delete();
-        }
-        else return false;
+        } else return false;
     }
 
     /*
@@ -340,25 +309,24 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
         $user = new Users;
 
-        if ($account != "email") $user->$account_id = $data['id'];
-        if ($account == "twitter") $user->user_name = $data['screen_name'];
-        if ($account == "email") $pwd = $data['password'];
+        if ($account != "email")    $user->$account_id = $data['id'];
+        if ($account == "twitter")  $user->user_name = $data['screen_name'];
+        if ($account == "email")    $pwd = $data['password'];
 
         $user->user_email   = $data['email'];
         $user->user_salt    = $userSalt;
         $user->user_active  = "active";
         $user->user_passwd  = Crypt::encrypt($userSalt.hash("sha256", $pwd));
         $user->user_role    = (count($currentUserCount) == 0) ? "admin" : "member";
+
         $user->save();
 
         $data['newPassword'] = $pwd;
 
         Session::flash("email", $data['email']);
 
-        if ($account != "email")
-        {
-            Mail::send('emails.newpassword', $data, function($message)
-            {
+        if ($account != "email") {
+            Mail::send('emails.newpassword', $data, function ($message) {
                 $user = $this->getMyProfileByEmail(Session::get("email"));
                 $message->to($user->user_email)->subject('New Password!');
             });

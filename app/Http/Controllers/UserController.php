@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class UserController extends BaseController {
-
+class UserController extends BaseController
+{
     protected $layout = 'layouts.master';
 
     public function __construct()
@@ -55,31 +55,24 @@ class UserController extends BaseController {
 
     public function generateNewPassword()
     {
-        try
-        {
+        try {
             $user = Users::getMyProfileByEmail(Input::get("email"));
             $newPassword = Users::generateNewPassword($user->id);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
             return redirect('errors/general');
         }
 
-        if ($newPassword)
-        {
+        if ($newPassword) {
             $data['newPassword'] = $newPassword;
 
-            Mail::send('emails.newpassword', $data, function($message)
-            {
+            Mail::send('emails.newpassword', $data, function ($message) {
                 $user = Users::getMyProfileByEmail(Input::get("email"));
                 $message->to($user->user_email, $user->user_name)->subject('New Password!');
             });
 
             Session::flash("notification", Lang::get("notification.general.new_password"));
-        }
-        else
-        {
+        } else {
             Session::flash("notification", Lang::get("notification.general.failed_new_password"));
         }
 
@@ -147,12 +140,9 @@ class UserController extends BaseController {
             "selectPlan"        => View::make('user.selectPlan', $data),
         ];
 
-        if ($data['user']->subscribed() && ! $data['user']->cancelled())
-        {
+        if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
             $layoutData["content"] = View::make('user.subscription_change', $data);
-        }
-        else
-        {
+        } else {
             $layoutData["content"] = View::make('user.subscription_set', $data);
         }
 
@@ -161,15 +151,12 @@ class UserController extends BaseController {
 
     public function update()
     {
-        try
-        {
+        try {
             $status = Users::updateProfile(Session::get("id"));
 
             if ($status) Session::flash("notification", Lang::get("notification.profile.update_success"));
             else Session::flash("notification", Lang::get("notification.profile.update_failed"));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
         }
@@ -179,16 +166,13 @@ class UserController extends BaseController {
 
     public function updatePassword()
     {
-        try
-        {
+        try {
             $users = new Users;
             $status = $users->updateMyPassword(Session::get("id"));
 
             if ($status) Session::flash("notification", Lang::get("notification.profile.password_success"));
             else Session::flash("notification", Lang::get("notification.profile.password_failed"));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
         }
@@ -198,16 +182,13 @@ class UserController extends BaseController {
 
     public function setSubscription()
     {
-        try
-        {
+        try {
             $users = new Users;
             $status = $users->setMySubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) Session::flash("notification", Lang::get("notification.subscription.success"));
             else Session::flash("notification", Lang::get("notification.subscription.failed"));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
         }
@@ -217,16 +198,13 @@ class UserController extends BaseController {
 
     public function updateSubscription()
     {
-        try
-        {
+        try {
             $users = new Users;
             $status = $users->updateMySubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) Session::flash("notification", Lang::get("notification.subscription.success"));
             else Session::flash("notification", Lang::get("notification.subscription.failed"));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
         }
@@ -236,16 +214,13 @@ class UserController extends BaseController {
 
     public function cancelSubscription()
     {
-        try
-        {
+        try {
             $users = new Users;
             $status = $users->cancelSubscription(Session::get("id"));
 
             if ($status) Session::flash("notification", Lang::get("notification.subscription.cancel_success"));
             else Session::flash("notification", Lang::get("notification.subscription.cancel_failed"));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
         }
@@ -284,27 +259,21 @@ class UserController extends BaseController {
         // Validation errors
         if (isset($validation['errors'])) return $validation['redirect'];
 
-        try
-        {
+        try {
             $Users = new Users;
             $user = $Users->login_with_email(Input::get('email'), Input::get('password'), Input::get('remember_me'));
 
-            if ( ! $user)
-            {
+            if ( ! $user) {
                 Session::flash("notification", Lang::get("notification.login.fail"));
                 return redirect('errors/general');
-            }
-            else
-            {
+            } else {
                 return $this->process($user);
             }
 
             Session::flash("notification", Lang::get("notification.login.success"));
             return redirect('errors/general');
 
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
         }
@@ -314,25 +283,19 @@ class UserController extends BaseController {
     {
         $code = Input::get('code');
 
-        if ( ! empty($code))
-        {
-            try
-            {
+        if ( ! empty($code)) {
+            try {
                 $result = Socialize::with('facebook')->user();
 
                 $Login = new Users;
                 $user = $Login->login_with_other_account($result, "facebook");
 
                 return $this->process($user);
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 Session::flash("notification", $e->getMessage());
                 return redirect('errors/general');
             }
-        }
-        else
-        {
+        } else {
             return Socialize::with('facebook')->redirect();
         }
     }
@@ -341,17 +304,14 @@ class UserController extends BaseController {
     {
         $oauth_verifier = Input::get('oauth_verifier');
 
-        if ( ! empty($oauth_verifier))
-        {
-            try
-            {
+        if ( ! empty($oauth_verifier)) {
+            try {
                 $result = Socialize::with('twitter')->user();
 
                 $Login = new Users;
                 $user = $Login->login_with_other_account($result, "twitter");
 
-                if ( ! is_object($user))
-                {
+                if ( ! is_object($user)) {
                     Session::put("twitterID", $result->id);
                     Session::put("twitterScreenName", $result->nickname);
 
@@ -359,15 +319,11 @@ class UserController extends BaseController {
                 }
 
                 return $this->process($user);
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 Session::flash("notification", $e->getMessage());
                 return redirect('errors/general');
             }
-        }
-        else
-        {
+        } else {
             return Socialize::with('twitter')->redirect();
         }
     }

@@ -7,8 +7,8 @@ use Input;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Config;
 
-class Validation {
-
+class Validation
+{
     public static function check($form)
     {
         $result = array();
@@ -17,10 +17,8 @@ class Validation {
 
         $feilds = $conditions[$form];
 
-        foreach ($feilds as $key => $value)
-        {
-            if (isset($feilds[$key]))
-            {
+        foreach ($feilds as $key => $value) {
+            if (isset($feilds[$key])) {
                 $validation = Validator::make(
                     array(
                         $key => Input::get($key)
@@ -30,8 +28,7 @@ class Validation {
                     )
                 );
 
-                if ($validation->fails())
-                {
+                if ($validation->fails()) {
                     array_push($errors, $validation->messages()->first($key));
                 }
             }
@@ -50,8 +47,7 @@ class Validation {
 
         if ( ! $errors) return false;
 
-        foreach ($errors as $error)
-        {
+        foreach ($errors as $error) {
             $errorMessage .= $error."<br>";
         }
 
@@ -60,4 +56,3 @@ class Validation {
 
 }
 //End of File
-?>

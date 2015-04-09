@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class MainController extends BaseController {
-
+class MainController extends BaseController
+{
     protected $layout = 'layouts.master';
 
     public function __construct()
@@ -17,8 +17,7 @@ class MainController extends BaseController {
         $data["user"] = "";
 
         // If we were to be remembered and we're not logged in
-        if (Auth::viaRemember() && ! Session::get("logged_in"))
-        {
+        if (Auth::viaRemember() && ! Session::get("logged_in")) {
             $email      = Cookie::get("email");
             $password   = Cookie::get("password");
 
@@ -27,8 +26,7 @@ class MainController extends BaseController {
         }
 
         // If we are logged in lets get personal
-        if (Session::get("logged_in"))
-        {
+        if (Session::get("logged_in")) {
             $data["back"] = " back ";
             $data["user"] = Session::get("username");
         }

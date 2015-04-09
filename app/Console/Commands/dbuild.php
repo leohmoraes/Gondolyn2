@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class dbuild extends Command {
-
+class dbuild extends Command
+{
     /**
      * The console command name.
      *
@@ -40,10 +40,8 @@ class dbuild extends Command {
     public function fire()
     {
         // No database setup
-        if ( ! Schema::hasTable('users'))
-        {
-            Schema::create('users', function($table)
-            {
+        if ( ! Schema::hasTable('users')) {
+            Schema::create('users', function ($table) {
                 $table->increments('id');
                 $table->string('user_email');
                 $table->string('user_phone')->nullable();
@@ -61,8 +59,7 @@ class dbuild extends Command {
                 $table->string('created_at');
             });
 
-            Schema::create('samples', function($table)
-            {
+            Schema::create('samples', function ($table) {
                 $table->increments('id');
                 $table->string('updated_at');
                 $table->string('created_at');
@@ -75,9 +72,7 @@ class dbuild extends Command {
             ]);
 
             $this->info("Your database has been constructed");
-        }
-        else
-        {
+        } else {
             $this->info("Your database already exists");
         }
     }

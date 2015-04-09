@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Validation extends Facade {
-
+class Validation extends Facade
+{
     /**
      * Get the registered name of the component.
      *

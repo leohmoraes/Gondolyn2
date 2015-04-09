@@ -4,8 +4,8 @@
  * The purpose of a prototype is to handle all buisness logic
  * enabling solid TDD.
  */
-class SamplePrototype extends \Prototype {
-
+class SamplePrototype extends \Prototype
+{
     public $output;
 
     public function __construct()

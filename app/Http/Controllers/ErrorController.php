@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class ErrorController extends BaseController {
-
+class ErrorController extends BaseController
+{
     /*
     |--------------------------------------------------------------------------
     | Error Controller
@@ -53,22 +53,17 @@ class ErrorController extends BaseController {
             "page_details" => ""
         );
 
-        try
-        {
-            if ( ! Session::has("data"))
-            {
+        try {
+            if ( ! Session::has("data")) {
                 throw new Exception("You do not have an error", 1);
             }
 
             $data['error'] = Session::get("data");
 
-            Mail::send('emails.critical', $data, function($message)
-            {
+            Mail::send('emails.critical', $data, function ($message) {
                 $message->to('mattlantz@gmail.com', 'Matt Lantz')->subject('Critical Error!');
             });
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("data", $e->getMessage());
             return redirect('errors/general');
         }

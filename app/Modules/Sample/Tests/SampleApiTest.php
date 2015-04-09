@@ -1,7 +1,7 @@
 <?php
 
-class SampleApiTest extends TestCase {
-
+class SampleApiTest extends TestCase
+{
     public function __construct()
     {
         $this->session = [

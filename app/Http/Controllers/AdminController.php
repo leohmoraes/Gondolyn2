@@ -1,9 +1,9 @@
-<?php
+<?php namespace App\Http\Controllers;
 
 use App\Prototypes\AppPrototype;
 
-class AdminController extends BaseController {
-
+class AdminController extends BaseController
+{
     protected $layout = 'layouts.master';
 
     public function __construct()
@@ -77,16 +77,13 @@ class AdminController extends BaseController {
 
     public function update()
     {
-        try
-        {
+        try {
             $user = Session::get("userInEditor");
             $status = Users::updateProfile($user->id);
 
             if ($status) Session::flash("notification", "The profile was successfully updated.");
             else Session::flash("notification", "The profile failed to update.");
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Session::flash("notification", "We seem to have encountered an error");
             return redirect('errors/general');
         }

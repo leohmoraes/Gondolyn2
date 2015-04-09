@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class ApiController extends BaseController {
-
+class ApiController extends BaseController
+{
     /*
     |--------------------------------------------------------------------------
     | Login / Logout
@@ -10,34 +10,25 @@ class ApiController extends BaseController {
 
     public function request()
     {
-        try
-        {
+        try {
             $Login = new Users;
             $user = $Login->login_with_email(Tools::raw_json_input("email"), Tools::raw_json_input("password"), Tools::raw_json_input("remember"));
 
-            if ( ! $user)
-            {
+            if ( ! $user) {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
-            }
-            else if ($user)
-            {
+            } elseif ($user) {
                 return Gondolyn::response("success", $this->process($user));
-            }
-            else
-            {
+            } else {
                 return Gondolyn::response("success", Lang::get("notification.login.success"));
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return Gondolyn::response("error", $e->getMessage());
         }
     }
 
     public function logout()
     {
-        if ( ! Session::get("logged_in"))
-        {
+        if ( ! Session::get("logged_in")) {
             return Gondolyn::response("error", Lang::get("notification.api.not_logged_in"));
         }
 
@@ -77,8 +68,7 @@ class ApiController extends BaseController {
 
     public function getUserData()
     {
-        if ( ! Session::get("logged_in"))
-        {
+        if ( ! Session::get("logged_in")) {
             return Gondolyn::response("error", Lang::get("notification.api.not_logged_in"));
         }
 

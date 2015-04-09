@@ -2,8 +2,8 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class CryptoServiceProvider extends ServiceProvider {
-
+class CryptoServiceProvider extends ServiceProvider
+{
     /**
      * Register the service provider.
      *
@@ -12,14 +12,12 @@ class CryptoServiceProvider extends ServiceProvider {
     public function register()
     {
         // Register 'underlyingclass' instance container to our UnderlyingClass object
-        $this->app['Crypto'] = $this->app->share(function($app)
-        {
+        $this->app['Crypto'] = $this->app->share(function ($app) {
             return new Crypto;
         });
 
         // Shortcut so developers don't need to add an Alias in app/config/app.php
-        $this->app->booting(function()
-        {
+        $this->app->booting(function () {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Crypto', 'Crypto\Facades\Crypto');
         });

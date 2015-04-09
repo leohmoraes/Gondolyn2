@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Lang;
 
-class Gondolyn {
-
+class Gondolyn
+{
     public function response($type, $message)
     {
         return Response::json(array("status" => $type, "data" => $message));
@@ -42,13 +42,10 @@ class Gondolyn {
 
     public static function version()
     {
-        if (php_sapi_name() !== "cli")
-        {
+        if (php_sapi_name() !== "cli") {
             $changelog = json_decode(file_get_contents("../build.json"));
             return $changelog[count($changelog) - 1]->version;
-        }
-        else
-        {
+        } else {
             return 'cli';
         }
     }
@@ -59,12 +56,9 @@ class Gondolyn {
 
         $files = glob($modules . "*");
 
-        foreach ($files as $file)
-        {
-            if (is_dir($file))
-            {
-                if (file_exists($file.'/menu.php'))
-                {
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                if (file_exists($file.'/menu.php')) {
                     @include($file.'/menu.php');
                 }
             }
