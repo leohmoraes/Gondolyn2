@@ -1,4 +1,4 @@
-<?php namespace App\Http\Models;
+<?php
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;

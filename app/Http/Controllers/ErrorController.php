@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php
 
 class ErrorController extends BaseController
 {
