@@ -2,7 +2,7 @@
 
 @section('nav_bar')
 
-<div class="raw100 raw-left raw-block-30 navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="raw100 raw-left raw-block-30 navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavbar">
             <span class="sr-only">{{ trans('content.app.name') }}</span>
@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse navbar-right" id="mainNavbar">
         <ul class="nav navbar-nav">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-bars"></span> {{ trans("content.menu.account") }} <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle raw-margin-right-10" data-toggle="dropdown"><span class="fa fa-bars"></span> {{ trans("content.menu.account") }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     @if (Session::get("logged_in"))
                         <li><a href="{{ URL::to(Session::get('role').'/home') }}"><span class="fa fa-home"></span> {{ trans("content.menu.home") }}</a></li>

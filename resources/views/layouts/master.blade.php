@@ -35,6 +35,9 @@
         <!-- Font Awesome -->
         {!! Minify::stylesheet('/font-awesome/css/font-awesome.css') !!}
 
+        <!-- Bootstrap Theme -->
+        {!! Minify::stylesheet('/themes/bootstrap-cosmo.css') !!}
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -78,8 +81,7 @@
             </div>
         </div>
 
-        <div class="raw100 raw-left navbar navbar-fixed-bottom raw-bg-E8E8E8">
-            <div class="raw100 raw-block-1 raw-bg-888888"></div>
+        <div class="raw100 raw-left navbar navbar-fixed-bottom">
             @yield("footer")
         </div>
 
