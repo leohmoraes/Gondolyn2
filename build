@@ -19,11 +19,13 @@
 
         public function __construct($config)
         {
-            $this->buildFile = $config->buildFile;
-            $this->author =    $config->buildAuthor;
-            $this->type =      $config->buildType;
-            $this->incType =   $config->buildIncType;
-            $this->comments =  $config->buildComments;
+            date_default_timezone_set("America/New_York");
+
+            $this->buildFile    = $config->buildFile;
+            $this->author       = $config->buildAuthor;
+            $this->type         = $config->buildType;
+            $this->incType      = $config->buildIncType;
+            $this->message      = $config->buildMessage;
         }
 
         private function getCommitHash()
@@ -35,14 +37,10 @@
             return $commitHash;
         }
 
-        private function getCommitComments()
+        private function tagGIT($version, $buildData)
         {
-            if ($this->comments == "")
-            {
-                exec("git log -1 --pretty=%B", $gitComment);
-                return implode(" ", $gitComment);
-            }
-            else return $this->comments;
+            exec("git tag -a v".$version." -m '".$this->message."'");
+            exec("git commit -am 'Build update'");
         }
 
         private function appendBuildDoc($buildData)
@@ -64,8 +62,7 @@
 
             $thisBuild = new stdClass;
             $thisBuild->commit = $buildData["commit"];
-            $thisBuild->comment = $buildData["comment"];
-            $thisBuild->build = time().'-'.$buildData["type"];
+            @$thisBuild->build = time().'-'.$buildData["type"];
             $thisBuild->builder = $buildData["builder"];
             $thisBuild->date = date("Y-m-d");
 
@@ -93,7 +90,6 @@
                     break;
             }
 
-
             $newVersion = implode(".", $version);
             $thisBuild->version = $newVersion;
 
@@ -101,20 +97,25 @@
 
             $buildFileData = json_encode($builds);
 
-            if (file_put_contents($buildFile, $buildFileData)) return true;
+            if (file_put_contents($buildFile, $buildFileData))
+            {
+                $this->tagGIT($newVersion, $thisBuild);
+
+                return true;
+            }
+
             return false;
         }
 
         public function main()
         {
             $commitHash = $this->getCommitHash();
-            $commitComments = $this->getCommitComments();
 
             $buildData = array(
                 "commit" => $commitHash,
-                "comment" => $commitComments,
                 "type" => $this->type,
                 "builder" => $this->author,
+                "message" => $this->message
             );
 
             $this->appendBuildDoc($buildData);
@@ -128,24 +129,24 @@
     |--------------------------------------------------------------------------
     */
 
-    $buildType = $argv[1];
-    $buildAuthor = $argv[2];
-    $buildIncType = $argv[3];
-    $buildComments = $argv[4];
+    $buildType      = $argv[1];
+    $buildAuthor    = $argv[2];
+    $buildIncType   = $argv[3];
+    $buildMessage   = $argv[4];
 
-    if (! $buildType || ! $buildAuthor || ! $buildIncType)
+    if (! $buildType || ! $buildAuthor || ! $buildIncType || ! $buildMessage)
     {
-        echo "php build \n<build-type (release|dev|experiment)> \n<build-author (name)> \n<build-increment (major|minor|patch)> \n<build-comment-in-quotes>";
-        echo "The version will automatically be generated based on the increment you state in the build statement\n";
+        echo "php build \n<build-type (release|dev|experiment)> \n<build-author (name)> \n<build-increment (major|minor|patch)>\n <build-message>\n";
+        echo "The version will automatically be generated based on the increment you state in the build statement, and GIT will be tagged\n";
         exit;
     }
 
     $config = new stdClass;
-    $config->buildFile = "build.json";
+    $config->buildFile = "../application/info/build.json";
     $config->buildType = $buildType;
     $config->buildAuthor = $buildAuthor;
     $config->buildIncType = $buildIncType;
-    $config->buildComments = $buildComments;
+    $config->buildMessage = $buildMessage;
 
     $build = new semanticPHP($config);
     $build->main();
