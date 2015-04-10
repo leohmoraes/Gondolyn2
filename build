@@ -64,6 +64,7 @@
             $thisBuild->commit = $buildData["commit"];
             @$thisBuild->build = time().'-'.$buildData["type"];
             $thisBuild->builder = $buildData["builder"];
+            $thisBuild->message = $buildData["message"];
             $thisBuild->date = date("Y-m-d");
 
             $version = explode(".", $version);

@@ -16,7 +16,7 @@
                 <a href="{{ 'https://github.com/mlantz/Gondolyn2/commit/'.$change->commit }}">{{ $change->commit }}</a>
             </div>
             <div class="raw45 raw-m-hide raw-t-hide raw-left">
-                <p>{{ $change->comment }}</p>
+                <p>{{ $change->message }}</p>
             </div>
         </div>
     @endforeach
