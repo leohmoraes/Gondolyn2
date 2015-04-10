@@ -157,6 +157,7 @@ return [
         'Devfactory\Minify\MinifyServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
 
     ],
 
@@ -209,6 +210,7 @@ return [
         'Minify'    => 'Devfactory\Minify\Facades\MinifyFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
     ],
 
