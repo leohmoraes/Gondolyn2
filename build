@@ -142,7 +142,7 @@
     }
 
     $config = new stdClass;
-    $config->buildFile = "../application/info/build.json";
+    $config->buildFile = "./build.json";
     $config->buildType = $buildType;
     $config->buildAuthor = $buildAuthor;
     $config->buildIncType = $buildIncType;
