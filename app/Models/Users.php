@@ -158,7 +158,6 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         if ($useremail === '' || $password === '') {
             throw new Exception("Missing login credentials", 1);
-            return false;
         }
 
         $user = Users::where('user_email', '=', $useremail)->first();
@@ -173,6 +172,8 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
             Cookie::queue('email', $useremail, $minutes);
             Cookie::queue('password', $password, $minutes);
         }
+
+        $data = array();
 
         if (is_object($user)) {
             $pwd = Crypt::decrypt($user->user_passwd);
