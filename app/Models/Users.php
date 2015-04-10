@@ -158,11 +158,21 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         if ($useremail === '' || $password === '') {
             throw new Exception("Missing login credentials", 1);
-
             return false;
         }
 
         $user = Users::where('user_email', '=', $useremail)->first();
+
+        // Check for remember me
+        $remember = ($remember_me === "on") ? TRUE : FALSE;
+
+        // Minutes for the remember me
+        $minutes = Config::get("gondolyn.remember_me_duration");
+
+        if ($remember) {
+            Cookie::queue('email', $useremail, $minutes);
+            Cookie::queue('password', $password, $minutes);
+        }
 
         if (is_object($user)) {
             $pwd = Crypt::decrypt($user->user_passwd);
@@ -171,17 +181,6 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
             $realPasswd = substr($pwd, 10);
 
             if ($exp == $user->user_salt && $realPasswd == hash("sha256", $password) && $user->user_role !== 'inactive') {
-                // Check for remember me
-                $remember = ($remember_me === "on") ? TRUE : FALSE;
-
-                // Minutes for the remember me
-                $minutes = Config::get("gondolyn.remember_me_duration");
-
-                if ($remember) {
-                    Cookie::queue('email', $useremail, $minutes);
-                    Cookie::queue('password', $password, $minutes);
-                }
-
                 // Utilize Laravel Auth
                 Auth::login($user, $remember);
 
@@ -197,7 +196,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
             $data['email'] = $useremail;
             $data['password'] = $password;
 
-            return $this->makeNewUser($data, "email");
+            return $this->makeNewUser($data, "email", $remember);
         } else {
             return false;
         }
@@ -298,7 +297,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
     |--------------------------------------------------------------------------
     */
 
-    private function makeNewUser($data, $account)
+    private function makeNewUser($data, $account, $remember = false)
     {
         $currentUserCount = DB::table('users')->get();
 
@@ -313,15 +312,19 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         if ($account == "twitter")  $user->user_name = $data['screen_name'];
         if ($account == "email")    $pwd = $data['password'];
 
-        $user->user_email   = $data['email'];
-        $user->user_salt    = $userSalt;
-        $user->user_active  = "active";
-        $user->user_passwd  = Crypt::encrypt($userSalt.hash("sha256", $pwd));
-        $user->user_role    = (count($currentUserCount) == 0) ? "admin" : "member";
+        $user->user_email       = $data['email'];
+        $user->user_salt        = $userSalt;
+        $user->user_active      = "active";
+        $user->user_api_token   = md5(Tools::add_salt(30));
+        $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
+        $user->user_role        = (count($currentUserCount) == 0) ? "admin" : "member";
 
         $user->save();
 
         $data['newPassword'] = $pwd;
+
+        // Utilize Laravel Auth
+        Auth::login($user, $remember);
 
         Session::flash("email", $data['email']);
 
