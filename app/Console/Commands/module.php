@@ -105,7 +105,7 @@ use View;
 use Config;
 use Session;
 use App\Modules\\'.$module.'\Prototypes\\'.$module.'Prototype;
-use App\Modules\\'.$module.'\Models\\'.$module.'s;
+use App\Modules\\'.$module.'\Models\\'.$module.';
 
 /**
  * '.$module.' Module Controller
