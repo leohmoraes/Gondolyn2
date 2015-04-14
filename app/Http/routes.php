@@ -80,6 +80,8 @@ Route::group(array('prefix' => 'user', 'before' => 'is_logged_in'), function () 
     Route::get('settings', "UserController@settings");
     Route::get('settings/password', "UserController@password");
     Route::get('settings/subscription', "UserController@subscription");
+    Route::get('settings/subscription/invoices', "UserController@subscriptionInvoices");
+    Route::get('settings/subscription/download/{id}', array('uses' => 'UserController@downloadInvoice'));
 
     Route::post('settings/update', array('uses' => 'UserController@update'));
     Route::post('settings/update/password', array('uses' => 'UserController@updatePassword'));

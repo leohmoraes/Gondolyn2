@@ -28,6 +28,7 @@
 <div class="raw-device raw-margin-auto raw-margin-top-24">
 
     <div class="raw100 raw-left raw-margin-top-24">
+        <a class="raw-left btn btn-default raw-margin-left-24" href="{{ URL::to('user/settings/subscription/invoices') }}" data-toggle="modal">Subscription Invoices</a>
         <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#cancelModal">Cancel Subscription</button>
 
         <form id="userSubscription" method="post" action="{{ URL::to('user/settings/update/subscription') }}">

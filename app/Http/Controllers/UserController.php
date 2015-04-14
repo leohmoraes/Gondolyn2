@@ -149,6 +149,43 @@ class UserController extends BaseController
         return view($this->layout, $layoutData);
     }
 
+    public function subscriptionInvoices()
+    {
+        $data = Config::get("gondolyn.basic-app-info");
+
+        $user = Users::getMyProfile(Session::get("id"));
+
+        $data['invoices'] = '';
+
+        $invoices = $user->invoices();
+
+        foreach ($invoices as $invoice) {
+            $data['invoices'] .= View::make('user.invoice', array('invoice' => $invoice));
+        }
+
+        $layoutData = [
+            "metadata"          => View::make('metadata', $data),
+            "general"           => View::make('common', $data),
+            "nav_bar"           => View::make('navbar', $data),
+        ];
+
+        $layoutData["content"] = View::make('user.subscription_invoices', $data);
+
+        return view($this->layout, $layoutData);
+    }
+
+    public function downloadInvoice($id)
+    {
+        $user = Users::getMyProfile(Session::get("id"));
+
+        $invoice = Crypto::decrypt($id);
+
+        return $user->downloadInvoice($invoice, [
+            'vendor'  => Config::get("gondolyn.company"),
+            'product' => Config::get("gondolyn.product"),
+        ]);
+    }
+
     public function update()
     {
         try {

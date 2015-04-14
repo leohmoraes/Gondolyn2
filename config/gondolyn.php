@@ -34,6 +34,10 @@ return array(
 
     'subscription' => TRUE,
 
+    'company' => '',
+
+    'product' => '',
+
     'stripe' => array(
         'secret_key' => '',
         'publish_key' => '',
