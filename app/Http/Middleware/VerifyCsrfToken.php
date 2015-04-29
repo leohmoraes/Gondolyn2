@@ -24,9 +24,9 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
             if ($request->is($route)) {
                 return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 
 };
