@@ -44,6 +44,7 @@ return array(
     ),
 
     "api" => array(
+        "incorrect" => "Incorrect route or missing information",
         "logout" => "You're logged out.",
         "bad_token" => "Sorry but your token is incorrect",
         "not_logged_in" => "Sorry but you're not logged in",

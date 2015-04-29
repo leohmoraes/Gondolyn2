@@ -51,6 +51,11 @@ class Handler extends ExceptionHandler
         if (is_a($e, 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException')) {
             return redirect('errors/general');
         }
+
+        if (stristr($request->url(), 'api')) {
+            return \Gondolyn::response('error', $e->getMessage());
+        }
+
         return parent::render($request, $e);
     }
 
