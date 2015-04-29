@@ -16,7 +16,7 @@ class ApiController extends BaseController
     public function request()
     {
         try {
-            if (Tools::raw_json_input("email") === "" || Tools::raw_json_input("password") === "") {
+            if ( ! Tools::raw_json_input("email") || ! Tools::raw_json_input("password")) {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
             }
 
