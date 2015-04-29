@@ -2,6 +2,11 @@
 
 class ApiController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('cors');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Login / Logout

@@ -14,6 +14,12 @@ return array(
         'api/login',
     ],
 
+    'cors' => [
+        'access-control-allow-origin' => '*',
+        'access-control-allow-methods' => 'GET, OPTIONS, PUT, POST, DELETE',
+        'access-control-allow-headers' => 'Content-Type, X-Auth-Token, Origin, Token, Authorization',
+    ],
+
     'remember_me_duration' => 20160,
 
     'basic-app-info' => array(
