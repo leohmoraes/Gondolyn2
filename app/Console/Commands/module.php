@@ -100,7 +100,7 @@ return [
 
 return [
 
-    "item" => [
+    "form" => [
         "action" => [
             "entity" => array("required", "string"),
         ]
