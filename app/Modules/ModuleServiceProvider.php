@@ -11,6 +11,10 @@ class ModuleServiceProvider extends  \Illuminate\Support\ServiceProvider
                 include __DIR__.'/'.$module.'/routes.php';
             }
 
+            if (file_exists(__DIR__.'/'.$module.'/filters.php')) {
+                include __DIR__.'/'.$module.'/filters.php';
+            }
+
             if (is_dir(__DIR__.'/'.$module.'/Views')) {
                 \View::addLocation(app('path').'/Modules/'.$module.'/Views');
             }

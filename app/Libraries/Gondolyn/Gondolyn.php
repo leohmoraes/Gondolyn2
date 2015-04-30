@@ -65,4 +65,23 @@ class Gondolyn
         }
     }
 
+    public function getModuleConfigs()
+    {
+        $moduleConfigs = array();
+        $modules = app_path()."/Modules/";
+
+        $files = glob($modules . "*");
+
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                if (file_exists($file.'/Config/config.php')) {
+                    $moduleName = str_replace(app_path().'/Modules/', '', $file);
+                    $moduleConfigs[$moduleName] = include($file.'/Config/config.php');
+                }
+            }
+        }
+
+        return $moduleConfigs;
+    }
+
 }
