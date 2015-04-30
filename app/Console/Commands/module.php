@@ -42,6 +42,8 @@ class module extends Command
 
         mkdir(app_path().'/Modules/'.$module, 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Libraries', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Models', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Prototypes', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Views', 0777);
@@ -67,10 +69,34 @@ class module extends Command
 
         /*
         |--------------------------------------------------------------------------
-        | Routes
+        | Config
         |--------------------------------------------------------------------------
         */
 
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Config/config.php', '<?php
+
+/*
+|--------------------------------------------------------------------------
+| Module Config
+|--------------------------------------------------------------------------
+*/
+
+return [
+
+    // General
+    "csrfIgnoredRoutes" => [
+        "api/put-request",
+    ],
+
+];');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Routes & Filters
+        |--------------------------------------------------------------------------
+        */
+
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/filters.php', '');
         $this->makeModuleFile(app_path().'/Modules/'.$module.'/routes.php', '<?php
 
     /*
