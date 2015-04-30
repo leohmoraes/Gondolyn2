@@ -36,9 +36,9 @@ class Gondolyn
 
         $userToken = Session::get('token');
 
-        if ($requestToken !== $userToken) return false;
+        if ($requestToken === $userToken) return true;
 
-        return true;
+        return false;
     }
 
     public static function is_api_call()
