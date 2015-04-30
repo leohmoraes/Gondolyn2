@@ -20,6 +20,7 @@ return array(
         "fail" => "Your email or password was incorrect",
         "success" => "We found you!",
         "deleted" => "Your account was deleted",
+        "expired-session" => "You're not currently logged in.",
     ),
 
     "general" => array(
@@ -47,6 +48,7 @@ return array(
         "incorrect" => "Incorrect route or missing information",
         "logout" => "You're logged out.",
         "bad_token" => "Sorry but your token is incorrect",
+        "bad_key" => "Sorry but your app key is incorrect",
         "not_logged_in" => "Sorry but you're not logged in",
     ),
 
