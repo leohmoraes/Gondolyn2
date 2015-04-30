@@ -46,21 +46,26 @@ class RouteServiceProvider extends ServiceProvider
             else Session::put("last_activity", time());
 
             if ( ! Session::get("logged_in")) {
-                Session::flash("notification", "You're not currently logged in.");
+                Session::flash("notification", Lang::get("notification.login.expired-session"));
+
+                if (Gondolyn::is_api_call()) {
+                    throw new \Exception(Lang::get("notification.login.expired-session"), 1);
+                }
+
                 return redirect("errors/general");
             }
         });
 
         Route::filter('is_member_logged_in', function () {
             if (Session::get("role") != "member") {
-                Session::flash("notification", "You're not currently logged in.");
+                Session::flash("notification", Lang::get("notification.login.expired-session"));
                 return redirect("errors/general");
             }
         });
 
         Route::filter('is_admin_logged_in', function () {
             if (Session::get("role") != "admin") {
-                Session::flash("notification", "You're not currently logged in.");
+                Session::flash("notification", Lang::get("notification.login.expired-session"));
                 return redirect("errors/general");
             }
         });

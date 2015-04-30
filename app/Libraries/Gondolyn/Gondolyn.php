@@ -1,5 +1,6 @@
 <?php namespace Gondolyn;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -38,6 +39,14 @@ class Gondolyn
         if ($requestToken !== $userToken) return false;
 
         return true;
+    }
+
+    public static function is_api_call()
+    {
+        if (php_sapi_name() !== "cli" && stristr(Request::path(), 'api')) {
+            return true;
+        }
+        return false;
     }
 
     public static function version()
