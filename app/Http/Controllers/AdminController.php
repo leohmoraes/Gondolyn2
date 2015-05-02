@@ -8,6 +8,7 @@ class AdminController extends BaseController
 
     public function __construct()
     {
+        // dd(Config::get('roles'));
         $this->middleware('auth');
     }
 
@@ -60,7 +61,7 @@ class AdminController extends BaseController
         $data['user']               = $user;
         $data['gravatar']           = $gravatarHash;
         $data['notification']       = Session::get("notification") ?: "";
-        $data['options']            = Config::get("gondolyn.roles");
+        $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
 
         $layoutData = [

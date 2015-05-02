@@ -96,7 +96,7 @@ class UserController extends BaseController
 
         $data['user']           = $user;
         $data['gravatar']       = $gravatarHash;
-        $data['options']        = Config::get("gondolyn.roles");
+        $data['options']        = Config::get("permissions.matrix.roles");
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
@@ -114,7 +114,7 @@ class UserController extends BaseController
         $data = Config::get("gondolyn.basic-app-info");
 
         $data['user'] = Users::getMyProfile(Session::get("id"));
-        $data['roles'] = Config::get("gondolyn.roles");
+        $data['roles'] = Config::get("permissions.matrix.roles");
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),

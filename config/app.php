@@ -158,6 +158,7 @@ return [
         'Laravel\Cashier\CashierServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
+        'GrahamCampbell\Throttle\ThrottleServiceProvider',
 
     ],
 
@@ -210,8 +211,8 @@ return [
         'Minify'    => 'Devfactory\Minify\Facades\MinifyFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
-        'Debugbar' => 'Barryvdh\Debugbar\Facade',
-
+        'Debugbar'  => 'Barryvdh\Debugbar\Facade',
+        'Throttle'  => 'GrahamCampbell\Throttle\Facades\Throttle',
     ],
 
 ];

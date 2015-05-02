@@ -41,13 +41,13 @@ class module extends Command
         $module = ucfirst($this->argument('name'));
 
         mkdir(app_path().'/Modules/'.$module, 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Libraries', 0777);
-        mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Models', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Prototypes', 0777);
-        mkdir(app_path().'/Modules/'.$module.'/Views', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Tests', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Views', 0777);
 
         /*
         |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ class module extends Command
 
         /*
         |--------------------------------------------------------------------------
-        | Config & Validation
+        | Config & Validation & Permissions
         |--------------------------------------------------------------------------
         */
 
@@ -104,6 +104,34 @@ return [
         "action" => [
             "entity" => array("required", "string"),
         ]
+    ],
+
+];');
+
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Config/permissions.matrix.php', '<?php
+
+/*
+|--------------------------------------------------------------------------
+| Permission Matix
+|--------------------------------------------------------------------------
+|
+| Here we can add to the roles and expand the groups of roles that the
+| permission matrix uses. Groups arrays can only be one level deep. We then define in routes:
+|
+| "permission" => "role OR groups.groupName"
+|
+*/
+
+return [
+
+    "roles" => [
+        "customer"
+    ],
+
+    "groups" => [
+        "all" => [
+            "customer"
+        ],
     ],
 
 ];');

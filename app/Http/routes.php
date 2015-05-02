@@ -44,7 +44,7 @@ Route::group(array('prefix' => 'api'), function () {
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('before' => 'is_admin_logged_in'), function () {
+Route::group(array('before' => 'is_logged_in', 'role' => 'admin'), function () {
     Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
     Route::get('admin/home', "AdminController@home");
@@ -64,7 +64,7 @@ Route::group(array('before' => 'is_admin_logged_in'), function () {
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('before' => 'is_member_logged_in'), function () {
+Route::group(array('before' => 'is_logged_in', 'role' => 'groups.all'), function () {
     Route::get('/member/home', "MemberController@home");
 });
 
@@ -74,7 +74,7 @@ Route::group(array('before' => 'is_member_logged_in'), function () {
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'user', 'before' => 'is_logged_in'), function () {
+Route::group(array('prefix' => 'user', 'before' => 'is_logged_in', 'role' => 'groups.all'), function () {
     Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
     Route::get('settings', "UserController@settings");

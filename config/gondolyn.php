@@ -31,11 +31,6 @@ return array(
         "page_details" => ""
     ),
 
-    'roles' => array(
-        'admin',
-        'member'
-    ),
-
     // Subscription details
 
     'subscription' => TRUE,

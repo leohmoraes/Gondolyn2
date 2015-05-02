@@ -318,7 +318,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         $user->user_active      = "active";
         $user->user_api_token   = md5(Tools::add_salt(30));
         $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
-        $user->user_role        = (count($currentUserCount) == 0) ? "admin" : "member";
+        $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');
 
         $user->save();
 

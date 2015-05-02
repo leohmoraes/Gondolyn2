@@ -28,6 +28,7 @@ return array(
         "cannot_find_user" => "Seems we cannot find your account.",
         "new_password" => "You have been sent a new password",
         "failed_new_password" => "We were unable to send you a new password",
+        "incorrect-permission" => "Incorrect Permission Level",
     ),
 
     "profile" => array(

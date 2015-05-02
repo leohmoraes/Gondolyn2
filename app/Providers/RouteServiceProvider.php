@@ -55,20 +55,6 @@ class RouteServiceProvider extends ServiceProvider
                 return redirect("errors/general");
             }
         });
-
-        Route::filter('is_member_logged_in', function () {
-            if (Session::get("role") != "member") {
-                Session::flash("notification", Lang::get("notification.login.expired-session"));
-                return redirect("errors/general");
-            }
-        });
-
-        Route::filter('is_admin_logged_in', function () {
-            if (Session::get("role") != "admin") {
-                Session::flash("notification", Lang::get("notification.login.expired-session"));
-                return redirect("errors/general");
-            }
-        });
     }
 
     /**

@@ -93,4 +93,23 @@ class Gondolyn
         return $moduleConfigs;
     }
 
+    public function getModulePermissionConfigs()
+    {
+        $modulePermissionConfigs = array();
+        $modules = app_path()."/Modules/";
+
+        $files = glob($modules . "*");
+
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                if (file_exists($file.'/Config/permissions.matrix.php')) {
+                    $moduleName = str_replace(app_path().'/Modules/', '', $file);
+                    $modulePermissionConfigs[$moduleName] = include($file.'/Config/permissions.matrix.php');
+                }
+            }
+        }
+
+        return $modulePermissionConfigs;
+    }
+
 }
