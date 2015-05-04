@@ -4,6 +4,8 @@
     "keywords": ["Gondolyn"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+    ],
     "require": {
         "laravel/framework": "5.0.*",
         "patchwork/utf8": "1.1.*",
@@ -66,5 +68,10 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "extra": {
+        "installer-paths": {
+            "app/Modules/{$name}/": [""]
+        }
     }
 }
