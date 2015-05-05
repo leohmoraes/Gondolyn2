@@ -145,7 +145,11 @@ return [
         'App\Providers\ConfigServiceProvider',
         'App\Providers\EventServiceProvider',
         'App\Providers\RouteServiceProvider',
-        'App\Modules\ModuleServiceProvider',
+
+        // For Modules
+
+        'App\Modules\ModulesServiceProvider',
+        'Module\ModuleServiceProvider',
 
         // Outside of default
 

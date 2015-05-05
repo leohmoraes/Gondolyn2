@@ -44,6 +44,8 @@ class module extends Command
         mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Libraries', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Lang', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Lang/en', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Models', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Prototypes', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Tests', 0777);
@@ -66,6 +68,29 @@ class module extends Command
 ?>
 
 <li><a href="<?= URL::to(\''.lcfirst($module).'\'); ?>"><span class="fa fa-gear"></span> '.$module.' Module</a></li>');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Module Langs
+        |--------------------------------------------------------------------------
+        */
+
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Lang/en/notifications.php', '<?php
+
+/*
+|--------------------------------------------------------------------------
+| Notifications
+|--------------------------------------------------------------------------
+*/
+
+return array(
+
+    "alert" => [
+        "module" => "You are in a module",
+    ],
+
+);');
 
         /*
         |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php namespace App\Modules;
 
-class ModuleServiceProvider extends  \Illuminate\Support\ServiceProvider
+class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {

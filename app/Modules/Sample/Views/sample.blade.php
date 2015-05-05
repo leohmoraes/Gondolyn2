@@ -5,6 +5,8 @@
             <p>This is an example of a module.</p>
             <br>
             <p>{{ $welcome }}</p>
+            <br>
+            <p>{{ Module::lang('sample.notifications.message.welcome') }}</p>
         </div>
     </div>
 @stop
