@@ -44,4 +44,23 @@ class Module {
         return $arr;
     }
 
+    /**
+     * Get Module Config
+     * @param  string $key Config key
+     * @return mixed
+     */
+    public static function config($key, $fileName = null)
+    {
+        $splitKey = explode('.', $key);
+
+        if (is_null($fileName)) {
+            $file = 'config';
+        } else {
+            $file = $fileName;
+        }
+
+        $moduleConfig = include(app_path().'/modules/'.ucfirst($splitKey[0]).'/Config/'.$file.'.php');
+        return $moduleConfig[$splitKey[1]];
+    }
+
 }

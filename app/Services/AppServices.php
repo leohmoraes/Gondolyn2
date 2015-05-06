@@ -1,6 +1,6 @@
-<?php namespace App\Prototypes;
+<?php namespace App\Services;
 
-class AppPrototype extends \Prototype
+class AppServices
 {
     public static function welcomeMessage($user)
     {

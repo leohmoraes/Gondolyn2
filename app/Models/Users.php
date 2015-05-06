@@ -72,7 +72,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         $user = Users::findOrFail($id);
 
-        $newPassword = Tools::add_salt(20);
+        $newPassword = Utilities::add_salt(20);
 
         $user->user_passwd = Crypt::encrypt($user->user_salt.hash("sha256", $newPassword));
         $user->save();
@@ -186,7 +186,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
                 Auth::login($user, $remember);
 
                 // Set the API auth token
-                $user->user_api_token = md5(Tools::add_salt(30));
+                $user->user_api_token = md5(Utilities::add_salt(30));
                 $user->save();
 
                 return $user;
@@ -304,8 +304,8 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
         $account_id = "user_".$account."_id";
 
-        $pwd = Tools::add_salt(20);
-        $userSalt = Tools::add_salt(10);
+        $pwd = Utilities::add_salt(20);
+        $userSalt = Utilities::add_salt(10);
 
         $user = new Users;
 
@@ -316,7 +316,7 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
         $user->user_email       = $data['email'];
         $user->user_salt        = $userSalt;
         $user->user_active      = "active";
-        $user->user_api_token   = md5(Tools::add_salt(30));
+        $user->user_api_token   = md5(Utilities::add_salt(30));
         $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
         $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');
 

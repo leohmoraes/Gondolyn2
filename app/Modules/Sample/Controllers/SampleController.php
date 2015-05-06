@@ -7,7 +7,7 @@ use View;
 use Config;
 use Session;
 use Gondolyn;
-use App\Modules\Sample\Prototypes\SamplePrototype;
+use App\Modules\Sample\Services\SampleService;
 use App\Modules\Sample\Models\Samples;
 
 /**
@@ -24,17 +24,17 @@ class SampleController extends \BaseController
 
     public function main()
     {
-        $prototype = new SamplePrototype;
+        $service = new SampleService;
 
         $sysData = [
             'config'        => Config::get("gondolyn.basic-app-info"),
             'notification'  => Session::get("notification"),
-            'welcome'       => 'Welcome to the Sample module '.Session::get("username").' the sample module demonstrates the use of prototypes which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to prototypes, to views.'
+            'welcome'       => 'Welcome to the Sample module '.Session::get("username").' the sample module demonstrates the use of services which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to services, to views.'
         ];
 
         $modelData      = Samples::getASample(1);
-        $prototypeData  = $prototype->dataModifier($modelData)->output;
-        $data           = $prototype->processData($prototypeData, $sysData)->toArray();
+        $serviceData    = $service->dataModifier($modelData);
+        $data           = $service->processData($serviceData, $sysData);
 
         $layoutData = [
             "metadata"    => View::make('metadata', $data),

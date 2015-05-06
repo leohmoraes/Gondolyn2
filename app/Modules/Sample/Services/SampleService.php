@@ -1,17 +1,8 @@
-<?php namespace App\Modules\Sample\Prototypes;
+<?php namespace App\Modules\Sample\Services;
 
-/**
- * The purpose of a prototype is to handle all buisness logic
- * enabling solid TDD.
- */
-class SamplePrototype extends \Prototype
+class SampleService implements SampleInterface
 {
     public $output;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function dataModifier($modelData)
     {
@@ -20,9 +11,7 @@ class SamplePrototype extends \Prototype
             'birthday' => $modelData->created_at
         ];
 
-        $this->output = $data;
-
-        return $this;
+        return $data;
     }
 
     public function processData($prototypeData, $sysData)
@@ -32,9 +21,7 @@ class SamplePrototype extends \Prototype
         $data['notification']   = $sysData['notification'];
         $data['welcome']        = $sysData['welcome'];
 
-        $this->output = $data;
-
-        return $this;
+        return $data;
     }
 
 }

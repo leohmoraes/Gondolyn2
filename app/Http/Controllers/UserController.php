@@ -190,9 +190,11 @@ class UserController extends BaseController
     {
         try {
             $status = Users::updateProfile(Session::get("id"));
-
-            if ($status) Session::flash("notification", Lang::get("notification.profile.update_success"));
-            else Session::flash("notification", Lang::get("notification.profile.update_failed"));
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.profile.update_success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.profile.update_failed"));
+            }
         } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
@@ -207,8 +209,11 @@ class UserController extends BaseController
             $users = new Users;
             $status = $users->updateMyPassword(Session::get("id"));
 
-            if ($status) Session::flash("notification", Lang::get("notification.profile.password_success"));
-            else Session::flash("notification", Lang::get("notification.profile.password_failed"));
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.profile.password_success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.profile.password_failed"));
+            }
         } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
@@ -223,8 +228,11 @@ class UserController extends BaseController
             $users = new Users;
             $status = $users->setMySubscription(Session::get("id"), Input::get("plan"));
 
-            if ($status) Session::flash("notification", Lang::get("notification.subscription.success"));
-            else Session::flash("notification", Lang::get("notification.subscription.failed"));
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.subscription.success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.subscription.failed"));
+            }
         } catch (Exception $e) {
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
@@ -239,8 +247,11 @@ class UserController extends BaseController
             $users = new Users;
             $status = $users->updateMySubscription(Session::get("id"), Input::get("plan"));
 
-            if ($status) Session::flash("notification", Lang::get("notification.subscription.success"));
-            else Session::flash("notification", Lang::get("notification.subscription.failed"));
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.subscription.success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.subscription.failed"));
+            }
         } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
@@ -255,8 +266,11 @@ class UserController extends BaseController
             $users = new Users;
             $status = $users->cancelSubscription(Session::get("id"));
 
-            if ($status) Session::flash("notification", Lang::get("notification.subscription.cancel_success"));
-            else Session::flash("notification", Lang::get("notification.subscription.cancel_failed"));
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.subscription.cancel_success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.subscription.cancel_failed"));
+            }
         } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.error"));
             return redirect('errors/general');
@@ -294,7 +308,9 @@ class UserController extends BaseController
         $validation = Validation::check('login/email');
 
         // Validation errors
-        if (isset($validation['errors'])) return $validation['redirect'];
+        if (isset($validation['errors'])) {
+            return $validation['redirect'];
+        }
 
         try {
             $Users = new Users;

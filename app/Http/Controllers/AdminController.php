@@ -1,6 +1,6 @@
 <?php
 
-use App\Prototypes\AppPrototype;
+use App\Services\AppServices;
 
 class AdminController extends BaseController
 {
@@ -8,7 +8,6 @@ class AdminController extends BaseController
 
     public function __construct()
     {
-        // dd(Config::get('roles'));
         $this->middleware('auth');
     }
 
@@ -18,7 +17,7 @@ class AdminController extends BaseController
 
         $user = Session::get("username");
 
-        $data['message'] = AppPrototype::welcomeMessage($user);
+        $data['message'] = AppServices::welcomeMessage($user);
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
@@ -82,8 +81,11 @@ class AdminController extends BaseController
             $user = Session::get("userInEditor");
             $status = Users::updateProfile($user->id);
 
-            if ($status) Session::flash("notification", "The profile was successfully updated.");
-            else Session::flash("notification", "The profile failed to update.");
+            if ($status) {
+                Session::flash("notification", "The profile was successfully updated.");
+            } else {
+                Session::flash("notification", "The profile failed to update.");
+            }
         } catch (Exception $e) {
             Session::flash("notification", "We seem to have encountered an error");
             return redirect('errors/general');

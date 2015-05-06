@@ -1,8 +1,8 @@
-<?php namespace Tools;
+<?php namespace Utilities;
 
 use Illuminate\Support\Facades\Request;
 
-class Tools
+class Utilities
 {
     public function add_salt($length = 10)
     {

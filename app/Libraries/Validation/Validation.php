@@ -4,7 +4,7 @@ use Validator;
 use Redirect;
 use Session;
 use Input;
-use Tools;
+use Utilities;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Config;
@@ -93,7 +93,7 @@ class Validation
     private static function getInput($key, $jsonInput)
     {
         if ($jsonInput) {
-            $input = Tools::raw_json_input($key);
+            $input = Utilities::raw_json_input($key);
         } else {
             $input = Input::get($key);
         }

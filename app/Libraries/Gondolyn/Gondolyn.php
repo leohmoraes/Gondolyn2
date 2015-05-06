@@ -74,8 +74,12 @@ class Gondolyn
         }
     }
 
-    public function getModuleConfigs()
+    public function getModuleConfigs($fileName = null)
     {
+        if (is_null($fileName)) {
+            $fileName = 'config';
+        }
+
         $moduleConfigs = array();
         $modules = app_path()."/Modules/";
 
@@ -83,9 +87,9 @@ class Gondolyn
 
         foreach ($files as $file) {
             if (is_dir($file)) {
-                if (file_exists($file.'/Config/config.php')) {
+                if (file_exists($file.'/Config/'.$fileName.'.php')) {
                     $moduleName = str_replace(app_path().'/Modules/', '', $file);
-                    $moduleConfigs[$moduleName] = include($file.'/Config/config.php');
+                    $moduleConfigs[$moduleName] = include($file.'/Config/'.$fileName.'.php');
                 }
             }
         }

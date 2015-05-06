@@ -1,14 +1,14 @@
-<?php namespace Tools\Facades;
+<?php namespace Utilities\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Tools extends Facade
+class Utilities extends Facade
 {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'Tools'; }
+    protected static function getFacadeAccessor() { return 'Utilities'; }
 
 }
