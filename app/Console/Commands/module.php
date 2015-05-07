@@ -43,11 +43,13 @@ class module extends Command
         mkdir(app_path().'/Modules/'.$module, 0777);
         mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
-        mkdir(app_path().'/Modules/'.$module.'/Libraries', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Helpers', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Lang', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Lang/en', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Models', 0777);
-        mkdir(app_path().'/Modules/'.$module.'/Prototypes', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Providers', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Services', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Services/Interfaces', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Tests', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Views', 0777);
 
@@ -108,7 +110,7 @@ return array(
 
 return [
 
-    // General
+    // CSRF Ignored Routes
     "csrfIgnoredRoutes" => [
         "api/put-request",
     ],
@@ -150,12 +152,12 @@ return [
 return [
 
     "roles" => [
-        "customer"
+        "'.$module.'_user"
     ],
 
     "groups" => [
         "all" => [
-            "customer"
+            "'.$module.'_user"
         ],
     ],
 
@@ -168,7 +170,14 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        $this->makeModuleFile(app_path().'/Modules/'.$module.'/filters.php', '');
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/filters.php', '<?php
+
+    // Filters to be run in routes
+    Route::filter("'.lcfirst($module).'Filter", function () {
+        Log::info("Filtering '.$module.' Module");
+    });
+
+');
         $this->makeModuleFile(app_path().'/Modules/'.$module.'/routes.php', '<?php
 
     /*
@@ -178,7 +187,7 @@ return [
     */
 
     Route::group(array(\'module\' => \''.$module.'\', \'namespace\' => \'App\Modules\\'.$module.'\Controllers\'), function () {
-        Route::get(\''.lcfirst($module).'\',  array(\'uses\' => \''.$module.'Controller@main\'));
+        Route::get(\''.lcfirst($module).'\',  array(\'before\' => \''.lcfirst($module).'Filter\', \'uses\' => \''.$module.'Controller@main\'));
 
         // API actions
         Route::group(array(\'prefix\' => \'api\', \'before\' => array(\'valid_api_key\', \'valid_api_token\')), function () {
@@ -196,13 +205,9 @@ return [
 
 $this->makeModuleFile(app_path().'/Modules/'.$module.'/Controllers/'.$module.'Controller.php', '<?php namespace App\Modules\\'.$module.'\Controllers;
 
-use Auth;
-use Input;
-use Redirect;
-use View;
-use Config;
-use Session;
-use App\Modules\\'.$module.'\Prototypes\\'.$module.'Prototype;
+use Auth, Input, Redirect, View, Config, Session, Log, App;
+
+use App\Modules\\'.$module.'\Services\\'.$module.'Service;
 use App\Modules\\'.$module.'\Models\\'.$module.';
 
 /**
@@ -214,12 +219,13 @@ class '.$module.'Controller extends \BaseController {
 
     public function __construct()
     {
-        \Log::info("Loading '.$module.' Module");
+        Log::info("Loading '.$module.' Module");
+        App::register(\'App\Modules\\'.$module.'\Providers\\'.$module.'ServiceProvider\');
     }
 
     public function main()
     {
-        $prototype = new '.$module.'Prototype;
+        $service = new '.$module.'Service;
 
         $sysData = [
             \'config\'        => Config::get("gondolyn.basic-app-info"),
@@ -228,8 +234,8 @@ class '.$module.'Controller extends \BaseController {
         ];
 
         $modelData      = '.$module.'::getA'.$module.'(1);
-        $prototypeData  = $prototype->dataModifier($modelData)->output;
-        $data           = $prototype->processData($prototypeData, $sysData)->toArray();
+        $serviceData    = $service->dataModifier($modelData);
+        $data           = $service->processData($serviceData, $sysData);
 
         $layoutData = [
             "metadata"    => View::make(\'metadata\', $data),
@@ -250,24 +256,46 @@ class '.$module.'Controller extends \BaseController {
 
         /*
         |--------------------------------------------------------------------------
-        | Prototypes
+        | Providers
         |--------------------------------------------------------------------------
         */
 
-        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Prototypes/'.$module.'Prototype.php', '<?php namespace App\Modules\\'.$module.'\Prototypes;
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Providers/'.$module.'ServiceProvider.php', '<?php namespace App\Modules\\'.$module.'\Providers;
 
-/**
- * The purpose of a prototype is to handle all buisness logic
- * enabling solid TDD.
- */
-class '.$module.'Prototype extends \Prototype {
-
-    public $output;
-
-    public function __construct()
+class '.$module.'ServiceProvider extends \Illuminate\Support\ServiceProvider
+{
+    /**
+     * Alias the services in the boot
+     *
+     * @return void
+     */
+    public function boot()
     {
-        parent::__construct();
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias("'.$module.'Service", "App\Modules\\'.$module.'\Services\\'.$module.'Service");
     }
+
+    /**
+     * Register the services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+    }
+}');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Services
+        |--------------------------------------------------------------------------
+        */
+
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Services/'.$module.'Service.php', '<?php namespace App\Modules\\'.$module.'\Services;
+
+use App\Modules\\'.$module.'\Services\Interfaces\\'.$module.'ServiceInterface;
+
+class '.$module.'Service implements '.$module.'ServiceInterface {
 
     public function dataModifier($modelData)
     {
@@ -276,9 +304,7 @@ class '.$module.'Prototype extends \Prototype {
             \'birthday\' => $modelData->created_at
         ];
 
-        $this->output = $data;
-
-        return $this;
+        return $data;
     }
 
     public function processData($prototypeData, $sysData)
@@ -288,12 +314,27 @@ class '.$module.'Prototype extends \Prototype {
         $data[\'notification\']   = $sysData[\'notification\'];
         $data[\'welcome\']        = $sysData[\'welcome\'];
 
-        $this->output = $data;
-
-        return $this;
+        return $data;
     }
 
 }');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Interfaces
+        |--------------------------------------------------------------------------
+        */
+
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Services/Interfaces/'.$module.'ServiceInterface.php', '<?php namespace App\Modules\\'.$module.'\Services\Interfaces;
+
+interface '.$module.'ServiceInterface {
+
+    public function dataModifier($modelData);
+
+    public function processData($prototypeData, $sysData);
+
+}');
+
         /*
         |--------------------------------------------------------------------------
         | Views
@@ -325,7 +366,13 @@ class '.$module.' extends \Eloquent {
 
     public static function getA'.$module.'($id)
     {
-        return '.$module.'::findOrFail($id);
+        //return '.$module.'::findOrFail($id);
+
+        $result = new \stdClass;
+        $result->id = 1;
+        $result->created_at = "today";
+
+        return $result;
     }
 
 }');
