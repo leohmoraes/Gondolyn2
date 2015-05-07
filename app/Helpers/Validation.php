@@ -1,10 +1,9 @@
-<?php namespace Validation;
+<?php namespace App\Helpers;
 
 use Validator;
 use Redirect;
 use Session;
 use Input;
-use Utilities;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Config;

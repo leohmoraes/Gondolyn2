@@ -30,14 +30,10 @@
             "app/Http/Controllers",
             "app/Console/Commands",
             "app/Models",
-            "app/Modules"
+            "app/Modules",
+            "app/Helpers"
         ],
         "psr-0": {
-            "Utilities": "app/Libraries",
-            "Validation": "app/Libraries",
-            "Gondolyn": "app/Libraries",
-            "Crypto": "app/Libraries",
-            "Module": "app/Libraries"
         },
         "psr-4": {
             "App\\": "app/",

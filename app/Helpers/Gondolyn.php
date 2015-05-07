@@ -1,4 +1,4 @@
-<?php namespace Gondolyn;
+<?php namespace App\Helpers;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Config;
@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Lang;
 
 class Gondolyn
 {
-    public function response($type, $message)
+    public static function response($type, $message)
     {
         return Response::json(array("status" => $type, "data" => $message));
     }
 
-    public function valid_api_key()
+    public static function valid_api_key()
     {
         $headers = getallheaders();
 
@@ -28,7 +28,7 @@ class Gondolyn
         return true;
     }
 
-    public function valid_api_token()
+    public static function valid_api_token()
     {
         $headers = getallheaders();
 
@@ -59,7 +59,7 @@ class Gondolyn
         }
     }
 
-    public function getModuleMenus()
+    public static function getModuleMenus()
     {
         $modules = app_path()."/Modules/";
 
@@ -74,7 +74,7 @@ class Gondolyn
         }
     }
 
-    public function getModuleConfigs($fileName = null)
+    public static function getModuleConfigs($fileName = null)
     {
         if (is_null($fileName)) {
             $fileName = 'config';
@@ -97,7 +97,7 @@ class Gondolyn
         return $moduleConfigs;
     }
 
-    public function getModulePermissionConfigs()
+    public static function getModulePermissionConfigs()
     {
         $modulePermissionConfigs = array();
         $modules = app_path()."/Modules/";

@@ -145,24 +145,11 @@ return [
         'App\Providers\ConfigServiceProvider',
         'App\Providers\EventServiceProvider',
         'App\Providers\RouteServiceProvider',
-
-        // Gondolyn Libraries
-        'Utilities\UtilitiesServiceProvider',
-        'Validation\ValidationServiceProvider',
-        'Crypto\CryptoServiceProvider',
-        'Gondolyn\GondolynServiceProvider',
-
-        // Modules
-
-        'Module\ModuleServiceProvider',
-        'App\Modules\ModulesServiceProvider',
+        'App\Providers\HelperProvider',
+        'App\Providers\ModulesProvider',
 
         // Third Party
 
-        'Utilities\UtilitiesServiceProvider',
-        'Validation\ValidationServiceProvider',
-        'Crypto\CryptoServiceProvider',
-        'Gondolyn\GondolynServiceProvider',
         'Devfactory\Minify\MinifyServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',

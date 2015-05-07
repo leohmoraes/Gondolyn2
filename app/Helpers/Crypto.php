@@ -1,4 +1,4 @@
-<?php namespace Crypto;
+<?php namespace App\Helpers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;

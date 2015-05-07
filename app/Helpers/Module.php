@@ -1,4 +1,4 @@
-<?php namespace Module;
+<?php namespace App\Helpers;
 
 /**
  * For Common Actions regarding languages within the store
