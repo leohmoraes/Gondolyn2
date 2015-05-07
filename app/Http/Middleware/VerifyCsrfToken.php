@@ -11,18 +11,22 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
 {
     public function handle($request, Closure $next)
     {
-        if ($this->isReading($request) || $this->excludedRoutes($request) || $this->tokensMatch($request)) {
+        if ($this->isReading($request) || $this->tokensMatch($request)) {
             return $this->addCookieToResponse($request, $next($request));
+        } else {
+            if ($this->isInExcludedRoutes($request)) {
+                return $next($request);
+            }
         }
 
         if (stristr($request->url(), 'api')) {
             throw new \Exception(Lang::get('notification.api.incorrect'), 1);
         }
 
-        throw new TokenMismatchException;
+        throw new \Illuminate\Session\TokenMismatchException;
     }
 
-    protected function excludedRoutes($request)
+    protected function isInExcludedRoutes($request)
     {
         $routes = Config::get('gondolyn.csrfIgnoredRoutes');
 
