@@ -8,7 +8,6 @@ class Module {
     /**
      * Get the language value
      * @param  string $key string of array as path
-     * @param  string $module string of module name
      * @return mixed
      */
     public static function lang($key)
@@ -23,7 +22,7 @@ class Module {
 
         $lastKey = $langRoute[count($langRoute) - 1];
 
-        return Module::assignArrayByPath($langContents, $strippedKey, $lastKey);
+        return Module::assignArrayByPath($langContents, $strippedKey);
     }
 
     /**
@@ -33,7 +32,7 @@ class Module {
      * @param  string $value Desired key
      * @return mixed
      */
-    public static function assignArrayByPath(&$arr, $path, $value)
+    public static function assignArrayByPath(&$arr, $path)
     {
         $keys = explode('.', $path);
 

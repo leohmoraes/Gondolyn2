@@ -17,12 +17,10 @@ class Validation
         $inputs = array();
 
         $langRoute = explode('.', $form);
-        $strippedKey = str_replace($langRoute[0].'.', '', $form);
-        $lastKey = $langRoute[count($langRoute) - 1];
 
         if ( ! is_null($module)) {
             $conditions = include(app_path().'/modules/'.ucfirst($module).'/Config/validation.php');
-            $fields = Validation::assignArrayByPath($conditions, $form, $lastKey);
+            $fields = Validation::assignArrayByPath($conditions, $form);
         } else {
             $conditions = Config::get("validation.conditions");
             $fields = $conditions[$form];

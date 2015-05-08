@@ -23,9 +23,9 @@ return array(
     'remember_me_duration' => 20160,
 
     'basic-app-info' => array(
-        "page_title" => "A seed application for Laravel 4",
-        "page_keywords" => "Gondolyn, gondolin, Laravel 4, Seed",
-        "page_description" => "A clean seed application for Laravel 4",
+        "page_title" => "A seed application for Laravel 5",
+        "page_keywords" => "Gondolyn, gondolin, Laravel 5, Seed App",
+        "page_description" => "A clean seed application for Laravel 5",
         "page_assets" => "",
         "page_js" => "",
         "page_details" => ""
