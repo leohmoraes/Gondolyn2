@@ -4,35 +4,6 @@ class UserController extends BaseController
 {
     protected $layout = 'layouts.master';
 
-    public function __construct()
-    {
-        // Constructor Args
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Home
-    |--------------------------------------------------------------------------
-    */
-
-    public function home()
-    {
-        $data = Config::get("gondolyn.basic-app-info");
-
-        $user = Session::get("username");
-
-        $data['message'] = AppPrototype::welcomeMessage($user);
-
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('user.home', $data),
-        ];
-
-        return view($this->layout, $layoutData);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Profile Recovery

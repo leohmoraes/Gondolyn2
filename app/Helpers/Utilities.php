@@ -35,7 +35,11 @@ class Utilities
     {
         $post = json_decode(Utilities::get_raw_post());
 
-        if (isset($post->$key)) return $post->$key;
+        if (isset($post->$key)) {
+            return $post->$key;
+        } else if ($key === '*') {
+            return $post;
+        }
 
         return false;
     }

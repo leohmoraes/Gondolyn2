@@ -25,6 +25,15 @@ Route::group(array('prefix' => 'errors'), function () {
 
 /*
 |--------------------------------------------------------------------------
+| Home & General Pages
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', "MainController@welcome");
+Route::get('/change-log', "MainController@changelog");
+
+/*
+|--------------------------------------------------------------------------
 | API
 |--------------------------------------------------------------------------
 */
@@ -88,8 +97,6 @@ Route::group(array('prefix' => 'user', 'before' => 'is_logged_in', 'role' => 'gr
     Route::post('settings/set/subscription', array('uses' => 'UserController@setSubscription'));
     Route::post('settings/update/subscription', array('uses' => 'UserController@updateSubscription'));
 
-    Route::get('home', "UserController@home");
-
     Route::get('delete/account', "UserController@deleteUserAccount");
     Route::get('cancel/subscription', "UserController@cancelSubscription");
 });
@@ -101,15 +108,6 @@ Route::group(array('prefix' => 'user', 'before' => 'is_logged_in', 'role' => 'gr
 */
 
 Route::post('failed/payment', 'Laravel\Cashier\WebhookController@handleWebhook');
-
-/*
-|--------------------------------------------------------------------------
-| Home
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/', "MainController@welcome");
-Route::get('/change-log', "MainController@changelog");
 
 /*
 |--------------------------------------------------------------------------
