@@ -59,7 +59,7 @@ class module extends Command
         |--------------------------------------------------------------------------
         */
 
-        $this->makeModuleFile(app_path().'/Modules/'.$module.'/menu.php', '<?php
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Views/menu.blade.php', '<?php
 
     /*
     |--------------------------------------------------------------------------
@@ -241,7 +241,7 @@ class '.$module.'Controller extends \BaseController {
             "metadata"    => View::make(\'metadata\', $data),
             "general"     => View::make(\'common\', $data),
             "nav_bar"     => View::make(\'navbar\', $data),
-            "content"     => View::make(\''.lcfirst($module).'\', $data),
+            "content"     => View::make(\''.lcfirst($module).'::'.lcfirst($module).'\', $data),
         ];
 
         return view($this->layout, $layoutData);

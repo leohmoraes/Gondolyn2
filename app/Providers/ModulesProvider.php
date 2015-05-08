@@ -1,6 +1,6 @@
 <?php namespace App\Providers;
 
-use App, Utilities;
+use App, Utilities, View;
 
 class ModulesProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -35,7 +35,7 @@ class ModulesProvider extends \Illuminate\Support\ServiceProvider
 
             // Load the Views
             if (is_dir(app_path().'/Modules/'.$module.'/Views')) {
-                \View::addLocation(app('path').'/Modules/'.$module.'/Views');
+                View::addNamespace(lcfirst($module), app('path').'/Modules/'.$module.'/Views');
             }
         }
     }

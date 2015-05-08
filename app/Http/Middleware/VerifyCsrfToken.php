@@ -3,7 +3,7 @@
 use Config;
 use Closure;
 use Lang;
-use Gondolyn;
+use Module;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as LaravelsVerifyCsrfToken;
 
@@ -30,7 +30,7 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
     {
         $routes = Config::get('gondolyn.csrfIgnoredRoutes');
 
-        $configs = Gondolyn::getModuleConfigs();
+        $configs = Module::getConfigs();
 
         foreach ($configs as $config) {
             $allRoutes = array_merge($routes, $config['csrfIgnoredRoutes']);

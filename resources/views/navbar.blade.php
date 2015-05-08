@@ -19,7 +19,6 @@
                 <ul class="dropdown-menu">
                     @if (Session::get("logged_in"))
                         <li><a href="{{ URL::to(Session::get('role').'/home') }}"><span class="fa fa-home"></span> {{ trans("content.menu.home") }}</a></li>
-                        {!! Gondolyn::getModuleMenus(); !!}
                         <li><a href="{{ URL::to('user/settings') }}"><span class="fa fa-wrench"></span> {{ trans("content.menu.settings") }}</a></li>
                         @if (Session::get("role") == "admin")
                         <li><a href="{{ URL::to('admin/users') }}"><span class="fa fa-user"></span> {{ trans("content.menu.users") }}</a></li>
@@ -28,6 +27,7 @@
                     @else
                         <li><a id="gondolynLoginPanel"><span class="fa fa-sign-in"></span> {{ trans("content.menu.login") }}</a></li>
                     @endif
+                    {!! Module::getMenus(); !!}
                 </ul>
             </li>
         </ul>

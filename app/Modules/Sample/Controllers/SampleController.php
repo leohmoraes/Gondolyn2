@@ -40,7 +40,7 @@ class SampleController extends \BaseController
             "metadata"    => View::make('metadata', $data),
             "general"     => View::make('common', $data),
             "nav_bar"     => View::make('navbar', $data),
-            "content"     => View::make('sample', $data),
+            "content"     => View::make('sample::sample', $data),
         ];
 
         return view($this->layout, $layoutData);

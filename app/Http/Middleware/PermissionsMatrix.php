@@ -1,6 +1,6 @@
 <?php namespace App\Http\Middleware;
 
-use Closure, Route, Session, Lang, Gondolyn;
+use Closure, Route, Session, Lang, Module;
 
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
@@ -35,7 +35,7 @@ class PermissionsMatrix implements Middleware
         $action = $route->getAction();
 
         // Create the Matrix
-        $modulePermissionConfigs = Gondolyn::getModulePermissionConfigs();
+        $modulePermissionConfigs = Module::getPermissionConfigs();
 
         $permissionsArray['roles'] = $roles;
         $permissionsArray['groups'] = $groups;
