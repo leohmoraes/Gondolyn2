@@ -18,7 +18,7 @@ class Module {
 
         $langRoute = explode('.', $key);
 
-        $langContents = include(app_path().'/modules/'.ucfirst($langRoute[0]).'/Lang/'.$locale.'/'.$langRoute[1].'.php');
+        $langContents = include(app_path().'/Modules/'.ucfirst($langRoute[0]).'/Lang/'.$locale.'/'.$langRoute[1].'.php');
 
         $strippedKey = str_replace($langRoute[1].'.', '', str_replace($langRoute[0].'.', '', $key));
 
@@ -60,7 +60,7 @@ class Module {
             $file = $fileName;
         }
 
-        $moduleConfig = include(app_path().'/modules/'.ucfirst($splitKey[0]).'/Config/'.$file.'.php');
+        $moduleConfig = include(app_path().'/Modules/'.ucfirst($splitKey[0]).'/Config/'.$file.'.php');
         return $moduleConfig[$splitKey[1]];
     }
 
