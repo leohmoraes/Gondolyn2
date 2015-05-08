@@ -43,6 +43,7 @@ class module extends Command
         mkdir(app_path().'/Modules/'.$module, 0777);
         mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Commands', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Helpers', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Lang', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Lang/en', 0777);
