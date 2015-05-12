@@ -50,18 +50,12 @@ class Module {
      * @param  string $key Config key
      * @return mixed
      */
-    public static function config($key, $fileName = null)
+    public static function config($key)
     {
         $splitKey = explode('.', $key);
 
-        if (is_null($fileName)) {
-            $file = 'config';
-        } else {
-            $file = $fileName;
-        }
-
-        $moduleConfig = include(app_path().'/Modules/'.ucfirst($splitKey[0]).'/Config/'.$file.'.php');
-        return $moduleConfig[$splitKey[1]];
+        $moduleConfig = include(app_path().'/Modules/'.ucfirst($splitKey[0]).'/Config/'.$splitKey[1].'.php');
+        return $moduleConfig[$splitKey[2]];
     }
 
     public static function getMenus()
@@ -125,5 +119,4 @@ class Module {
 
         return $modulePermissionConfigs;
     }
-
 }
