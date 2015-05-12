@@ -69,7 +69,7 @@
                 <?= Form::token(); ?>
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="email" class="raw-margin-top-8 raw-right">Email Address</label>
+                        <label for="email" class="raw-margin-top-10 raw-right">Email Address</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="alt_email" class="raw-margin-top-8 raw-right">Alt. Email Address</label>
+                        <label for="alt_email" class="raw-margin-top-10 raw-right">Alt. Email Address</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
@@ -87,17 +87,20 @@
                 </div>
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="username" class="raw-margin-top-8 raw-right">Username</label>
+                        <label for="username" class="raw-margin-top-10 raw-right">Username</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
                         <input id="username" type="text" name="username" class="form-control" placeholder="Username" value="{{ $user->user_name }}">
                     </div>
                 </div>
+
+                {!! FormMaker::fromObject($shippingColumns, 'user.settingsRow', $user); !!}
+
                 @if (Session::get('role') == 'admin')
                 <div class="raw100 raw-left raw-margin-top-24">
                     <div class="raw25 raw-left">
-                        <label for="role" class="raw-margin-top-8 raw-right">Role</label>
+                        <label for="role" class="raw-margin-top-10 raw-right">Role</label>
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">

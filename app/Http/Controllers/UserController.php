@@ -65,9 +65,10 @@ class UserController extends BaseController
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
-        $data['user']           = $user;
-        $data['gravatar']       = $gravatarHash;
-        $data['options']        = Config::get("permissions.matrix.roles");
+        $data['user']               = $user;
+        $data['gravatar']           = $gravatarHash;
+        $data['options']            = Config::get("permissions.matrix.roles");
+        $data['shippingColumns']    = Config::get('forms.shipping');
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),

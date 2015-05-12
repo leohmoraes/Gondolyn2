@@ -135,3 +135,15 @@ Route::group(array('prefix' => 'forgot'), function () {
     Route::get('password', "UserController@forgotPassword");
     Route::post('password/request', "UserController@generateNewPassword");
 });
+
+/*
+|--------------------------------------------------------------------------
+| App Specific
+|--------------------------------------------------------------------------
+*/
+
+Route::group(array('before' => 'is_logged_in', 'role' => 'groups.all'), function () {
+
+    // Put Routes Here
+
+});
