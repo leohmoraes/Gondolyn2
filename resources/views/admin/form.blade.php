@@ -1,7 +1,7 @@
 @section('form')
 
 <div class="raw100">
-    <h2>Admin : Form Example</h2>
+    <h2>Admin : FormMaker Example</h2>
 </div>
 
 <div class="raw100">

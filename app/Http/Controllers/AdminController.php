@@ -129,6 +129,12 @@ class AdminController extends BaseController
         return redirect('admin/users');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | FormMaker Demo
+    |--------------------------------------------------------------------------
+    */
+
     public function formSubmission()
     {
         $validation = Validation::check('admin');
