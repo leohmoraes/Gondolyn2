@@ -16,14 +16,12 @@ class Validation
         $errors = array();
         $inputs = array();
 
-        $langRoute = explode('.', $form);
-
         if ( ! is_null($module)) {
-            $conditions = include(app_path().'/modules/'.ucfirst($module).'/Config/validation.php');
-            $fields = Validation::assignArrayByPath($conditions, $form);
+            $conditions = Module::config(strtolower($module).'.validation.'.$form);
+            $fields = $conditions;
         } else {
-            $conditions = Config::get("validation.conditions");
-            $fields = $conditions[$form];
+            $conditions = Config::get("validation");
+            $fields = Utilities::assignArrayByPath($conditions, $form);
         }
 
         foreach ($fields as $key => $value) {
@@ -38,35 +36,49 @@ class Validation
                 );
 
                 if ($validation->fails()) {
-                    array_push($errors, $validation->messages()->first($key));
+                    $errors[$key] = $validation->messages()->first($key);
                 } else {
                     $inputs[$key] = Validation::getInput($key, $jsonInput);
                 }
             }
         }
 
-        $result["redirect"] = redirect($form)->with('validationErrors', $errors);
+        $result["redirect"] = Redirect::back()->with('validationErrors', $errors)->with('validationInputs', Validation::inputsArray($jsonInput));
+
         if ( ! empty($errors)) {
             $result["errors"] = $errors;
         } else {
-            $result["inputs"] = $inputs;
+            $result["errors"] = false;
         }
 
         return $result;
     }
 
-    public static function errors()
+    public static function errors($format = 'array')
     {
         $errorMessage = "";
         $errors = Session::get("validationErrors") ?: false;
 
         if ( ! $errors) return false;
 
-        foreach ($errors as $error) {
-            $errorMessage .= $error."<br>";
+        if ($format === 'string') {
+            foreach ($errors as $error => $message) {
+                $errorMessage .= $message."<br>";
+            }
+        } else {
+            $errorMessage = Session::get("validationErrors");
         }
 
         return $errorMessage;
+    }
+
+    public static function inputs()
+    {
+        $inputs = Session::get("validationInputs") ?: false;
+
+        if ( ! $inputs) return false;
+
+        return $inputs;
     }
 
     /**
@@ -96,6 +108,20 @@ class Validation
         }
 
         return $input;
+    }
+
+    private static function inputsArray($jsonInput)
+    {
+        if ($jsonInput) {
+            $inputs = Utilities::raw_json_input('*');
+        } else {
+            $inputs = Input::all();
+        }
+
+        // Don't send the token back
+        unset($inputs['_token']);
+
+        return $inputs;
     }
 
 }

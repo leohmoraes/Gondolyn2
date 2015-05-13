@@ -1,6 +1,6 @@
 <?php namespace App\Helpers;
 
-use View, Schema, DB;
+use View, Schema, DB, Validation;
 
 /**
  * FormMaker helper to make table and object form mapping easy
@@ -36,17 +36,11 @@ class FormMaker {
 
         foreach ($tableTypeColumns as $column => $field) {
             if (in_array($column, $tableColumns)) {
-
+                $errorMessage = false;
+                $errors = Validation::errors('array');
                 $input = FormMaker::inputMaker($column, $field, $column, $class, $reformatted, $populated);
 
-                if (is_null($view)) {
-                    $formBuild .= '<lablel for="'.ucfirst($column).'">'.FormMaker::cleanString(FormMaker::columnLabel($field, $column, true)).'</label>'.$input;
-                } else {
-                    $formBuild .= View::make($view, array(
-                        'label' => FormMaker::columnLabel($field, $column),
-                        'input' => $input
-                    ));
-                }
+                $formBuild .= FormMaker::formBuilder($view, $errors, $field, $column, $input);
             }
         }
 
@@ -61,13 +55,45 @@ class FormMaker {
 
         foreach ($columns as $column => $field) {
             if (in_array($column, $tableColumns)) {
+                $errors = Validation::errors('array');
                 $input = FormMaker::inputMaker($column, $field, $object, $class, $reformatted, $populated);
 
-                $formBuild .= View::make($view, array(
-                    'label' => FormMaker::columnLabel($field, $column),
-                    'input' => $input
-                ));
+                $formBuild .= FormMaker::formBuilder($view, $errors, $field, $column, $input);
             }
+        }
+
+        return $formBuild;
+    }
+
+    public static function formBuilder($view, $errors, $field, $column, $input)
+    {
+        $formBuild = '';
+
+        if (is_null($view)) {
+            if (isset($errors[$column])) {
+                $errorHighlight = ' has-error';
+                $errorMessage = $errors[$column];
+            } else {
+                $errorHighlight = '';
+                $errorMessage = false;
+            }
+
+            if (isset($field['type']) && (stristr($field['type'], 'radio') || stristr($field['type'], 'checkbox'))) {
+                $formBuild .= '<div class="'.$errorHighlight.'">';
+                $formBuild .= '<div class="'.$field['type'].'"><label>'.$input.FormMaker::cleanString(FormMaker::columnLabel($field, $column, true)).'</label>'.FormMaker::errorMessage($errorMessage).'</div>';
+            } else {
+                $formBuild .= '<div class="form-group '.$errorHighlight.'">';
+                $formBuild .= '<label class="control-label" for="'.ucfirst($column).'">'.FormMaker::cleanString(FormMaker::columnLabel($field, $column, true)).'</label>'.$input.FormMaker::errorMessage($errorMessage);
+            }
+
+            $formBuild .= '</div>';
+        } else {
+            $formBuild .= View::make($view, array(
+                'label' => FormMaker::columnLabel($field, $column),
+                'input' => $input,
+                'errorMessage' => FormMaker::errorMessage($errorMessage),
+                'errorHighlight' => $errorHighlight
+            ));
         }
 
         return $formBuild;
@@ -92,11 +118,21 @@ class FormMaker {
         $passwordInputs = ['password'];
         $fileInputs     = ['file', 'image'];
         $dateInputs     = ['datetime', 'date'];
+        $checkboxInputs = ['checkbox', 'checkbox-inline'];
+        $radioInputs    = ['radio', 'radio-inline'];
+
+        $inputs = Validation::inputs();
 
         $inputString = '';
 
-        $objectName = (isset($object->$name)) ? $object->$name: $object;
+        $objectName     = (isset($object->$name)) ? $object->$name: $object;
         $placeholder    = FormMaker::columnLabel($field, $name);
+
+        // If validation inputs are available lets prepopulate the fields!
+        if (isset($inputs[$name])) {
+            $populated = true;
+            $objectName = $inputs[$name];
+        }
 
         if ($reformatted) {
             $objectName     = FormMaker::cleanString($objectName);
@@ -144,12 +180,40 @@ class FormMaker {
                 $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" '.$multiple.' type="file" name="'.$name.'" value="'.$objectName.'" placeholder="'.$placeholder.'">';
                 break;
 
+            case in_array($fieldType, $checkboxInputs):
+                $checked = (isset($inputs[$name]) || isset($field['selected'])) ? 'checked': '';
+                $inputString .= '<input id="'.ucfirst($name).'" '.$checked.' type="checkbox" name="'.$name.'">';
+                break;
+
+            case in_array($fieldType, $radioInputs):
+                $selected = (isset($inputs[$name]) || isset($field['selected'])) ? 'selected': '';
+                $inputString .= '<input id="'.ucfirst($name).'" '.$selected.' type="radio" name="'.$name.'">';
+                break;
+
             default:
                 $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="text" name="'.$name.'" value="'.$objectName.'" placeholder="'.$placeholder.'">';
                 break;
         }
 
         return $inputString;
+    }
+
+    /**
+     * Generate the error message for the input
+     * @param  string $message Error message
+     * @return string
+     */
+    public static function errorMessage($message)
+    {
+        $realErrorMessage = '';
+
+        if ( ! $message) {
+            $realErrorMessage = '';
+        } else {
+            $realErrorMessage = '<div><p class="text-danger">'.$message.'</p></div>';
+        }
+
+        return $realErrorMessage;
     }
 
     /**
