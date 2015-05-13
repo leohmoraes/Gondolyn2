@@ -1,14 +1,15 @@
 <?php
 
-return array(
+return [
 
-    'conditions' => array(
+    'conditions' => [
 
-        'login/email' => array(
-            'email' => array('required', 'email'),
-            'password' => array('required', 'min:8')
-        )
+        'login_email' => [
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:8']
+        ]
 
-    )
+    ],
+    ''
 
-);
+];

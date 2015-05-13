@@ -51,6 +51,8 @@ return array(
         "bad_token" => "Sorry but your token is incorrect",
         "bad_key" => "Sorry but your app key is incorrect",
         "not_logged_in" => "Sorry but you're not logged in",
+        "ajax_only" => "Sorry only AJAX calls allowed",
+        "not_api_call" => "Sorry this is not an API call",
     ),
 
 );

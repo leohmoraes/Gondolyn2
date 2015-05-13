@@ -29,6 +29,18 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
+        Route::filter('is_ajax_call', function () {
+            if ( ! Gondolyn::is_ajax_call()) {
+                return Gondolyn::response("error", Lang::get("notification.api.ajax_only"));
+            }
+        });
+
+        Route::filter('is_api_call', function () {
+            if ( ! Gondolyn::is_api_call()) {
+                return Gondolyn::response("error", Lang::get("notification.api.not_api_call"));
+            }
+        });
+
         Route::filter('valid_api_key', function () {
             if ( ! Gondolyn::valid_api_key()) {
                 return Gondolyn::response("error", Lang::get("notification.api.bad_key"));

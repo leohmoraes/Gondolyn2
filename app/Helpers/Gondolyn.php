@@ -49,6 +49,15 @@ class Gondolyn
         return false;
     }
 
+    public static function is_ajax_call()
+    {
+        if ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            return true;
+        }
+
+        return false;
+    }
+
     public static function version()
     {
         if (php_sapi_name() !== "cli") {
