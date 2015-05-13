@@ -261,7 +261,7 @@ class UserController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        Session::flash('notification', Validation::errors() ?: false);
+        Session::flash('notification', Validation::errors('string') ?: false);
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
@@ -277,10 +277,10 @@ class UserController extends BaseController
     public function withEmail()
     {
         // Validation
-        $validation = Validation::check('login/email');
+        $validation = Validation::check('conditions.login_email');
 
         // Validation errors
-        if (isset($validation['errors'])) {
+        if ($validation['errors']) {
             return $validation['redirect'];
         }
 
@@ -299,6 +299,7 @@ class UserController extends BaseController
             return redirect('errors/general');
 
         } catch (Exception $e) {
+            dd("huh");
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
         }

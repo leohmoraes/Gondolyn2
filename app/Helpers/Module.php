@@ -20,29 +20,11 @@ class Module {
 
         $langContents = include(app_path().'/Modules/'.ucfirst($langRoute[0]).'/Lang/'.$locale.'/'.$langRoute[1].'.php');
 
-        $strippedKey = str_replace($langRoute[1].'.', '', str_replace($langRoute[0].'.', '', $key));
+        $strippedKey = preg_replace('/'.$langRoute[1].'./', '', preg_replace('/'.$langRoute[0].'./', '', $key, 1), 1);
 
         $lastKey = $langRoute[count($langRoute) - 1];
 
-        return Module::assignArrayByPath($langContents, $strippedKey);
-    }
-
-    /**
-     * Assign a value to the path
-     * @param  array &$arr  Original Array of values
-     * @param  string $path  Array as path string
-     * @param  string $value Desired key
-     * @return mixed
-     */
-    public static function assignArrayByPath(&$arr, $path)
-    {
-        $keys = explode('.', $path);
-
-        while ($key = array_shift($keys)) {
-            $arr = &$arr[$key];
-        }
-
-        return $arr;
+        return Utilities::assignArrayByPath($langContents, $strippedKey);
     }
 
     /**
@@ -55,7 +37,10 @@ class Module {
         $splitKey = explode('.', $key);
 
         $moduleConfig = include(app_path().'/Modules/'.ucfirst($splitKey[0]).'/Config/'.$splitKey[1].'.php');
-        return $moduleConfig[$splitKey[2]];
+
+        $strippedKey = preg_replace('/'.$splitKey[1].'./', '', preg_replace('/'.$splitKey[0].'./', '', $key, 1), 1);
+
+        return Utilities::assignArrayByPath($moduleConfig, $strippedKey);
     }
 
     public static function getMenus()
