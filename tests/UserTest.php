@@ -58,7 +58,7 @@ class UserTest extends TestCase {
             '_token' => Session::token(),
         ));
 
-        $this->assertRedirectedTo('login/email');
+        $this->assertRedirectedTo('http://localhost');
     }
 
     /**
@@ -79,7 +79,7 @@ class UserTest extends TestCase {
 
         $response = $this->call('POST', 'login/request', $inputs);
 
-        $this->assertRedirectedTo('login/email');
+        $this->assertRedirectedTo('http://localhost');
     }
 
 }
