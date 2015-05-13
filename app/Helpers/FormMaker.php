@@ -177,7 +177,7 @@ class FormMaker {
 
             case in_array($fieldType, $fileInputs):
                 $multiple = (isset($field['multiple'])) ? 'multiple': '';
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" '.$multiple.' type="file" name="'.$name.'" value="'.$objectName.'" placeholder="'.$placeholder.'">';
+                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" '.$multiple.' type="file" name="'.$name.'" placeholder="'.$placeholder.'">';
                 break;
 
             case in_array($fieldType, $checkboxInputs):
@@ -191,7 +191,8 @@ class FormMaker {
                 break;
 
             default:
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="text" name="'.$name.'" value="'.$objectName.'" placeholder="'.$placeholder.'">';
+                $population = ($populated) ? $objectName : '';
+                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="text" name="'.$name.'" '.$population.' placeholder="'.$placeholder.'">';
                 break;
         }
 
