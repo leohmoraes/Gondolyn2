@@ -65,6 +65,9 @@ Route::group(array('before' => 'is_logged_in', 'role' => 'admin'), function () {
     Route::get('admin/delete/user', "AdminController@delete");
 
     Route::post('admin/update', "AdminController@update");
+
+    // General FormMaker with Validation example
+    Route::post('admin/submit/form',  array('uses' => 'AdminController@formSubmission'));
 });
 
 /*

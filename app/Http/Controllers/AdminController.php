@@ -23,6 +23,7 @@ class AdminController extends BaseController
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
+            "form"              => View::make('admin.form'),
             "content"           => View::make('admin.home', $data),
         ];
 
@@ -126,5 +127,16 @@ class AdminController extends BaseController
         Session::flash("notification", "The user was successfully deleted");
 
         return redirect('admin/users');
+    }
+
+    public function formSubmission()
+    {
+        $validation = Validation::check('admin');
+
+        if ( ! $validation['errors']) {
+            dd("Successful Submission");
+        } else {
+            return $validation['redirect'];
+        }
     }
 }
