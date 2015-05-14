@@ -88,11 +88,19 @@ class FormMaker {
 
             $formBuild .= '</div>';
         } else {
+            if (isset($errors[$column])) {
+                $errorHighlight = ' has-error';
+                $errorMessage = $errors[$column];
+            } else {
+                $errorHighlight = '';
+                $errorMessage = false;
+            }
+
             $formBuild .= View::make($view, array(
                 'label' => FormMaker::columnLabel($field, $column),
                 'input' => $input,
                 'errorMessage' => FormMaker::errorMessage($errorMessage),
-                'errorHighlight' => $errorHighlight
+                'errorHighlight' => $errorHighlight,
             ));
         }
 

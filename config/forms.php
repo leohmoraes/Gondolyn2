@@ -34,7 +34,7 @@ return [
             'alt_name' => 'Postal Code'
         ],
         'other'         => [
-            'type' => 'checkbox'
+            'type' => 'textarea'
         ],
 
     )
