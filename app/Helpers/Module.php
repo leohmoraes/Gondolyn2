@@ -22,8 +22,6 @@ class Module {
 
         $strippedKey = preg_replace('/'.$langRoute[1].'./', '', preg_replace('/'.$langRoute[0].'./', '', $key, 1), 1);
 
-        $lastKey = $langRoute[count($langRoute) - 1];
-
         return Utilities::assignArrayByPath($langContents, $strippedKey);
     }
 
@@ -43,6 +41,10 @@ class Module {
         return Utilities::assignArrayByPath($moduleConfig, $strippedKey);
     }
 
+    /**
+     * Collect the menus from the modules
+     * @return string
+     */
     public static function getMenus()
     {
         $modules = app_path()."/Modules/";
@@ -63,6 +65,11 @@ class Module {
         return $menu;
     }
 
+    /**
+     * Collect the configs from the specified module
+     * @param  string $fileName Specific config file name
+     * @return mixed
+     */
     public static function getConfigs($fileName = null)
     {
         if (is_null($fileName)) {
@@ -86,6 +93,10 @@ class Module {
         return $moduleConfigs;
     }
 
+    /**
+     * Get the permission matrix config.
+     * @return array
+     */
     public static function getPermissionConfigs()
     {
         $modulePermissionConfigs = array();

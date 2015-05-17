@@ -47,6 +47,16 @@ class FormMaker {
         return $formBuild;
     }
 
+    /**
+     * Build the form from the an object
+     * @param  array  $columns      Columns desired and specified
+     * @param  string  $view        A template to use for the rows
+     * @param  object  $object      An object to base the form off
+     * @param  string  $class       Default input class
+     * @param  boolean $populated   Is content populated
+     * @param  boolean $reformatted Are column names reformatted
+     * @return string
+     */
     public static function fromObject($columns, $view = null, $object, $class = 'form-control', $populated = true, $reformatted = false)
     {
         $formBuild = "";
@@ -65,6 +75,15 @@ class FormMaker {
         return $formBuild;
     }
 
+    /**
+     * Constructs HTML forms
+     * @param  string $view   View template
+     * @param  array $errors Array of errors
+     * @param  array $field  Array of field values
+     * @param  string $column Column name
+     * @param  array $input  Input array
+     * @return string
+     */
     public static function formBuilder($view, $errors, $field, $column, $input)
     {
         $formBuild = '';
