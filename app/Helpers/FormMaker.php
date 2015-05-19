@@ -63,11 +63,11 @@ class FormMaker {
 
         $tableColumns = array_keys($object['attributes']);
 
+
         foreach ($columns as $column => $field) {
             if (in_array($column, $tableColumns)) {
                 $errors = Validation::errors('array');
                 $input = FormMaker::inputMaker($column, $field, $object, $class, $reformatted, $populated);
-
                 $formBuild .= FormMaker::formBuilder($view, $errors, $field, $column, $input);
             }
         }
@@ -152,7 +152,7 @@ class FormMaker {
 
         $inputString = '';
 
-        $objectName     = (isset($object->$name)) ? $object->$name: $object;
+        $objectName     = (isset($object->$name)) ? $object->$name : $name;
         $placeholder    = FormMaker::columnLabel($field, $name);
 
         // If validation inputs are available lets prepopulate the fields!
@@ -162,22 +162,21 @@ class FormMaker {
         }
 
         if ($reformatted) {
-            $objectName     = FormMaker::cleanString($objectName);
+            // $objectName     = FormMaker::cleanString($objectName);
             $placeholder    = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
         }
 
         $fieldType      = ( ! isset($field['type'])) ? $field : $field['type'];
+        $checkType      = (in_array($fieldType, $checkboxInputs)) ? 'checked': 'selected';
+        $selected       = (isset($inputs[$name]) || isset($field['selected'])) ? $checkType: '';
 
         switch ($fieldType) {
             case in_array($fieldType, $stringInputs):
-                $population = ($populated) ? 'value="'.$objectName.'"' : '';
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="text" name="'.$name.'" '.$population.' placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('text', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
 
             case in_array($fieldType, $integerInputs):
-                $population = ($populated) ? 'value="'.$objectName.'"' : '';
-                $floatingNumber = ($fieldType === 'float' || $fieldType === 'decimal') ? 'step="any"': '';
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="number" '.$floatingNumber.' name="'.$name.'" '.$population.' placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('number', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
 
             case in_array($fieldType, $textInputs):
@@ -195,34 +194,52 @@ class FormMaker {
                 break;
 
             case in_array($fieldType, $passwordInputs):
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="password" name="'.$name.'" placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('password', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
 
             case in_array($fieldType, $dateInputs):
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="date" name="'.$name.'" placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('date', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
 
             case in_array($fieldType, $fileInputs):
-                $multiple = (isset($field['multiple'])) ? 'multiple': '';
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" '.$multiple.' type="file" name="'.$name.'" placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('file', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
 
             case in_array($fieldType, $checkboxInputs):
-                $checked = (isset($inputs[$name]) || isset($field['selected'])) ? 'checked': '';
-                $inputString .= '<input id="'.ucfirst($name).'" '.$checked.' type="checkbox" name="'.$name.'">';
+                $inputString .= '<input id="'.ucfirst($name).'" '.$selected.' type="checkbox" name="'.$name.'">';
                 break;
 
             case in_array($fieldType, $radioInputs):
-                $selected = (isset($inputs[$name]) || isset($field['selected'])) ? 'selected': '';
                 $inputString .= '<input id="'.ucfirst($name).'" '.$selected.' type="radio" name="'.$name.'">';
                 break;
 
             default:
-                $population = ($populated) ? $objectName : '';
-                $inputString .= '<input id="'.ucfirst($name).'" class="'.$class.'" type="text" name="'.$name.'" '.$population.' placeholder="'.$placeholder.'">';
+                $inputString .= FormMaker::makeAnInput('text', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
         }
 
+        return $inputString;
+    }
+
+    /**
+     * Generate a standard HTML input string
+     * @param  string $type        Input type
+     * @param  boolean $populated   Preset value
+     * @param  string $name        Input name
+     * @param  string $objectName  Object name
+     * @param  string $placeholder Placeholder value
+     * @param  string $class       CSS class
+     * @param  array $field       The field details
+     * @param  string $fieldType   Field type
+     * @return string
+     */
+    public static function makeAnInput($type, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType)
+    {
+        $multiple           = (isset($field['multiple'])) ? 'multiple': '';
+        $floatingNumber     = ($fieldType === 'float' || $fieldType === 'decimal') ? 'step="any"': '';
+        $population         = ($populated) ? 'value="'.$objectName.'"' : '';
+
+        $inputString        = '<input id="'.ucfirst($name).'" class="'.$class.'" type="'.$type.'" name="'.$name.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$placeholder.'">';
         return $inputString;
     }
 
