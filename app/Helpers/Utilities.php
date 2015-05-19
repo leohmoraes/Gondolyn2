@@ -20,7 +20,6 @@ class Utilities
      * Assign a value to the path
      * @param  array &$arr  Original Array of values
      * @param  string $path  Array as path string
-     * @param  string $value Desired key
      * @return mixed
      */
     public static function assignArrayByPath(&$arr, $path)

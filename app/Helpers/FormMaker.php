@@ -36,7 +36,6 @@ class FormMaker {
 
         foreach ($tableTypeColumns as $column => $field) {
             if (in_array($column, $tableColumns)) {
-                $errorMessage = false;
                 $errors = Validation::errors('array');
                 $input = FormMaker::inputMaker($column, $field, $column, $class, $reformatted, $populated);
 
@@ -81,7 +80,7 @@ class FormMaker {
      * @param  array $errors Array of errors
      * @param  array $field  Array of field values
      * @param  string $column Column name
-     * @param  array $input  Input array
+     * @param  string $input  Input string
      * @return string
      */
     public static function formBuilder($view, $errors, $field, $column, $input)
@@ -99,10 +98,10 @@ class FormMaker {
 
             if (isset($field['type']) && (stristr($field['type'], 'radio') || stristr($field['type'], 'checkbox'))) {
                 $formBuild .= '<div class="'.$errorHighlight.'">';
-                $formBuild .= '<div class="'.$field['type'].'"><label>'.$input.FormMaker::cleanString(FormMaker::columnLabel($field, $column, true)).'</label>'.FormMaker::errorMessage($errorMessage).'</div>';
+                $formBuild .= '<div class="'.$field['type'].'"><label>'.$input.FormMaker::cleanString(FormMaker::columnLabel($field, $column)).'</label>'.FormMaker::errorMessage($errorMessage).'</div>';
             } else {
                 $formBuild .= '<div class="form-group '.$errorHighlight.'">';
-                $formBuild .= '<label class="control-label" for="'.ucfirst($column).'">'.FormMaker::cleanString(FormMaker::columnLabel($field, $column, true)).'</label>'.$input.FormMaker::errorMessage($errorMessage);
+                $formBuild .= '<label class="control-label" for="'.ucfirst($column).'">'.FormMaker::cleanString(FormMaker::columnLabel($field, $column)).'</label>'.$input.FormMaker::errorMessage($errorMessage);
             }
 
             $formBuild .= '</div>';
@@ -162,7 +161,6 @@ class FormMaker {
         }
 
         if ($reformatted) {
-            // $objectName     = FormMaker::cleanString($objectName);
             $placeholder    = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
         }
 
@@ -250,8 +248,6 @@ class FormMaker {
      */
     public static function errorMessage($message)
     {
-        $realErrorMessage = '';
-
         if ( ! $message) {
             $realErrorMessage = '';
         } else {

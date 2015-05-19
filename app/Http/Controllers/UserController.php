@@ -26,6 +26,8 @@ class UserController extends BaseController
 
     public function generateNewPassword()
     {
+        $data = array();
+
         try {
             $user = Users::getMyProfileByEmail(Input::get("email"));
             $newPassword = Users::generateNewPassword($user->id);
@@ -299,7 +301,6 @@ class UserController extends BaseController
             return redirect('errors/general');
 
         } catch (Exception $e) {
-            dd("huh");
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
         }

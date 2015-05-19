@@ -10,6 +10,10 @@ use Illuminate\Foundation\Application;
 
 class PermissionsMatrix implements Middleware
 {
+    protected $app;
+    protected $redirector;
+    protected $request;
+
     public function __construct(Application $app, Redirector $redirector, Request $request)
     {
         $this->app = $app;
@@ -26,6 +30,8 @@ class PermissionsMatrix implements Middleware
       */
      public function handle($request, Closure $next)
      {
+        $permissionsArray = array();
+
         $matrix = Config::get('permissions.matrix');
 
         $groups = $matrix['groups'];
