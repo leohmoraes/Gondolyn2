@@ -166,7 +166,7 @@ class FormMaker {
             $fieldType      = $field['type'];
         }
 
-        $inputString    = FormMaker::inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
+        $inputString    = FormMaker::inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs);
 
         return $inputString;
     }
@@ -183,7 +183,7 @@ class FormMaker {
      * @param  string $fieldType   Field type as string
      * @return string
      */
-    public static function inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType)
+    public static function inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs)
     {
         $textInputs     = ['text', 'textarea'];
         $selectInputs   = ['select'];
