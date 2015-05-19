@@ -4,7 +4,9 @@ return [
 
     'shipping' => array(
 
-        'street'        => [],
+        'street'        => [
+            'type' => 'string'
+        ],
         'city'          => [],
         'state'         => [
             'type' => 'select',

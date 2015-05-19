@@ -1,6 +1,6 @@
 <?php namespace App\Helpers;
 
-use View, Schema, DB, Validation;
+use View, Schema, DB, Validation, Config;
 
 /**
  * FormMaker helper to make table and object form mapping easy
@@ -137,13 +137,10 @@ class FormMaker {
      */
     public static function inputMaker($name, $field, $object, $class, $reformatted = false, $populated)
     {
-        $stringInputs   = ['string', 'email', 'varchar'];
-        $integerInputs  = ['number', 'integer', 'float', 'decimal'];
+        $inputTypes = Config::get('form.maker');
+
         $textInputs     = ['text', 'textarea'];
         $selectInputs   = ['select'];
-        $passwordInputs = ['password'];
-        $fileInputs     = ['file', 'image'];
-        $dateInputs     = ['datetime', 'date'];
         $checkboxInputs = ['checkbox', 'checkbox-inline'];
         $radioInputs    = ['radio', 'radio-inline'];
 
@@ -164,19 +161,20 @@ class FormMaker {
             $placeholder    = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
         }
 
-        $fieldType      = ( ! isset($field['type'])) ? $field : $field['type'];
+        if ( ! isset($field['type'])) {
+            if (is_array($field)) {
+                $fieldType = 'string';
+            } else {
+                $fieldType      = $field;
+            }
+        } else {
+            $fieldType      = $field['type'];
+        }
+
         $checkType      = (in_array($fieldType, $checkboxInputs)) ? 'checked': 'selected';
         $selected       = (isset($inputs[$name]) || isset($field['selected'])) ? $checkType: '';
 
         switch ($fieldType) {
-            case in_array($fieldType, $stringInputs):
-                $inputString .= FormMaker::makeAnInput('text', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
-                break;
-
-            case in_array($fieldType, $integerInputs):
-                $inputString .= FormMaker::makeAnInput('number', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
-                break;
-
             case in_array($fieldType, $textInputs):
                 $population = ($populated) ? $objectName : '';
                 $inputString .= '<textarea id="'.ucfirst($name).'" class="'.$class.'" name="'.$name.'" placeholder="'.$placeholder.'">'.$population.'</textarea>';
@@ -191,18 +189,6 @@ class FormMaker {
                 $inputString .= '<select id="'.ucfirst($name).'" class="'.$class.'" name="'.$name.'">'.$options.'</select>';
                 break;
 
-            case in_array($fieldType, $passwordInputs):
-                $inputString .= FormMaker::makeAnInput('password', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
-                break;
-
-            case in_array($fieldType, $dateInputs):
-                $inputString .= FormMaker::makeAnInput('date', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
-                break;
-
-            case in_array($fieldType, $fileInputs):
-                $inputString .= FormMaker::makeAnInput('file', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
-                break;
-
             case in_array($fieldType, $checkboxInputs):
                 $inputString .= '<input id="'.ucfirst($name).'" '.$selected.' type="checkbox" name="'.$name.'">';
                 break;
@@ -212,7 +198,7 @@ class FormMaker {
                 break;
 
             default:
-                $inputString .= FormMaker::makeAnInput('text', $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
+                $inputString .= FormMaker::makeAnInput($inputTypes[$fieldType], $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
                 break;
         }
 
