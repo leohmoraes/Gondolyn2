@@ -18,11 +18,11 @@ class MainController extends BaseController
 
         // If we were to be remembered and we're not logged in
         if (Auth::viaRemember() && ! Session::get("logged_in")) {
-            $email      = Cookie::get("email");
-            $password   = Cookie::get("password");
+            $email      = Request::cookie("email");
+            $password   = Request::cookie("password");
 
             $Users      = new Users;
-            $user       = $Users->login_with_email($email, $password, false);
+            $Users->login_with_email($email, $password, false);
         }
 
         // If we are logged in lets get personal

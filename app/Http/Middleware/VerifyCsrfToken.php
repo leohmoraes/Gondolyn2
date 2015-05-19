@@ -26,7 +26,7 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
         throw new \Illuminate\Session\TokenMismatchException;
     }
 
-    protected function isInExcludedRoutes($request)
+    private function isInExcludedRoutes($request)
     {
         $allRoutes = array();
 
