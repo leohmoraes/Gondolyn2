@@ -99,14 +99,13 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
         $pwd = Crypt::decrypt($user->user_passwd);
 
-        $salt = substr($pwd, 0, 10);
         $realPasswd = substr($pwd, 10);
 
         if ($realPasswd == hash("sha256", Input::get("old_password"))) {
             $user->user_passwd = Crypt::encrypt($user->user_salt.hash("sha256", Input::get("new_password")));
             $result = $user->save();
 
-            return true;
+            return $result;
         }
 
         return false;
@@ -234,7 +233,6 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
                     return $this->makeNewUser($data, $account);
                 } else {
                     throw new Exception("We're sorry either your account has been deactivated or you have not registered with us before.", 1);
-                    return false;
                 }
             } else {
                 // means the service doesn't have an email provided by the API
@@ -245,6 +243,8 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
 
     public function verify_user_email($email, $account)
     {
+        $data = array();
+
         $account_id = "user_".$account."_id";
 
         $user = Users::where('user_email', '=', $email)->first();
@@ -268,7 +268,6 @@ class Users extends Eloquent implements AuthenticatableContract, CanResetPasswor
                 return $this->makeNewUser($data, $account);
             } else {
                 throw new Exception("We're sorry we cannot find you and this application is not currently accepting sign ups.", 1);
-                return false;
             }
         }
     }

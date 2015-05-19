@@ -81,23 +81,6 @@ class Validation
         return $inputs;
     }
 
-    /**
-     * Assign a value to the path
-     * @param  array &$arr  Original Array of values
-     * @param  string $path  Array as path string
-     * @return mixed
-     */
-    private static function assignArrayByPath(&$arr, $path)
-    {
-        $keys = explode('.', $path);
-
-        while ($key = array_shift($keys)) {
-            $arr = &$arr[$key];
-        }
-
-        return $arr;
-    }
-
     private static function getInput($key, $jsonInput)
     {
         if ($jsonInput) {

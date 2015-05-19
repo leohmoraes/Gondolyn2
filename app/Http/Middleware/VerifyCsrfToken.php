@@ -28,6 +28,8 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
 
     protected function isInExcludedRoutes($request)
     {
+        $allRoutes = array();
+
         $routes = Config::get('gondolyn.csrfIgnoredRoutes');
 
         $configs = Module::getConfigs();
