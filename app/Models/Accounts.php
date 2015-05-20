@@ -136,6 +136,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
             $user->save();
         }
 
+        Session::put(array(
+            "subscribed" => $user->subscribed(),
+            "plan" => $user->stripe_plan,
+        ), null);
+
         return true;
     }
 
@@ -149,6 +154,8 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $user->subscription($myplan['stripe_id'])->swap();
 
+        Session::put("plan", $myplan['stripe_id']);
+
         return true;
     }
 
@@ -156,6 +163,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     {
         $user = Accounts::find($id);
         $user->subscription()->cancel();
+        Session::put("plan", null);
 
         return true;
     }
@@ -349,7 +357,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         Session::flash("email", $data['email']);
 
         if ($account != "email") {
-            Mail::send('emails.newpassword', $data, function ($message) {
+            Mail::send('emails.newpassword', $data, function($message) {
                 $user = $this->getAccountByEmail(Session::get("email"));
                 $message->to($user->user_email)->subject('New Password!');
             });

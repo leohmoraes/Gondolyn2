@@ -30,7 +30,7 @@ class ErrorController extends BaseController
 
         $error = (strpos($error, "NotFoundHttpException") > 0) ? Lang::get("notification.error.lost") : $error;
 
-        $data['error'] =  $error ?: Lang::get("notification.fourofour.general");
+        $data['error'] = $error ?: Lang::get("notification.fourofour.general");
 
         return view('errors.general', $data, [], 404);
     }
@@ -52,8 +52,8 @@ class ErrorController extends BaseController
 
             $data['error'] = Session::get("data");
 
-            Mail::send('emails.critical', $data, function ($message) {
-                $message->to('mattlantz@gmail.com', 'Matt Lantz')->subject('Critical Error!');
+            Mail::send('emails.critical', $data, function($message) {
+                $message->to(Config::get('gondolyn.app_admin_email'), Config::get('gondolyn.app_admin_name'))->subject('Critical Error!');
             });
         } catch (Exception $e) {
             Session::flash("data", $e->getMessage());

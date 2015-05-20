@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\AppServices;
+use App\Services\AccountServices;
 
 class AdminController extends BaseController
 {
@@ -51,9 +52,6 @@ class AdminController extends BaseController
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
         $data['shippingColumns']    = Config::get('forms.shipping');
-
-        // $data["adminModals"]  = View::make('admin.modals');
-        // $data["selectRole"]  = View::make('account.selectRole');
 
         return view('account.settings', $data);
     }

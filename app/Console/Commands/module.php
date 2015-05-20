@@ -452,7 +452,7 @@ class '.$module.'ApiTest extends TestCase {
         $this->info('Your '.$module.' module has been generated.');
 
         if ($this->option('table')) {
-            Schema::create(lcfirst($module), function ($table) {
+            Schema::create(lcfirst($module), function($table) {
                 $table->increments('id');
                 $table->string('updated_at');
                 $table->string('created_at');
@@ -496,6 +496,12 @@ class '.$module.'ApiTest extends TestCase {
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Make Module File
+     * @param  string $file    File
+     * @param  string $content Content of file
+     * @return boolean
+     */
     public function makeModuleFile($file, $content)
     {
         $moduleFile = fopen($file, "w");

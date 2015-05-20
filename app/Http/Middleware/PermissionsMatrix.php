@@ -1,7 +1,10 @@
 <?php namespace App\Http\Middleware;
 
-use Closure, Route, Session, Lang, Module;
-
+use Closure;
+use Route;
+use Session;
+use Lang;
+use Module;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
@@ -21,13 +24,13 @@ class PermissionsMatrix implements Middleware
         $this->request = $request;
     }
 
-     /**
-      * Handle an incoming request.
-      *
-      * @param \Illuminate\Http\Request $request
-      * @param \Closure $next
-      * @return mixed
-      */
+    /**
+     * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @return mixed
+     */
      public function handle($request, Closure $next)
      {
         $permissionsArray = array();
@@ -66,11 +69,19 @@ class PermissionsMatrix implements Middleware
 
         Config::set('permissions.matrix', $permissionsArray);
 
-        // Permission Checking
+        // Role Checking
         if (isset($action['role'])) {
             $permission = $action['role'];
-            if (Session::get('logged_in') &&  ! $this->checkPermission(Session::get('role'), $permission)) {
+            if (Session::get('logged_in') && ! $this->checkRole(Session::get('role'), $permission)) {
                 throw new \Exception(Lang::get('notification.general.incorrect-permission'), 1);
+            }
+        }
+
+        // Subscription Checking
+        if (isset($action['subscription'])) {
+            $subscription = $action['subscription'];
+            if (Session::get('logged_in') && ! $this->checkSubscription(Session::get('plan'), $subscription)) {
+                throw new \Exception(Lang::get('notification.subscription.incorrect-subscription'), 1);
             }
         }
 
@@ -78,7 +89,13 @@ class PermissionsMatrix implements Middleware
         return $content;
     }
 
-    public function checkPermission($role, $permission)
+    /**
+     * Check roles
+     * @param  string $role       Current role
+     * @param  string $permission Role by string or by group string
+     * @return boolean
+     */
+    public function checkRole($role, $permission)
     {
         $permissionsConfig = Config::get('permissions.matrix');
 
@@ -96,6 +113,25 @@ class PermissionsMatrix implements Middleware
         }
 
         // look at group arrays and go from there
+        return false;
+    }
+
+    /**
+     * Check Subscription
+     * @param  string $plan         Current plan
+     * @param  mixed $subscription Array of plans or string of plan
+     * @return boolean
+     */
+    public function checkSubscription($plan, $subscription)
+    {
+        if (is_array($subscription)) {
+            if (in_array($plan, $subscription)) {
+                return true;
+            }
+        } else if ($plan === $subscription) {
+            return true;
+        }
+
         return false;
     }
 

@@ -27,7 +27,7 @@ class Crypto
         $key        = $alt_key.$config_key;
         $iv         = md5(md5($key));
 
-        $decrypted =  mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), Crypto::url_base64_decode(rawurldecode($value)), MCRYPT_MODE_CBC, $iv);
+        $decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), Crypto::url_base64_decode(rawurldecode($value)), MCRYPT_MODE_CBC, $iv);
 
         return trim($decrypted);
     }

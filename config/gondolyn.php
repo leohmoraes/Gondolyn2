@@ -2,6 +2,9 @@
 
 return array(
 
+    'app_admin_email' => '',
+    'app_admin_name' => '',
+
     'signup' => TRUE,
 
     'smLogin' => FALSE,

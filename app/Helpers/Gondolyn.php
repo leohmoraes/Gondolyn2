@@ -21,7 +21,9 @@ class Gondolyn
 
         $keys = Config::get('gondolyn.authKeys');
 
-        if ( ! in_array($auth, $keys)) return false;
+        if ( ! in_array($auth, $keys)) {
+            return false;
+        }
 
         Session::put('authKey', $auth);
 
@@ -36,7 +38,9 @@ class Gondolyn
 
         $userToken = Session::get('token');
 
-        if ($requestToken === $userToken) return true;
+        if ($requestToken === $userToken) {
+            return true;
+        }
 
         return false;
     }

@@ -33,6 +33,10 @@ class Utilities
         return $arr;
     }
 
+    /**
+     * Get raw post
+     * @return mixed
+     */
     public static function getRawPost()
     {
         $request = Request::instance();
@@ -41,6 +45,11 @@ class Utilities
         return $content;
     }
 
+    /**
+     * Get header
+     * @param  string $key Key
+     * @return string
+     */
     public static function getHeader($key)
     {
         $headers = getallheaders();
@@ -48,6 +57,11 @@ class Utilities
         return @$headers[$key];
     }
 
+    /**
+     * Get JSON input
+     * @param  string $key JSON key
+     * @return mixed
+     */
     public static function jsonInput($key)
     {
         $post = json_decode(Utilities::getRawPost());

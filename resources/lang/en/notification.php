@@ -43,6 +43,7 @@ return array(
         "failed" => "Your subscription failed to update.",
         "cancel_success" => "Your subscription was successfully cancelled.",
         "cancel_failed" => "Your subscription failed to cancel.",
+        "incorrect-subscription" => "Incorrect Subscription",
     ),
 
     "api" => array(

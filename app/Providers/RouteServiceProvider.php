@@ -29,31 +29,31 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        Route::filter('is_ajax_call', function () {
+        Route::filter('is_ajax_call', function() {
             if ( ! Gondolyn::is_ajax_call()) {
                 return Gondolyn::response("error", Lang::get("notification.api.ajax_only"));
             }
         });
 
-        Route::filter('is_api_call', function () {
+        Route::filter('is_api_call', function() {
             if ( ! Gondolyn::is_api_call()) {
                 return Gondolyn::response("error", Lang::get("notification.api.not_api_call"));
             }
         });
 
-        Route::filter('valid_api_key', function () {
+        Route::filter('valid_api_key', function() {
             if ( ! Gondolyn::valid_api_key()) {
                 return Gondolyn::response("error", Lang::get("notification.api.bad_key"));
             }
         });
 
-        Route::filter('valid_api_token', function () {
+        Route::filter('valid_api_token', function() {
             if ( ! Gondolyn::valid_api_token()) {
                 return Gondolyn::response("error", Lang::get("notification.api.bad_token"));
             }
         });
 
-        Route::filter('is_logged_in', function () {
+        Route::filter('is_logged_in', function() {
             if (time() - Session::get("last_activity") > Config::get("session.lifetime") * 60) Session::flush();
             else Session::put("last_activity", time());
 
@@ -77,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
+        $router->group(['namespace' => $this->namespace], function($router) {
             require app_path('Http/routes.php');
         });
     }

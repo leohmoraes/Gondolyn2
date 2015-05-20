@@ -59,7 +59,9 @@ class Validation
         $errorMessage = "";
         $errors = Session::get("validationErrors") ?: false;
 
-        if ( ! $errors) return false;
+        if ( ! $errors) {
+            return false;
+        }
 
         if ($format === 'string') {
             foreach ($errors as $error => $message) {
@@ -76,7 +78,9 @@ class Validation
     {
         $inputs = Session::get("validationInputs") ?: false;
 
-        if ( ! $inputs) return false;
+        if ( ! $inputs) {
+            return false;
+        }
 
         return $inputs;
     }

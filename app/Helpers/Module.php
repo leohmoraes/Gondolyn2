@@ -49,7 +49,7 @@ class Module {
     {
         $modules = app_path()."/Modules/";
 
-        $files = glob($modules . "*");
+        $files = glob($modules."*");
 
         $menu = '';
 
@@ -79,7 +79,7 @@ class Module {
         $moduleConfigs = array();
         $modules = app_path()."/Modules/";
 
-        $files = glob($modules . "*");
+        $files = glob($modules."*");
 
         foreach ($files as $file) {
             if (is_dir($file)) {
@@ -102,7 +102,7 @@ class Module {
         $modulePermissionConfigs = array();
         $modules = app_path()."/Modules/";
 
-        $files = glob($modules . "*");
+        $files = glob($modules."*");
 
         foreach ($files as $file) {
             if (is_dir($file)) {

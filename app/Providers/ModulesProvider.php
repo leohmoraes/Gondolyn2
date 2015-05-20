@@ -1,6 +1,8 @@
 <?php namespace App\Providers;
 
-use App, Utilities, View;
+use App;
+use Utilities;
+use View;
 
 class ModulesProvider extends \Illuminate\Support\ServiceProvider
 {

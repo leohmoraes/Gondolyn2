@@ -38,7 +38,7 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
             $allRoutes = array_merge($routes, $config['csrfIgnoredRoutes']);
         }
 
-        foreach($allRoutes as $route) {
+        foreach ($allRoutes as $route) {
             if ($request->is($route)) {
                 return true;
             }

@@ -1,6 +1,10 @@
 <?php namespace App\Helpers;
 
-use View, Schema, DB, Validation, Config;
+use View;
+use Schema;
+use DB;
+use Validation;
+use Config;
 
 /**
  * FormMaker helper to make table and object form mapping easy
@@ -141,8 +145,6 @@ class FormMaker {
 
         $inputs = Validation::inputs();
 
-        $inputString = '';
-
         $objectName     = (isset($object->$name)) ? $object->$name : $name;
         $placeholder    = FormMaker::columnLabel($field, $name);
 
@@ -153,20 +155,20 @@ class FormMaker {
         }
 
         if ($reformatted) {
-            $placeholder    = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
+            $placeholder = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
         }
 
         if ( ! isset($field['type'])) {
             if (is_array($field)) {
                 $fieldType = 'string';
             } else {
-                $fieldType      = $field;
+                $fieldType = $field;
             }
         } else {
-            $fieldType      = $field['type'];
+            $fieldType = $field['type'];
         }
 
-        $inputString    = FormMaker::inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs);
+        $inputString = FormMaker::inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs);
 
         return $inputString;
     }
@@ -190,8 +192,8 @@ class FormMaker {
         $checkboxInputs = ['checkbox', 'checkbox-inline'];
         $radioInputs    = ['radio', 'radio-inline'];
 
-        $checkType      = (in_array($fieldType, $checkboxInputs)) ? 'checked': 'selected';
-        $selected       = (isset($inputs[$name]) || isset($field['selected'])) ? $checkType: '';
+        $checkType      = (in_array($fieldType, $checkboxInputs)) ? 'checked' : 'selected';
+        $selected       = (isset($inputs[$name]) || isset($field['selected'])) ? $checkType : '';
 
         switch ($fieldType) {
             case in_array($fieldType, $textInputs):
@@ -202,7 +204,7 @@ class FormMaker {
             case in_array($fieldType, $selectInputs):
                 $options = '';
                 foreach ($field['options'] as $key => $value) {
-                    $selected = ($objectName === $value) ? 'selected': '';
+                    $selected = ($objectName === $value) ? 'selected' : '';
                     $options .= '<option value="'.$value.'" '.$selected.'>'.$key.'</option>';
                 }
                 $inputString = '<select id="'.ucfirst($name).'" class="'.$class.'" name="'.$name.'">'.$options.'</select>';
@@ -238,8 +240,8 @@ class FormMaker {
      */
     public static function makeHTMLInputString($type, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType)
     {
-        $multiple           = (isset($field['multiple'])) ? 'multiple': '';
-        $floatingNumber     = ($fieldType === 'float' || $fieldType === 'decimal') ? 'step="any"': '';
+        $multiple           = (isset($field['multiple'])) ? 'multiple' : '';
+        $floatingNumber     = ($fieldType === 'float' || $fieldType === 'decimal') ? 'step="any"' : '';
         $population         = ($populated) ? 'value="'.$objectName.'"' : '';
 
         $inputString        = '<input id="'.ucfirst($name).'" class="'.$class.'" type="'.$type.'" name="'.$name.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$placeholder.'">';
@@ -280,6 +282,6 @@ class FormMaker {
      */
     public static function cleanString($string)
     {
-        return preg_replace( "/[^a-z0-9 ]/i", "", ucwords(str_replace('_', ' ', $string)));
+        return preg_replace("/[^a-z0-9 ]/i", "", ucwords(str_replace('_', ' ', $string)));
     }
 }
