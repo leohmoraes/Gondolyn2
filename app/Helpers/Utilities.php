@@ -33,7 +33,7 @@ class Utilities
         return $arr;
     }
 
-    public static function get_raw_post()
+    public static function getRawPost()
     {
         $request = Request::instance();
         $content = $request->getContent();
@@ -41,16 +41,16 @@ class Utilities
         return $content;
     }
 
-    public static function get_header($key)
+    public static function getHeader($key)
     {
         $headers = getallheaders();
 
         return @$headers[$key];
     }
 
-    public static function raw_json_input($key)
+    public static function jsonInput($key)
     {
-        $post = json_decode(Utilities::get_raw_post());
+        $post = json_decode(Utilities::getRawPost());
 
         if (isset($post->$key)) {
             return $post->$key;

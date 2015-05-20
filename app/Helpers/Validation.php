@@ -84,7 +84,7 @@ class Validation
     private static function getInput($key, $jsonInput)
     {
         if ($jsonInput) {
-            $input = Utilities::raw_json_input($key);
+            $input = Utilities::jsonInput($key);
         } else {
             $input = Input::get($key);
         }
@@ -95,7 +95,7 @@ class Validation
     private static function inputsArray($jsonInput)
     {
         if ($jsonInput) {
-            $inputs = Utilities::raw_json_input('*');
+            $inputs = Utilities::jsonInput('*');
         } else {
             $inputs = Input::all();
         }

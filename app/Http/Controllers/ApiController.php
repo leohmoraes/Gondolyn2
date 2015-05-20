@@ -16,12 +16,12 @@ class ApiController extends BaseController
     public function request()
     {
         try {
-            if ( ! Utilities::raw_json_input("email") || ! Utilities::raw_json_input("password")) {
+            if ( ! Utilities::jsonInput("email") || ! Utilities::jsonInput("password")) {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
             }
 
             $Login = new Users;
-            $user = $Login->loginWithEmail(Utilities::raw_json_input("email"), Utilities::raw_json_input("password"), Utilities::raw_json_input("remember"));
+            $user = $Login->loginWithEmail(Utilities::jsonInput("email"), Utilities::jsonInput("password"), Utilities::jsonInput("remember"));
 
             if ( ! $user) {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
