@@ -21,12 +21,13 @@ class ApiController extends BaseController
             }
 
             $Login = new Users;
-            $user = $Login->login_with_email(Utilities::raw_json_input("email"), Utilities::raw_json_input("password"), Utilities::raw_json_input("remember"));
+            $user = $Login->loginWithEmail(Utilities::raw_json_input("email"), Utilities::raw_json_input("password"), Utilities::raw_json_input("remember"));
 
             if ( ! $user) {
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
             } elseif ($user) {
-                return Gondolyn::response("success", $this->process($user));
+                AccountServices::login($user);
+                return Gondolyn::response("success", $user->user_api_token);
             } else {
                 return Gondolyn::response("success", Lang::get("notification.login.success"));
             }
@@ -44,29 +45,6 @@ class ApiController extends BaseController
         Session::flush();
 
         return Gondolyn::response("success", Lang::get("notification.api.logout"));
-    }
-
-    protected function process($user)
-    {
-        Session::flush();
-
-        $username = ($user->user_name == "") ? $user->user_email : $user->user_name;
-
-        $sessionData = array(
-            "logged_in" => TRUE,
-            "role" => $user->user_role,
-            "username" => $username,
-            "subscribed" => $user->subscribed(),
-            "token" => $user->user_api_token,
-            "plan" => $user->stripe_plan,
-            "email" => $user->user_email,
-            "last_activity" => time(),
-            "id" => $user->id
-        );
-
-        Session::put($sessionData, null);
-
-        return $user->user_api_token;
     }
 
     /*

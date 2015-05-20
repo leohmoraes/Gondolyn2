@@ -9,7 +9,7 @@
     <div class="raw100 raw-left card-wrapper raw-margin-top-24"></div>
 
     <div class="raw100 raw-left raw-margin-top-24">
-        <form id="userSubscription" method="post" action="{{ URL::to('user/settings/set/subscription') }}">
+        <form id="userSubscription" method="post" action="{{ URL::to('account/settings/set/subscription') }}">
             <?= Form::token(); ?>
             <input id="exp_month" type="hidden" name="exp_month" data-stripe="exp-month" />
             <input id="exp_year" type="hidden" name="exp_year" data-stripe="exp-year"/>

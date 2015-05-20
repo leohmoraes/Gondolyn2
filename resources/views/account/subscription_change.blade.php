@@ -13,7 +13,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a id="cancelBtn" type="button" class="btn btn-danger" href="{{ URL::to('user/cancel/subscription') }}">Confirm Cancelation</a>
+                <a id="cancelBtn" type="button" class="btn btn-danger" href="{{ URL::to('account/cancel/subscription') }}">Confirm Cancelation</a>
             </div>
         </div>
     </div>
@@ -28,10 +28,10 @@
 <div class="raw-device raw-margin-auto raw-margin-top-24">
 
     <div class="raw100 raw-left raw-margin-top-24">
-        <a class="raw-left btn btn-default raw-margin-left-24" href="{{ URL::to('user/settings/subscription/invoices') }}" data-toggle="modal">Subscription Invoices</a>
+        <a class="raw-left btn btn-default raw-margin-left-24" href="{{ URL::to('account/settings/subscription/invoices') }}" data-toggle="modal">Subscription Invoices</a>
         <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#cancelModal">Cancel Subscription</button>
 
-        <form id="userSubscription" method="post" action="{{ URL::to('user/settings/update/subscription') }}">
+        <form id="userSubscription" method="post" action="{{ URL::to('account/settings/update/subscription') }}">
             <?= Form::token(); ?>
             <div class="raw100 raw-left rg-row raw-margin-top-24">
                 <div class="rg-col-4">

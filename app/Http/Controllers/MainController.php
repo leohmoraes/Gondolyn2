@@ -22,7 +22,7 @@ class MainController extends BaseController
             $password   = Request::cookie("password");
 
             $Users      = new Users;
-            $Users->login_with_email($email, $password, false);
+            $Users->loginWithEmail($email, $password, false);
         }
 
         // If we are logged in lets get personal
@@ -34,7 +34,7 @@ class MainController extends BaseController
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('user.login-panel', $data),
+            "gondolyn_login"    => View::make('account.login-panel', $data),
             "nav_bar"           => View::make('navbar', $data),
             "content"           => View::make('main.welcome', $data),
         ];
@@ -51,7 +51,7 @@ class MainController extends BaseController
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('user.login-panel', $data),
+            "gondolyn_login"    => View::make('account.login-panel', $data),
             "nav_bar"           => View::make('navbar', $data),
             "content"           => View::make('main.changelog', $data),
         ];

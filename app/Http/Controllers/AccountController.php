@@ -1,12 +1,14 @@
 <?php
 
-class UserController extends BaseController
+use App\Services\AccountServices;
+
+class AccountController extends BaseController
 {
     protected $layout = 'layouts.master';
 
     /*
     |--------------------------------------------------------------------------
-    | Profile Recovery
+    | Account Recovery
     |--------------------------------------------------------------------------
     */
 
@@ -18,7 +20,7 @@ class UserController extends BaseController
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('user.forgot-password', $data),
+            "content"           => View::make('account.forgot-password', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -29,8 +31,8 @@ class UserController extends BaseController
         $data = array();
 
         try {
-            $user = Users::getMyProfileByEmail(Input::get("email"));
-            $newPassword = Users::generateNewPassword($user->id);
+            $user = Accounts::getAccountByEmail(Input::get("email"));
+            $newPassword = Accounts::generateNewPassword($user->id);
         } catch (Exception $e) {
             Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
             return redirect('errors/general');
@@ -40,7 +42,7 @@ class UserController extends BaseController
             $data['newPassword'] = $newPassword;
 
             Mail::send('emails.newpassword', $data, function ($message) {
-                $user = Users::getMyProfileByEmail(Input::get("email"));
+                $user = Accounts::getAccountByEmail(Input::get("email"));
                 $message->to($user->user_email, $user->user_name)->subject('New Password!');
             });
 
@@ -54,7 +56,7 @@ class UserController extends BaseController
 
     /*
     |--------------------------------------------------------------------------
-    | Profile Updates
+    | Account Updates
     |--------------------------------------------------------------------------
     */
 
@@ -62,8 +64,8 @@ class UserController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $users = new Users;
-        $user = $users->getMyProfile(Session::get("id"));
+        $users = new Accounts;
+        $user = $users->getAccount(Session::get("id"));
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
@@ -76,8 +78,8 @@ class UserController extends BaseController
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "selectRole"        => View::make('user.selectRole', $data),
-            "content"           => View::make('user.settings', $data),
+            "selectRole"        => View::make('account.selectRole', $data),
+            "content"           => View::make('account.settings', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -87,14 +89,14 @@ class UserController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['user'] = Users::getMyProfile(Session::get("id"));
+        $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['roles'] = Config::get("permissions.matrix.roles");
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('user.password', $data),
+            "content"           => View::make('account.password', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -104,20 +106,20 @@ class UserController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['user'] = Users::getMyProfile(Session::get("id"));
+        $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['packages'] = Config::get("gondolyn.packages");
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "selectPlan"        => View::make('user.selectPlan', $data),
+            "selectPlan"        => View::make('account.selectPlan', $data),
         ];
 
         if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
-            $layoutData["content"] = View::make('user.subscription_change', $data);
+            $layoutData["content"] = View::make('account.subscription_change', $data);
         } else {
-            $layoutData["content"] = View::make('user.subscription_set', $data);
+            $layoutData["content"] = View::make('account.subscription_set', $data);
         }
 
         return view($this->layout, $layoutData);
@@ -127,14 +129,14 @@ class UserController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $user = Users::getMyProfile(Session::get("id"));
+        $user = Accounts::getAccount(Session::get("id"));
 
         $data['invoices'] = '';
 
         $invoices = $user->invoices();
 
         foreach ($invoices as $invoice) {
-            $data['invoices'] .= View::make('user.invoice', array('invoice' => $invoice));
+            $data['invoices'] .= View::make('account.invoice', array('invoice' => $invoice));
         }
 
         $layoutData = [
@@ -143,14 +145,14 @@ class UserController extends BaseController
             "nav_bar"           => View::make('navbar', $data),
         ];
 
-        $layoutData["content"] = View::make('user.subscription_invoices', $data);
+        $layoutData["content"] = View::make('account.subscription_invoices', $data);
 
         return view($this->layout, $layoutData);
     }
 
     public function downloadInvoice($id)
     {
-        $user = Users::getMyProfile(Session::get("id"));
+        $user = Accounts::getAccount(Session::get("id"));
 
         $invoice = Crypto::decrypt($id);
 
@@ -163,7 +165,7 @@ class UserController extends BaseController
     public function update()
     {
         try {
-            $status = Users::updateProfile(Session::get("id"));
+            $status = Accounts::updateAccount(Session::get("id"));
             if ($status) {
                 Session::flash("notification", Lang::get("notification.profile.update_success"));
             } else {
@@ -174,13 +176,13 @@ class UserController extends BaseController
             return redirect('errors/general');
         }
 
-        return redirect('user/settings');
+        return redirect('account/settings');
     }
 
     public function updatePassword()
     {
         try {
-            $users = new Users;
+            $users = new Accounts;
             $status = $users->updateMyPassword(Session::get("id"));
 
             if ($status) {
@@ -193,14 +195,14 @@ class UserController extends BaseController
             return redirect('errors/general');
         }
 
-        return redirect('user/settings');
+        return redirect('account/settings');
     }
 
     public function setSubscription()
     {
         try {
-            $users = new Users;
-            $status = $users->setMySubscription(Session::get("id"), Input::get("plan"));
+            $users = new Accounts;
+            $status = $users->setAccountSubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) {
                 Session::flash("notification", Lang::get("notification.subscription.success"));
@@ -212,14 +214,14 @@ class UserController extends BaseController
             return redirect('errors/general');
         }
 
-        return redirect('user/settings');
+        return redirect('account/settings');
     }
 
     public function updateSubscription()
     {
         try {
-            $users = new Users;
-            $status = $users->updateMySubscription(Session::get("id"), Input::get("plan"));
+            $users = new Accounts;
+            $status = $users->updateAccountSubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) {
                 Session::flash("notification", Lang::get("notification.subscription.success"));
@@ -231,13 +233,13 @@ class UserController extends BaseController
             return redirect('errors/general');
         }
 
-        return redirect('user/settings');
+        return redirect('account/settings');
     }
 
     public function cancelSubscription()
     {
         try {
-            $users = new Users;
+            $users = new Accounts;
             $status = $users->cancelSubscription(Session::get("id"));
 
             if ($status) {
@@ -250,7 +252,7 @@ class UserController extends BaseController
             return redirect('errors/general');
         }
 
-        return redirect('user/settings');
+        return redirect('account/settings');
     }
 
     /*
@@ -268,9 +270,9 @@ class UserController extends BaseController
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('user.login-panel', $data),
+            "gondolyn_login"    => View::make('account.login-panel', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('user.login', $data),
+            "content"           => View::make('account.login', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -287,14 +289,15 @@ class UserController extends BaseController
         }
 
         try {
-            $Users = new Users;
-            $user = $Users->login_with_email(Input::get('email'), Input::get('password'), Input::get('remember_me'));
+            $Users = new Accounts;
+            $user = $Users->loginWithEmail(Input::get('email'), Input::get('password'), Input::get('remember_me'));
 
             if ( ! $user) {
                 Session::flash("notification", Lang::get("notification.login.fail"));
                 return redirect('errors/general');
             } else {
-                return $this->process($user);
+                $redirect = AccountServices::login($user);
+                return redirect($redirect);
             }
 
             Session::flash("notification", Lang::get("notification.login.success"));
@@ -314,10 +317,11 @@ class UserController extends BaseController
             try {
                 $result = Socialize::with('facebook')->user();
 
-                $Login = new Users;
-                $user = $Login->login_with_other_account($result, "facebook");
+                $Login = new Accounts;
+                $user = $Login->loginWithSocialMedia($result, "facebook");
 
-                return $this->process($user);
+                $redirect = AccountServices::login($user);
+                return redirect($redirect);
             } catch (Exception $e) {
                 Session::flash("notification", $e->getMessage());
                 return redirect('errors/general');
@@ -335,8 +339,8 @@ class UserController extends BaseController
             try {
                 $result = Socialize::with('twitter')->user();
 
-                $Login = new Users;
-                $user = $Login->login_with_other_account($result, "twitter");
+                $Login = new Accounts;
+                $user = $Login->loginWithSocialMedia($result, "twitter");
 
                 if ( ! is_object($user)) {
                     Session::put("twitterID", $result->id);
@@ -345,7 +349,8 @@ class UserController extends BaseController
                     return redirect("login/twitter/verify/");
                 }
 
-                return $this->process($user);
+                $redirect = AccountServices::login($user);
+                return redirect($redirect);
             } catch (Exception $e) {
                 Session::flash("notification", $e->getMessage());
                 return redirect('errors/general');
@@ -363,7 +368,7 @@ class UserController extends BaseController
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('user.twitter-verify', $data),
+            "content"           => View::make('account.twitter-verify', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -371,32 +376,24 @@ class UserController extends BaseController
 
     public function loginTwitterVerified()
     {
-        $Login = new Users;
-        $user = $Login->verify_user_email(Input::get('email'), "twitter");
+        $Login = new Accounts;
+        $user = $Login->verifyAccountEmail(Input::get('email'), "twitter");
 
-        return $this->process($user);
+        $redirect = AccountServices::login($user);
+        return redirect($redirect);
     }
 
     public function logout()
     {
-        // Kill the session
-        Session::flush();
-
-        // Kill the auth
-        Auth::logout();
-
-        // Drop the remember details
-        Cookie::forget('email');
-        Cookie::forget('password');
-
+        AccountServices::logout();
         return redirect("/");
     }
 
-    public function deleteUserAccount()
+    public function deleteAccount()
     {
         $id = Session::get("id");
 
-        $user = new Users;
+        $user = new Accounts;
 
         $user->deleteMyAccount($id);
 
@@ -406,31 +403,4 @@ class UserController extends BaseController
 
         return redirect("/");
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Private Methods
-    |--------------------------------------------------------------------------
-    */
-
-    private function process($user)
-    {
-        $username = ($user->user_name == "") ? $user->user_email : $user->user_name;
-
-        $sessionData = array(
-            "logged_in" => TRUE,
-            "role" => $user->user_role,
-            "username" => $username,
-            "email" => $user->user_email,
-            "subscribed" => $user->subscribed(),
-            "plan" => $user->stripe_plan,
-            "last_activity" => time(),
-            "id" => $user->id
-        );
-
-        Session::put($sessionData, null);
-
-        return redirect($user->user_role."/home");
-    }
-
 }

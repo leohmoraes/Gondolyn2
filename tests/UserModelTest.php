@@ -9,8 +9,8 @@ class UserModelTest extends TestCase {
      */
     public function testGetProfile()
     {
-        $test = Users::getMyProfile(1);
-        $this->assertInstanceOf('Users', $test);
+        $test = Accounts::getAccount(1);
+        $this->assertInstanceOf('Accounts', $test);
     }
 
     /**
@@ -20,8 +20,8 @@ class UserModelTest extends TestCase {
      */
     public function testGetProfileByEmail()
     {
-        $test = Users::getMyProfileByEmail('foo@bar.com');
-        $this->assertInstanceOf('Users', $test);
+        $test = Accounts::getAccountByEmail('foo@bar.com');
+        $this->assertInstanceOf('Accounts', $test);
     }
 
 }

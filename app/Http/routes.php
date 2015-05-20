@@ -54,7 +54,7 @@ Route::group(array('prefix' => 'api'), function () {
 */
 
 Route::group(array('before' => 'is_logged_in', 'role' => 'admin'), function () {
-    Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
+    Accounts::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
     Route::get('admin/home', "AdminController@home");
     Route::get('admin/users', "AdminController@users");
@@ -82,26 +82,26 @@ Route::group(array('before' => 'is_logged_in', 'role' => 'groups.all'), function
 
 /*
 |--------------------------------------------------------------------------
-| Users
+| Accounts
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'user', 'before' => 'is_logged_in', 'role' => 'groups.all'), function () {
-    Users::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
+Route::group(array('prefix' => 'account', 'before' => 'is_logged_in', 'role' => 'groups.all'), function () {
+    Accounts::setStripeKey(Config::get("gondolyn.stripe.secret_key"));
 
-    Route::get('settings', "UserController@settings");
-    Route::get('settings/password', "UserController@password");
-    Route::get('settings/subscription', "UserController@subscription");
-    Route::get('settings/subscription/invoices', "UserController@subscriptionInvoices");
-    Route::get('settings/subscription/download/{id}', array('uses' => 'UserController@downloadInvoice'));
+    Route::get('settings', "AccountController@settings");
+    Route::get('settings/password', "AccountController@password");
+    Route::get('settings/subscription', "AccountController@subscription");
+    Route::get('settings/subscription/invoices', "AccountController@subscriptionInvoices");
+    Route::get('settings/subscription/download/{id}', array('uses' => 'AccountController@downloadInvoice'));
 
-    Route::post('settings/update', array('uses' => 'UserController@update'));
-    Route::post('settings/update/password', array('uses' => 'UserController@updatePassword'));
-    Route::post('settings/set/subscription', array('uses' => 'UserController@setSubscription'));
-    Route::post('settings/update/subscription', array('uses' => 'UserController@updateSubscription'));
+    Route::post('settings/update', array('uses' => 'AccountController@update'));
+    Route::post('settings/update/password', array('uses' => 'AccountController@updatePassword'));
+    Route::post('settings/set/subscription', array('uses' => 'AccountController@setSubscription'));
+    Route::post('settings/update/subscription', array('uses' => 'AccountController@updateSubscription'));
 
-    Route::get('delete/account', "UserController@deleteUserAccount");
-    Route::get('cancel/subscription', "UserController@cancelSubscription");
+    Route::get('delete/account', "AccountController@deleteAccount");
+    Route::get('cancel/subscription', "AccountController@cancelSubscription");
 });
 
 /*
@@ -118,15 +118,15 @@ Route::post('failed/payment', 'Laravel\Cashier\WebhookController@handleWebhook')
 |--------------------------------------------------------------------------
 */
 
-Route::get('login/email', "UserController@login");
-Route::post('login/request', array('uses' => 'UserController@withEmail'));
+Route::get('login/email', "AccountController@login");
+Route::post('login/request', array('uses' => 'AccountController@withEmail'));
 
-Route::get('login/facebook', "UserController@withFacebook");
-Route::get('login/twitter', "UserController@withTwitter");
-Route::get('login/twitter/verify', "UserController@loginTwitterVerify");
-Route::post('login/twitter/verified', "UserController@loginTwitterVerified");
+Route::get('login/facebook', "AccountController@withFacebook");
+Route::get('login/twitter', "AccountController@withTwitter");
+Route::get('login/twitter/verify', "AccountController@loginTwitterVerify");
+Route::post('login/twitter/verified', "AccountController@loginTwitterVerified");
 
-Route::get('logout', "UserController@logout");
+Route::get('logout', "AccountController@logout");
 
 /*
 |--------------------------------------------------------------------------
@@ -135,8 +135,8 @@ Route::get('logout', "UserController@logout");
 */
 
 Route::group(array('prefix' => 'forgot'), function () {
-    Route::get('password', "UserController@forgotPassword");
-    Route::post('password/request', "UserController@generateNewPassword");
+    Route::get('password', "AccountController@forgotPassword");
+    Route::post('password/request', "AccountController@generateNewPassword");
 });
 
 /*

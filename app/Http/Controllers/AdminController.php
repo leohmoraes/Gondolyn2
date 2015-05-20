@@ -36,7 +36,7 @@ class AdminController extends BaseController
 
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['users'] = Users::getAllMembers();
+        $data['users'] = Accounts::getAllMembers();
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
@@ -52,7 +52,7 @@ class AdminController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $user = Users::getMember(Crypto::decrypt($id));
+        $user = Accounts::getMember(Crypto::decrypt($id));
 
         Session::set("userInEditor", $user);
 
@@ -63,14 +63,15 @@ class AdminController extends BaseController
         $data['notification']       = Session::get("notification") ?: "";
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
+        $data['shippingColumns']    = Config::get('forms.shipping');
 
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
             "nav_bar"           => View::make('navbar', $data),
             "adminModals"       => View::make('admin.modals', $data),
-            "selectRole"        => View::make('user.selectRole', $data),
-            "content"           => View::make('user.settings', $data),
+            "selectRole"        => View::make('account.selectRole', $data),
+            "content"           => View::make('account.settings', $data),
         ];
 
         return view($this->layout, $layoutData);
@@ -80,7 +81,7 @@ class AdminController extends BaseController
     {
         try {
             $user = Session::get("userInEditor");
-            $status = Users::updateProfile($user->id);
+            $status = Accounts::updateAccount($user->id);
 
             if ($status) {
                 Session::flash("notification", "The profile was successfully updated.");
@@ -99,7 +100,7 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
-        Users::modifyUserStatus($user->id, "inactive");
+        Accounts::modifyUserStatus($user->id, "inactive");
 
         return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
@@ -108,7 +109,7 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
-        Users::modifyUserStatus($user->id, "active");
+        Accounts::modifyUserStatus($user->id, "active");
 
         return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
@@ -122,7 +123,7 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
-        Users::deleteAccount($user->id);
+        Accounts::deleteAccount($user->id);
 
         Session::flash("notification", "The user was successfully deleted");
 

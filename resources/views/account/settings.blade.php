@@ -17,7 +17,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a id="deleteBtn" type="button" class="btn btn-danger" href="{{ URL::to('user/delete/account') }}">Confirm Delete</a>
+                    <a id="deleteBtn" type="button" class="btn btn-danger" href="{{ URL::to('account/delete/account') }}">Confirm Delete</a>
                 </div>
             </div>
         </div>
@@ -57,14 +57,14 @@
                 @else
                 <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
                     @if (Config::get("gondolyn.subscription"))
-                    <a class="raw-right btn btn-default raw-margin-left-24" href="{{ URL::to('user/settings/subscription') }}">Subscription</a>
+                    <a class="raw-right btn btn-default raw-margin-left-24" href="{{ URL::to('account/settings/subscription') }}">Subscription</a>
                     @endif
                 @endif
             </div>
             @if (isset($adminEditorMode))
             <form id="userSettings" method="post" action="{{ URL::to('admin/update') }}">
             @else
-            <form id="userSettings" method="post" action="{{ URL::to('user/settings/update') }}">
+            <form id="userSettings" method="post" action="{{ URL::to('account/settings/update') }}">
             @endif
                 <?= Form::token(); ?>
                 <div class="raw100 raw-left raw-margin-top-24">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                {!! FormMaker::fromObject($shippingColumns, 'user.settingsRow', $user); !!}
+                {!! FormMaker::fromObject($shippingColumns, 'account.settingsRow', $user); !!}
 
                 @if (Session::get('role') == 'admin')
                 <div class="raw100 raw-left raw-margin-top-24">
@@ -112,7 +112,7 @@
                 <div class="raw50 raw-right raw-margin-top-24 text-right">
                     <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-left-24" value="Save Settings">
                     @if ( ! isset($adminEditorMode))
-                        <a href="{{ URL::to('user/settings/password') }}" class="btn btn-info">Change Password</a>
+                        <a href="{{ URL::to('account/settings/password') }}" class="btn btn-info">Change Password</a>
                     @endif
                 </div>
             </form>

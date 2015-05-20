@@ -5,7 +5,7 @@
 </div>
 
 <div class="raw-device raw-margin-auto raw-margin-top-24">
-    <form id="userSettings" method="post" action="{{ URL::to('user/settings/update/password') }}">
+    <form id="userSettings" method="post" action="{{ URL::to('account/settings/update/password') }}">
         <?= Form::token(); ?>
         <div class="raw100 raw-left rg-row raw-margin-top-24">
             <div class="rg-col-6">

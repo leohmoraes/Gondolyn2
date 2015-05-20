@@ -34,6 +34,7 @@ class PermissionsMatrix implements Middleware
 
         $matrix = Config::get('permissions.matrix');
 
+        $default = $matrix['default_role'];
         $groups = $matrix['groups'];
         $roles = $matrix['roles'];
 
@@ -45,6 +46,7 @@ class PermissionsMatrix implements Middleware
 
         $permissionsArray['roles'] = $roles;
         $permissionsArray['groups'] = $groups;
+        $permissionsArray['default_role'] = $default;
 
         foreach ($modulePermissionConfigs as $permissions) {
 

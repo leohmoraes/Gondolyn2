@@ -35,7 +35,7 @@ class ErrorController extends BaseController
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('user.login-panel', $data),
+            "gondolyn_login"    => View::make('account.login-panel', $data),
             "nav_bar"           => View::make('navbar', $data),
             "content"           => View::make('errors.general', $data),
         ];
@@ -75,7 +75,7 @@ class ErrorController extends BaseController
         $layoutData = [
             "metadata"          => View::make('metadata', $data),
             "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('user.login-panel', $data),
+            "gondolyn_login"    => View::make('account.login-panel', $data),
             "nav_bar"           => View::make('navbar', $data),
             "content"           => View::make('errors.critical', $data),
         ];

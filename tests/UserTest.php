@@ -1,6 +1,6 @@
 <?php
 
-class UserTest extends TestCase {
+class AccountTest extends TestCase {
 
     /**
      * Check the home page

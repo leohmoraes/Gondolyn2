@@ -1,7 +1,7 @@
 <div class="raw100 raw-left user-row">
     <div class="rg-row">
         <div class="rg-col-4">
-            <p><a href="{{ URL::to('user/settings/subscription/download/'.Crypto::encrypt($invoice->id)) }}">
+            <p><a href="{{ URL::to('account/settings/subscription/download/'.Crypto::encrypt($invoice->id)) }}">
                 {{ $invoice->dateString() }}
             </a></p>
         </div>

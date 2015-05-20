@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Request;
 
 class Utilities
 {
-    public static function add_salt($length = 10)
+    public static function addSalt($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
