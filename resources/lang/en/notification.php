@@ -21,6 +21,9 @@ return array(
         "success" => "We found you!",
         "deleted" => "Your account was deleted",
         "expired-session" => "You're not currently logged in.",
+        "missing" => "Missing login credentials",
+        "deactivated" => "We're sorry either your account has been deactivated or you have not registered with us before.",
+        "denied" => "We're sorry we cannot find you and this application is not currently accepting new accounts.",
     ),
 
     "general" => array(

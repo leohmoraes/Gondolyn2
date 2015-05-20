@@ -128,18 +128,17 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $creditCardToken = Input::get("stripeToken");
 
-        if ($user->cancelled()) $user->subscription($myplan['stripe_id'])->resume($creditCardToken);
-        else $user->subscription($myplan['stripe_id'])->create($creditCardToken);
+        if ($user->cancelled()) {
+            $user->subscription($myplan['stripe_id'])->resume($creditCardToken);
+        } else {
+            $user->subscription($myplan['stripe_id'])->create($creditCardToken);
+            Session::put(["subscribed" => true, "plan" => $myplan['stripe_id']], null);
+        }
 
         if ($trial > 0) {
             $user->trial_ends_at = Carbon::now()->addDays($trial);
             $user->save();
         }
-
-        Session::put(array(
-            "subscribed" => $user->subscribed(),
-            "plan" => $user->stripe_plan,
-        ), null);
 
         return true;
     }
@@ -177,22 +176,19 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     public function loginWithEmail($useremail, $password, $remember_me)
     {
         if ($useremail === '' || $password === '') {
-            throw new Exception("Missing login credentials", 1);
+            throw new Exception(Lang::get('notifications.login.missing'), 1);
         }
 
         $user = Accounts::where('user_email', '=', $useremail)->first();
 
-        if (is_object($user)) {
-            return $this->login($user, $useremail, $password, $remember_me);
-        } elseif (is_null($user) && Config::get("gondolyn.signup")) {
-            $data = array(
-                'email' => $useremail,
-                'password' => $password,
-            );
-            return $this->makeNewAccount($data, "email", $remember_me);
-        } else {
-            return false;
-        }
+        $data = array(
+            'email' => $useremail,
+            'password' => $password,
+        );
+
+        $checkedUser = $this->checkAccountStatus($user, $data, "email");
+
+        return $this->login($checkedUser, $useremail, $password, $remember_me);
     }
 
     public function loginWithSocialMedia($data, $account)
@@ -213,19 +209,34 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
             // Look for a matching Email
             if (isset($data['user']['email'])) {
                 $user = Accounts::where('user_email', '=', $data['user']['email'])->first();
-
-                if (is_object($user) && $user->user_role !== 'inactive') {
-                    return $user;
-                } else if (Config::get("gondolyn.signup") && ! is_object($user)) {
-                    return $this->makeNewAccount($data, $account);
-                } else {
-                    throw new Exception("We're sorry either your account has been deactivated or you have not registered with us before.", 1);
-                }
+                return $this->checkAccountStatus($user, $data, $account);
             } else {
                 // means the service doesn't have an email provided by the API
                 return true;
             }
         }
+    }
+
+    /**
+     * Check the account statis
+     * @param  object $user User Object
+     * @param  array  $data User data
+     * @param  string $account Account type
+     * @return mixed
+     */
+    public function checkAccountStatus($user, $data, $account)
+    {
+        $result = false;
+
+        if (is_object($user) && $user->user_active !== 'inactive') {
+            $result = $user;
+        } else if (is_object($user) && $user->user_active === 'inactive') {
+            throw new Exception(Lang::get('notification.login.deactivated'), 1);
+        } else {
+            $result = $this->makeNewAccount($data, $account);
+        }
+
+        return $result;
     }
 
     public function login($user, $useremail, $password, $remember_me = null)
@@ -282,11 +293,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
             Session::forget("twitterID");
             Session::forget("twitterScreenName");
 
-            if (Config::get("gondolyn.signup")) {
-                return $this->makeNewAccount($data, $account);
-            } else {
-                throw new Exception("We're sorry we cannot find you and this application is not currently accepting sign ups.", 1);
-            }
+            return $this->makeNewAccount($data, $account);
         }
     }
 
@@ -324,6 +331,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
     private function makeNewAccount($data, $account, $remember_me = false)
     {
+        // Do we allow new accounts?
+        if ( ! Config::get("gondolyn.signup")) {
+            throw new Exception(Lang::get('notification.login.denied'), 1);
+        }
+
         // Check for remember me
         $remember = ($remember_me === "on") ? TRUE : FALSE;
 

@@ -141,85 +141,85 @@ class FormMaker {
      */
     public static function inputMaker($name, $field, $object, $class, $reformatted = false, $populated)
     {
-        $inputTypes = Config::get('form.maker');
+        $config['populated'] = $populated;
+        $config['name']      = $name;
+        $config['class']     = $class;
+        $config['field']     = $field;
 
-        $inputs = Validation::inputs();
+        $config['inputTypes'] = Config::get('form.maker');
 
-        $objectName     = (isset($object->$name)) ? $object->$name : $name;
-        $placeholder    = FormMaker::columnLabel($field, $name);
+        $config['inputs'] = Validation::inputs();
+
+        $config['objectName']     = (isset($object->$name)) ? $object->$name : $name;
+        $config['placeholder']    = FormMaker::columnLabel($field, $name);
 
         // If validation inputs are available lets prepopulate the fields!
-        if (isset($inputs[$name])) {
-            $populated = true;
-            $objectName = $inputs[$name];
+        if (isset($config['inputs'][$name])) {
+            $config['populated'] = true;
+            $config['objectName'] = $config['inputs'][$name];
         }
 
         if ($reformatted) {
-            $placeholder = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
+            $config['placeholder'] = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
         }
 
         if ( ! isset($field['type'])) {
             if (is_array($field)) {
-                $fieldType = 'string';
+                $config['fieldType'] = 'string';
             } else {
-                $fieldType = $field;
+                $config['fieldType'] = $field;
             }
         } else {
-            $fieldType = $field['type'];
+            $config['fieldType'] = $field['type'];
         }
 
-        $inputString = FormMaker::inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs);
+        $inputString = FormMaker::inputStringGenerator($config);
 
         return $inputString;
     }
 
     /**
      * The input string generator
-     * @param  array $inputTypes  Input type array
-     * @param  boolean $populated   Populated values
-     * @param  string $name        Name
-     * @param  string $objectName  Object name
-     * @param  string $placeholder Placeholder value
-     * @param  string $class       CSS class
-     * @param  array $field       Field array
-     * @param  string $fieldType   Field type as string
+     * @param  array $config  Config
      * @return string
      */
-    public static function inputStringGenerator($inputTypes, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType, $inputs)
+    public static function inputStringGenerator($config)
     {
         $textInputs     = ['text', 'textarea'];
         $selectInputs   = ['select'];
         $checkboxInputs = ['checkbox', 'checkbox-inline'];
         $radioInputs    = ['radio', 'radio-inline'];
 
-        $checkType      = (in_array($fieldType, $checkboxInputs)) ? 'checked' : 'selected';
-        $selected       = (isset($inputs[$name]) || isset($field['selected'])) ? $checkType : '';
+        $checkType      = (in_array($config['fieldType'], $checkboxInputs)) ? 'checked' : 'selected';
+        $selected       = (isset($config['inputs'][$config['name']]) || isset($config['field']['selected'])) ? $checkType : '';
 
-        switch ($fieldType) {
-            case in_array($fieldType, $textInputs):
-                $population = ($populated) ? $objectName : '';
-                $inputString = '<textarea id="'.ucfirst($name).'" class="'.$class.'" name="'.$name.'" placeholder="'.$placeholder.'">'.$population.'</textarea>';
+        switch ($config['fieldType']) {
+            case in_array($config['fieldType'], $textInputs):
+                $population = ($config['populated']) ? $config['objectName'] : '';
+                $inputString = '<textarea id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
                 break;
 
-            case in_array($fieldType, $selectInputs):
+            case in_array($config['fieldType'], $selectInputs):
                 $options = '';
-                foreach ($field['options'] as $key => $value) {
-                    $selected = ($objectName === $value) ? 'selected' : '';
+                foreach ($config['field']['options'] as $key => $value) {
+                    $selected = ($config['objectName'] === $value) ? 'selected' : '';
                     $options .= '<option value="'.$value.'" '.$selected.'>'.$key.'</option>';
                 }
-                $inputString = '<select id="'.ucfirst($name).'" class="'.$class.'" name="'.$name.'">'.$options.'</select>';
+                $inputString = '<select id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
                 break;
 
-            case in_array($fieldType, $checkboxInputs):
-                $inputString = '<input id="'.ucfirst($name).'" '.$selected.' type="checkbox" name="'.$name.'">';
+            case in_array($config['fieldType'], $checkboxInputs):
+                $inputString = '<input id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'">';
                 break;
 
-            case in_array($fieldType, $radioInputs):
-                $inputString = '<input id="'.ucfirst($name).'" '.$selected.' type="radio" name="'.$name.'">';
+            case in_array($config['fieldType'], $radioInputs):
+                $inputString = '<input id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'">';
                 break;
 
             default:
-                $inputString = FormMaker::makeHTMLInputString($inputTypes[$fieldType], $populated, $name, $objectName, $placeholder, $class, $field, $fieldType);
+                // Pass along the config
+                $config['type'] = $config['inputTypes'][$config['fieldType']];
+                $inputString = FormMaker::makeHTMLInputString($config);
                 break;
         }
 
@@ -228,23 +228,16 @@ class FormMaker {
 
     /**
      * Generate a standard HTML input string
-     * @param  string $type        Input type
-     * @param  boolean $populated   Preset value
-     * @param  string $name        Input name
-     * @param  string $objectName  Object name
-     * @param  string $placeholder Placeholder value
-     * @param  string $class       CSS class
-     * @param  array $field       The field details
-     * @param  string $fieldType   Field type
+     * @param  array $config        Config array
      * @return string
      */
-    public static function makeHTMLInputString($type, $populated, $name, $objectName, $placeholder, $class, $field, $fieldType)
+    public static function makeHTMLInputString($config)
     {
-        $multiple           = (isset($field['multiple'])) ? 'multiple' : '';
-        $floatingNumber     = ($fieldType === 'float' || $fieldType === 'decimal') ? 'step="any"' : '';
-        $population         = ($populated) ? 'value="'.$objectName.'"' : '';
+        $multiple           = (isset($confif['field']['multiple'])) ? 'multiple' : '';
+        $floatingNumber     = ($config['fieldType'] === 'float' || $config['fieldType'] === 'decimal') ? 'step="any"' : '';
+        $population         = ($config['populated']) ? 'value="'.$config['objectName'].'"' : '';
 
-        $inputString        = '<input id="'.ucfirst($name).'" class="'.$class.'" type="'.$type.'" name="'.$name.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$placeholder.'">';
+        $inputString        = '<input id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
         return $inputString;
     }
 
