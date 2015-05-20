@@ -35,13 +35,17 @@ return array(
 
     'subscription' => TRUE,
 
-    'company' => '',
-
-    'product' => '',
+    // Invoice Details
+    'company'   => '',
+    'street'    => '',
+    'location'  => '',
+    'phone'     => '',
+    'url'       => '',
+    'product'   => '',
 
     'stripe' => array(
-        'secret_key' => 'sk_test_it46CfmSMY1URex8iltvYENv',
-        'publish_key' => 'pk_test_gnX4axSqMkQ8wmhBcwxgNxA8',
+        'secret_key' => '',
+        'publish_key' => '',
     ),
 
     'trial' => 30,
