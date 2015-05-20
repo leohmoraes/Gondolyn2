@@ -38,6 +38,8 @@ return array(
 
     'subscription' => TRUE,
 
+    'tax' => 0.00,
+
     // Invoice Details
     'company'   => '',
     'street'    => '',

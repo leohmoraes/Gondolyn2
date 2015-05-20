@@ -41,6 +41,15 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     }
 
     /**
+     * Get Tax Percentage for subscriptions
+     * @return float
+     */
+    public function getTaxPercent()
+    {
+        return Config::get('gondolyn.tax');
+    }
+
+    /**
      * Get account
      * @param  integer $id Account ID
      * @return mixed
@@ -187,11 +196,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $myplan = $packages[$plan];
 
-        $result = $user->subscription($myplan['stripe_id'])->swap();
+        $user->subscription($myplan['stripe_id'])->swap();
 
         Session::put("plan", $myplan['stripe_id']);
 
-        return $result;
+        return true;
     }
 
     /**
