@@ -1,5 +1,3 @@
-@section('selectRole')
-
 <select name="role" class="form-control">
     @foreach($options as $option)
 
@@ -7,5 +5,3 @@
 
     @endforeach
 </select>
-
-@stop

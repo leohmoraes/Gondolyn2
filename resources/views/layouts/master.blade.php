@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="@yield('page_description')" />
-        <meta name="keywords" content="@yield('page_keywords')" />
+        <meta name="description" content="{!! $page_description !!}" />
+        <meta name="keywords" content="{!! $page_keywords !!}" />
 
-        <title>{{ trans("content.app.title") }} - @yield('page_title')</title>
+        <title>{{ trans("content.app.title") }} - {!! $page_title !!}</title>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="<?= asset('css/bootstrap.min.css'); ?>">
@@ -45,11 +45,11 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        @yield('page_assets')
+        {!! $page_assets; !!}
     </head>
     <body>
 
-        @yield("gondolyn_login")
+        @include('account.login-panel')
 
         <div class="gondolyn-modal">
             <div class="raw-device">
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        @yield("nav_bar")
+        @yield("navigation")
 
         <div class="raw100 raw-left raw-margin-top-60">
             <div class="raw-device raw-margin-auto">

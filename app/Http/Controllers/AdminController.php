@@ -19,15 +19,9 @@ class AdminController extends BaseController
 
         $data['message'] = AppServices::welcomeMessage($user);
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "form"              => View::make('admin.form'),
-            "content"           => View::make('admin.home', $data),
-        ];
+        $data['form'] = View::make('admin.form');
 
-        return view($this->layout, $layoutData);
+        return view('admin.home', $data);
     }
 
     public function users()
@@ -38,14 +32,7 @@ class AdminController extends BaseController
 
         $data['users'] = Accounts::getAllMembers();
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('admin.users', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('admin.users', $data);
     }
 
     public function editor($id)
@@ -65,16 +52,10 @@ class AdminController extends BaseController
         $data['adminEditorMode']    = true;
         $data['shippingColumns']    = Config::get('forms.shipping');
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "adminModals"       => View::make('admin.modals', $data),
-            "selectRole"        => View::make('account.selectRole', $data),
-            "content"           => View::make('account.settings', $data),
-        ];
+        // $data["adminModals"]  = View::make('admin.modals');
+        // $data["selectRole"]  = View::make('account.selectRole');
 
-        return view($this->layout, $layoutData);
+        return view('account.settings', $data);
     }
 
     public function update()

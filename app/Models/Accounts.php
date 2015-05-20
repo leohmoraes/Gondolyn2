@@ -34,6 +34,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 
+    public function getBillableName()
+    {
+        $user = Accounts::getAccount(Session::get("id"));
+        return $user->user_email;
+    }
+
     public static function getAccount($id)
     {
         return Accounts::findOrFail($id);

@@ -16,13 +16,6 @@ class MemberController extends BaseController
         $data['user'] = Session::get("username");
         $data['notification'] = Session::get("notification");
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('members.home', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('members.home', $data);
     }
 }

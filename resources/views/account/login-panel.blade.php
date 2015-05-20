@@ -1,5 +1,3 @@
-@section('gondolyn_login')
-
 <div class="gondolyn-login">
 
     <div class="raw100 raw-left raw-margin-top-48 raw-margin-bottom-48">
@@ -32,5 +30,3 @@
     </div>
 
 </div>
-
-@stop

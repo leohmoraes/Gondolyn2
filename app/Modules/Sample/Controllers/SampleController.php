@@ -36,14 +36,7 @@ class SampleController extends \BaseController
         $serviceData    = $service->dataModifier($modelData);
         $data           = $service->processData($serviceData, $sysData);
 
-        $layoutData = [
-            "metadata"    => View::make('metadata', $data),
-            "general"     => View::make('common', $data),
-            "nav_bar"     => View::make('navbar', $data),
-            "content"     => View::make('sample::sample', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('sample::sample', $data);
     }
 
     public function api()

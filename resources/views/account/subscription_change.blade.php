@@ -1,3 +1,5 @@
+@extends('layouts.standard')
+
 @section('content')
 
 <!-- Modal -->
@@ -38,7 +40,7 @@
                     <label for="cvv" class="raw-margin-top-8 raw-right">Plan</label>
                 </div>
                 <div class="rg-col-8">
-                    @yield('selectPlan')
+                    @include('account.selectPlan')
                 </div>
             </div>
             <div class="raw100 raw-left rg-row raw-margin-top-24">

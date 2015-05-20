@@ -1,5 +1,3 @@
-@section('selectPlan')
-
 <select name="plan" class="form-control">
     @foreach($packages as $option)
 
@@ -7,5 +5,3 @@
 
     @endforeach
 </select>
-
-@stop

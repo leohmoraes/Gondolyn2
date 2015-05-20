@@ -32,15 +32,7 @@ class ErrorController extends BaseController
 
         $data['error'] =  $error ?: Lang::get("notification.fourofour.general");
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('account.login-panel', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('errors.general', $data),
-        ];
-
-        return view($this->layout, $layoutData, [], 404);
+        return view('errors.general', $data, [], 404);
     }
 
     public function critical()
@@ -72,15 +64,7 @@ class ErrorController extends BaseController
 
         Session::flush();
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('account.login-panel', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('errors.critical', $data),
-        ];
-
-        return view($this->layout, $layoutData, [], 500);
+        return view('errors.critical', $data, [], 500);
     }
 
 }

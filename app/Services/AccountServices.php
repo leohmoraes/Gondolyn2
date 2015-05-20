@@ -1,6 +1,6 @@
 <?php namespace App\Services;
 
-use Session, Auth, Cookie;
+use Session, Auth, Cookie, Request;
 
 class AccountServices
 {
@@ -38,4 +38,23 @@ class AccountServices
         return $user->user_role."/home";
     }
 
+    public static function loggedIn()
+    {
+        if (Session::get('logged_in')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function isAccountRemembered()
+    {
+        if (Auth::viaRemember() && ! Session::get("logged_in")) {
+            $email      = Request::cookie("email");
+            $password   = Request::cookie("password");
+
+            $Users      = new Accounts;
+            $Users->loginWithEmail($email, $password, false);
+        }
+    }
 }

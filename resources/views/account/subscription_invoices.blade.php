@@ -1,3 +1,5 @@
+@extends('layouts.standard')
+
 @section('content')
 
 <!-- Content -->

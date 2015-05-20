@@ -1,3 +1,5 @@
+@extends('layouts.standard')
+
 @section('content')
 
 <div class="raw100 raw-left text-center">
@@ -34,7 +36,7 @@
                     <label for="cvc" class="raw-margin-top-8 raw-right">CVV / Expiry</label>
                 </div>
                 <div class="rg-col-4">
-                    <input id="cvc" type="text" name="cvc" class="form-control" placeholder="CVC" data-stripe="cvc">
+                    <input id="cvc" type="text" name="cvc" class="form-control" placeholder="CVV" data-stripe="cvc">
                 </div>
                 <div class="rg-col-4">
                     <input id="expiry" type="text" name="expiry" class="form-control" placeholder="MM/YY">
@@ -45,7 +47,7 @@
                     <label for="cvv" class="raw-margin-top-8 raw-right">Plan</label>
                 </div>
                 <div class="rg-col-8">
-                    @yield('selectPlan')
+                     @include('account.selectPlan')
                 </div>
             </div>
             <div class="raw100 raw-left rg-row raw-margin-top-24">

@@ -238,14 +238,7 @@ class '.$module.'Controller extends \BaseController {
         $serviceData    = $service->dataModifier($modelData);
         $data           = $service->processData($serviceData, $sysData);
 
-        $layoutData = [
-            "metadata"    => View::make(\'metadata\', $data),
-            "general"     => View::make(\'common\', $data),
-            "nav_bar"     => View::make(\'navbar\', $data),
-            "content"     => View::make(\''.lcfirst($module).'::'.lcfirst($module).'\', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view(\''.lcfirst($module).'::'.lcfirst($module).'\', $data);
     }
 
     public function api()
@@ -342,7 +335,9 @@ interface '.$module.'ServiceInterface {
         |--------------------------------------------------------------------------
         */
 
-        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Views/'.lcfirst($module).'.blade.php', '@section(\'content\')
+        $this->makeModuleFile(app_path().'/Modules/'.$module.'/Views/'.lcfirst($module).'.blade.php', '@extends(\'layouts.standard\')
+
+@section(\'content\')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <h1>'.$module.' Module #1</h1>

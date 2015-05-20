@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\AccountServices;
+
 class MainController extends BaseController
 {
     protected $layout = 'layouts.master';
@@ -16,30 +18,13 @@ class MainController extends BaseController
         $data["back"] = "";
         $data["user"] = "";
 
-        // If we were to be remembered and we're not logged in
-        if (Auth::viaRemember() && ! Session::get("logged_in")) {
-            $email      = Request::cookie("email");
-            $password   = Request::cookie("password");
-
-            $Users      = new Users;
-            $Users->loginWithEmail($email, $password, false);
-        }
-
         // If we are logged in lets get personal
-        if (Session::get("logged_in")) {
+        if (AccountServices::loggedIn()) {
             $data["back"] = " back ";
             $data["user"] = Session::get("username");
         }
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('account.login-panel', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('main.welcome', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('main.welcome', $data);
     }
 
     public function changelog()
@@ -48,14 +33,6 @@ class MainController extends BaseController
 
         $data['changes'] = array_reverse(json_decode(file_get_contents("../build.json")));
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('account.login-panel', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('main.changelog', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('main.changelog', $data);
     }
 }

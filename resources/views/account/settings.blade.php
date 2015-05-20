@@ -1,7 +1,9 @@
+@extends('layouts.standard')
+
 @section('content')
 
     @if (isset($adminEditorMode))
-        @yield('adminModals')
+        @include('admin.modals')
     @endif
 
     <!-- Modal -->
@@ -104,7 +106,7 @@
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
-                        @yield('selectRole')
+                        @include('account.selectRole')
                     </div>
                 </div>
                 @endif

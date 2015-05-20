@@ -1,5 +1,3 @@
-@section('adminModals')
-
 <!-- Modal -->
 <div class="modal fade" id="adminDeleteModal" tabindex="-2" role="dialog" aria-labelledby="adminDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -54,5 +52,3 @@
         </div>
     </div>
 </div>
-
-@stop

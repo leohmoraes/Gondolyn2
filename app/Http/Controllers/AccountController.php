@@ -15,15 +15,7 @@ class AccountController extends BaseController
     public function forgotPassword()
     {
         $data = Config::get("gondolyn.basic-app-info");
-
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('account.forgot-password', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('account.forgot-password', $data);
     }
 
     public function generateNewPassword()
@@ -74,15 +66,7 @@ class AccountController extends BaseController
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['shippingColumns']    = Config::get('forms.shipping');
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "selectRole"        => View::make('account.selectRole', $data),
-            "content"           => View::make('account.settings', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('account.settings', $data);
     }
 
     public function password()
@@ -92,14 +76,7 @@ class AccountController extends BaseController
         $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['roles'] = Config::get("permissions.matrix.roles");
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('account.password', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('account.password', $data);
     }
 
     public function subscription()
@@ -109,20 +86,12 @@ class AccountController extends BaseController
         $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['packages'] = Config::get("gondolyn.packages");
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "selectPlan"        => View::make('account.selectPlan', $data),
-        ];
-
         if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
-            $layoutData["content"] = View::make('account.subscription_change', $data);
+            $view = view('account.subscription_change', $data);
         } else {
-            $layoutData["content"] = View::make('account.subscription_set', $data);
+            $view = view('account.subscription_set', $data);
         }
-
-        return view($this->layout, $layoutData);
+        return $view;
     }
 
     public function subscriptionInvoices()
@@ -139,15 +108,7 @@ class AccountController extends BaseController
             $data['invoices'] .= View::make('account.invoice', array('invoice' => $invoice));
         }
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-        ];
-
-        $layoutData["content"] = View::make('account.subscription_invoices', $data);
-
-        return view($this->layout, $layoutData);
+        return view('account.subscription_invoices', $data);
     }
 
     public function downloadInvoice($id)
@@ -157,8 +118,12 @@ class AccountController extends BaseController
         $invoice = Crypto::decrypt($id);
 
         return $user->downloadInvoice($invoice, [
-            'vendor'  => Config::get("gondolyn.company"),
-            'product' => Config::get("gondolyn.product"),
+            'vendor'    => Config::get("gondolyn.company"),
+            'street'    => Config::get("gondolyn.street"),
+            'location'  => Config::get("gondolyn.location"),
+            'phone'     => Config::get("gondolyn.phone"),
+            'url'       => Config::get("gondolyn.url"),
+            'product'   => Config::get("gondolyn.product"),
         ]);
     }
 
@@ -267,15 +232,7 @@ class AccountController extends BaseController
 
         Session::flash('notification', Validation::errors('string') ?: false);
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "gondolyn_login"    => View::make('account.login-panel', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('account.login', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('account.login', $data);
     }
 
     public function withEmail()
@@ -364,14 +321,7 @@ class AccountController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $layoutData = [
-            "metadata"          => View::make('metadata', $data),
-            "general"           => View::make('common', $data),
-            "nav_bar"           => View::make('navbar', $data),
-            "content"           => View::make('account.twitter-verify', $data),
-        ];
-
-        return view($this->layout, $layoutData);
+        return view('account.twitter-verify', $data);
     }
 
     public function loginTwitterVerified()

@@ -1,10 +1,12 @@
+@extends('layouts.standard')
+
 @section('content')
 
 <div class="raw100">
     <h2>Admin : User Manager</h2>
 </div>
 
-<div class="raw100">
+<div class="raw100 raw-margin-top-24">
 
     @foreach($users as $user)
 

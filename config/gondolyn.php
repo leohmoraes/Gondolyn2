@@ -40,8 +40,8 @@ return array(
     'product' => '',
 
     'stripe' => array(
-        'secret_key' => '',
-        'publish_key' => '',
+        'secret_key' => 'sk_test_it46CfmSMY1URex8iltvYENv',
+        'publish_key' => 'pk_test_gnX4axSqMkQ8wmhBcwxgNxA8',
     ),
 
     'trial' => 30,
