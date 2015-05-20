@@ -141,6 +141,8 @@ class FormMaker {
      */
     public static function inputMaker($name, $field, $object, $class, $reformatted = false, $populated)
     {
+        $config = array();
+
         $config['populated'] = $populated;
         $config['name']      = $name;
         $config['class']     = $class;
@@ -233,7 +235,7 @@ class FormMaker {
      */
     public static function makeHTMLInputString($config)
     {
-        $multiple           = (isset($confif['field']['multiple'])) ? 'multiple' : '';
+        $multiple           = (isset($config['field']['multiple'])) ? 'multiple' : '';
         $floatingNumber     = ($config['fieldType'] === 'float' || $config['fieldType'] === 'decimal') ? 'step="any"' : '';
         $population         = ($config['populated']) ? 'value="'.$config['objectName'].'"' : '';
 

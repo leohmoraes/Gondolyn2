@@ -31,7 +31,7 @@ class AdminController extends BaseController
 
         $data = Config::get("gondolyn.basic-app-info");
 
-        $data['users'] = Accounts::getAllMembers();
+        $data['users'] = Accounts::getAllAccounts();
 
         return view('admin.users', $data);
     }
@@ -40,7 +40,7 @@ class AdminController extends BaseController
     {
         $data = Config::get("gondolyn.basic-app-info");
 
-        $user = Accounts::getMember(Crypto::decrypt($id));
+        $user = Accounts::getAccount(Crypto::decrypt($id));
 
         Session::set("userInEditor", $user);
 
@@ -79,7 +79,7 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
-        Accounts::modifyUserStatus($user->id, "inactive");
+        Accounts::modifyAccountStatus($user->id, "inactive");
 
         return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }
@@ -88,7 +88,7 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
-        Accounts::modifyUserStatus($user->id, "active");
+        Accounts::modifyAccountStatus($user->id, "active");
 
         return redirect('admin/editor/'.Crypto::encrypt($user->id));
     }

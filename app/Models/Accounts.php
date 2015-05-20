@@ -40,27 +40,40 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return $user->user_email;
     }
 
+    /**
+     * Get account
+     * @param  integer $id Account ID
+     * @return mixed
+     */
     public static function getAccount($id)
     {
         return Accounts::findOrFail($id);
     }
 
+    /**
+     * Get an account by email
+     * @param  string $email Email address
+     * @return mixed
+     */
     public static function getAccountByEmail($email)
     {
         return Accounts::where('user_email', '=', $email)->firstOrFail();
     }
 
-    public static function getAllMembers()
+    /**
+     * Get all Accounts
+     * @return array
+     */
+    public static function getAllAccounts()
     {
         return Accounts::where('user_role', '=', 'member')->get();
     }
 
-    public static function getMember($id)
-    {
-        $users = Accounts::where('id', '=', $id)->get();
-        return $users[0];
-    }
-
+    /**
+     * Update Account
+     * @param  integer $id User Id
+     * @return bool
+     */
     public static function updateAccount($id)
     {
         $user = Accounts::findOrFail($id);
@@ -81,6 +94,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return true;
     }
 
+    /**
+     * Generate new password
+     * @param  integer $id User Id
+     * @return string
+     */
     public function generateNewPassword($id)
     {
         $user = Accounts::findOrFail($id);
@@ -93,12 +111,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return $newPassword;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Subscriptions
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Update Password
+     * @param  integer $id User Id
+     * @return bool
+     */
     public static function updateMyPassword($id)
     {
         $user = Accounts::findOrFail($id);
@@ -117,6 +134,19 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return false;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Subscriptions
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Set the account's subscription
+     * @param integer $id   Account Id
+     * @param string $plan Plan Id
+     *
+     * @return  bool
+     */
     public static function setAccountSubscription($id, $plan)
     {
         $trial = Config::get("gondolyn.trial");
@@ -143,6 +173,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return true;
     }
 
+    /**
+     * Update Subscription
+     * @param  integer $id   User Id
+     * @param  string $plan Plan ID
+     * @return bool
+     */
     public function updateAccountSubscription($id, $plan)
     {
         $user = Accounts::findOrFail($id);
@@ -151,13 +187,18 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $myplan = $packages[$plan];
 
-        $user->subscription($myplan['stripe_id'])->swap();
+        $result = $user->subscription($myplan['stripe_id'])->swap();
 
         Session::put("plan", $myplan['stripe_id']);
 
-        return true;
+        return $result;
     }
 
+    /**
+     * Cancel the subscription
+     * @param  integer $id User Id
+     * @return bool
+     */
     public function cancelSubscription($id)
     {
         $user = Accounts::find($id);
@@ -173,6 +214,13 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Login with Email
+     * @param  string $useremail   Email address
+     * @param  string $password    Password
+     * @param  mixed $remember_me Remember me
+     * @return mixed
+     */
     public function loginWithEmail($useremail, $password, $remember_me)
     {
         if ($useremail === '' || $password === '') {
@@ -191,6 +239,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return $this->login($checkedUser, $useremail, $password, $remember_me);
     }
 
+    /**
+     * Login with Social Media
+     * @param  array $data    SM data
+     * @param  string $account Account type
+     * @return mixed
+     */
     public function loginWithSocialMedia($data, $account)
     {
         // Typecast the data because everyone likes to give back different things.
@@ -226,8 +280,6 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     public function checkAccountStatus($user, $data, $account)
     {
-        $result = false;
-
         if (is_object($user) && $user->user_active !== 'inactive') {
             $result = $user;
         } else if (is_object($user) && $user->user_active === 'inactive') {
@@ -239,6 +291,14 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return $result;
     }
 
+    /**
+     * Perform a login
+     * @param  object $user        User Object
+     * @param  string $useremail   User email
+     * @param  string $password    User password
+     * @param  mixed $remember_me Remember me
+     * @return mixed
+     */
     public function login($user, $useremail, $password, $remember_me = null)
     {
         $pwd = Crypt::decrypt($user->user_passwd);
@@ -270,6 +330,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         }
     }
 
+    /**
+     * Verify Account By Email
+     * @param  string $email   Email address
+     * @param  string $account Account type
+     * @return object
+     */
     public function verifyAccountEmail($email, $account)
     {
         $data = array();
@@ -297,7 +363,13 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         }
     }
 
-    public static function modifyUserStatus($id, $status)
+    /**
+     * Modify Account Status
+     * @param  integer $id     User ID
+     * @param  string $status Account Status
+     * @return bool
+     */
+    public static function modifyAccountStatus($id, $status)
     {
         $user = Accounts::findOrFail($id);
 
@@ -307,6 +379,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         return true;
     }
 
+    /**
+     * Delete user's personal account
+     * @param  integer $id User id
+     * @return bool
+     */
     public function deleteMyAccount($id)
     {
         if (Session::get("id") == $id) {
@@ -315,6 +392,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         } else return false;
     }
 
+    /**
+     * Delete the account
+     * @param  integer $id User ID
+     * @return bool
+     */
     public static function deleteAccount($id)
     {
         if (Session::get("role") == "admin") {
@@ -329,8 +411,17 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Make a new Account
+     * @param  array  $data        Account data
+     * @param  string  $account     Account type
+     * @param  boolean $remember_me Remember me?
+     * @return object               User
+     */
     private function makeNewAccount($data, $account, $remember_me = false)
     {
+        $sendMail = false;
+
         // Do we allow new accounts?
         if ( ! Config::get("gondolyn.signup")) {
             throw new Exception(Lang::get('notification.login.denied'), 1);
@@ -341,16 +432,18 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $currentUserCount = DB::table('users')->get();
 
-        $account_id = "user_".$account."_id";
-
-        $pwd = Utilities::addSalt(20);
-        $userSalt = Utilities::addSalt(10);
-
         $user = new Accounts;
 
-        if ($account != "email")    $user->$account_id = $data['id'];
-        if ($account == "twitter")  $user->user_name = $data['screen_name'];
-        if ($account == "email")    $pwd = $data['password'];
+        if ($account !== 'email') {
+            $account_id = "user_".$account."_id";
+            $pwd = Utilities::addSalt(20);
+            $user->$account_id = $data['id'];
+            $sendMail = true;
+        } else {
+            $pwd = $data['password'];
+        }
+
+        $userSalt = Utilities::addSalt(10);
 
         $user->user_email       = $data['email'];
         $user->user_salt        = $userSalt;
@@ -368,7 +461,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         Session::flash("email", $data['email']);
 
-        if ($account != "email") {
+        if ($sendMail) {
             Mail::send('emails.newpassword', $data, function($message) {
                 $user = $this->getAccountByEmail(Session::get("email"));
                 $message->to($user->user_email)->subject('New Password!');
