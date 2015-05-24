@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                {!! FormMaker::fromObject($shippingColumns, 'account.settingsRow', $user); !!}
+                {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
 
                 @if (Session::get('role') == 'admin')
                 <div class="raw100 raw-left raw-margin-top-24">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="raw2 raw-left raw-block-10"></div>
                     <div class="raw73 raw-left">
-                        @include('account.selectRole')
+                        @include('account.select-role')
                     </div>
                 </div>
                 @endif

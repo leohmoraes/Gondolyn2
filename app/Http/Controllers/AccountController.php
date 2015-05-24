@@ -87,9 +87,9 @@ class AccountController extends BaseController
         $data['packages'] = Config::get("gondolyn.packages");
 
         if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
-            $view = view('account.subscription_change', $data);
+            $view = view('account.subscription-change', $data);
         } else {
-            $view = view('account.subscription_set', $data);
+            $view = view('account.subscription-set', $data);
         }
         return $view;
     }
@@ -108,7 +108,7 @@ class AccountController extends BaseController
             $data['invoices'] .= View::make('account.invoice', array('invoice' => $invoice));
         }
 
-        return view('account.subscription_invoices', $data);
+        return view('account.subscription-invoices', $data);
     }
 
     public function downloadInvoice($id)

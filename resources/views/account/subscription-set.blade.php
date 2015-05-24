@@ -47,7 +47,7 @@
                     <label for="cvv" class="raw-margin-top-8 raw-right">Plan</label>
                 </div>
                 <div class="rg-col-8">
-                     @include('account.selectPlan')
+                     @include('account.select-plan')
                 </div>
             </div>
             <div class="raw100 raw-left rg-row raw-margin-top-24">
