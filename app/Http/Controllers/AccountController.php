@@ -124,6 +124,7 @@ class AccountController extends BaseController
             'phone'     => Config::get("gondolyn.phone"),
             'url'       => Config::get("gondolyn.url"),
             'product'   => Config::get("gondolyn.product"),
+            'description'   => 'Subscription',
         ]);
     }
 
