@@ -50,7 +50,7 @@ return array(
     ),
 
     "api" => array(
-        "incorrect" => "Incorrect route or missing information",
+        "incorrect" => "Incorrect route or missing information (check CSRF)",
         "logout" => "You're logged out.",
         "bad_token" => "Sorry but your token is incorrect",
         "bad_key" => "Sorry but your app key is incorrect",
