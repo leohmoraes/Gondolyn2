@@ -38,6 +38,9 @@ return [
         'other'         => [
             'type' => 'textarea'
         ],
+        'profile'         => [
+            'type' => 'file'
+        ],
 
     )
 

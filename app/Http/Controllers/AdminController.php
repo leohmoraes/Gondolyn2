@@ -120,6 +120,7 @@ class AdminController extends BaseController
         $validation = Validation::check('admin');
 
         if ( ! $validation['errors']) {
+            $file = Utilities::saveFile('profile');
             dd("Successful Submission");
         } else {
             return $validation['redirect'];

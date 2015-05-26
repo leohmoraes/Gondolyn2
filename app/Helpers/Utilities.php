@@ -1,6 +1,8 @@
 <?php namespace App\Helpers;
 
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class Utilities
 {
@@ -100,6 +102,26 @@ class Utilities
         $class = str_replace('.php', '', $fileName);
 
         return $class;
+    }
+
+    /**
+     * Saves File
+     * @param  string $fileName File input name
+     * @param  string $location Storage location
+     * @return array
+     */
+    public static function saveFile($fileName, $location = 'local')
+    {
+        $file = Request::file($fileName);
+        $extension = $file->getClientOriginalExtension();
+        $newFileName = md5(rand(1111,9999).time());
+
+        Storage::disk($location)->put($newFileName.'.'.$extension,  File::get($file));
+
+        return [
+            'original' => $file->getFilename(),
+            'name'  => $newFileName,
+        ];
     }
 
 }

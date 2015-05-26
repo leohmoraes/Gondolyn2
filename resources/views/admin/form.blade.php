@@ -6,7 +6,7 @@
 
 <div class="raw100">
 
-    {!! Form::open(array('url' => 'admin/submit/form')) !!}
+    {!! Form::open(array('files'=> true, 'url' => 'admin/submit/form')) !!}
 
     {!! FormMaker::fromTable('users', null, Config::get('forms.shipping')); !!}
 
