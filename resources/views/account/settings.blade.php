@@ -36,8 +36,8 @@
     </div>
 
     <div class="raw100 rg-row raw-margin-top-24">
-        <div class="rg-col-4 text-center raw-block-300">
-            <div class="raw100 raw-left raw-margin-top-24">
+        <div class="rg-col-4 text-center raw-block-350">
+            <div class="raw100 raw-left">
                 <div class="gondolyn-profile-container">
                     <div class="gondolyn-profile" style="background-image: url({{ $profileImage }})" ></div>
                 </div>
@@ -67,29 +67,20 @@
             @endif
                 <?= Form::token(); ?>
                 <div class="raw100 raw-left raw-margin-top-24">
-                    <div class="raw25 raw-left">
-                        <label for="email" class="raw-margin-top-10 raw-right">Email Address</label>
-                    </div>
-                    <div class="raw2 raw-left raw-block-10"></div>
-                    <div class="raw73 raw-left">
+                    <div class="raw100 raw-left">
+                        <label for="email">Email Address</label>
                         <input id="email" type="text" name="email" class="form-control" placeholder="Email Address" value="{{ $user->user_email }}">
                     </div>
                 </div>
                 <div class="raw100 raw-left raw-margin-top-24">
-                    <div class="raw25 raw-left">
-                        <label for="alt_email" class="raw-margin-top-10 raw-right">Alt. Email Address</label>
-                    </div>
-                    <div class="raw2 raw-left raw-block-10"></div>
-                    <div class="raw73 raw-left">
+                    <div class="raw100 raw-left">
+                        <label for="alt_email">Alt. Email Address</label>
                         <input id="alt_email" type="text" name="alt_email" class="form-control" placeholder="Alt. Email Address" value="{{ $user->user_alt_email }}">
                     </div>
                 </div>
                 <div class="raw100 raw-left raw-margin-top-24">
-                    <div class="raw25 raw-left">
-                        <label for="username" class="raw-margin-top-10 raw-right">Username</label>
-                    </div>
-                    <div class="raw2 raw-left raw-block-10"></div>
-                    <div class="raw73 raw-left">
+                    <div class="raw100 raw-left">
+                        <label for="username">Username</label>
                         <input id="username" type="text" name="username" class="form-control" placeholder="Username" value="{{ $user->user_name }}">
                     </div>
                 </div>
@@ -98,20 +89,17 @@
 
                 @if (Session::get('role') == 'admin')
                 <div class="raw100 raw-left raw-margin-top-24">
-                    <div class="raw25 raw-left">
-                        <label for="role" class="raw-margin-top-10 raw-right">Role</label>
-                    </div>
-                    <div class="raw2 raw-left raw-block-10"></div>
-                    <div class="raw73 raw-left">
+                    <div class="raw100 raw-left">
+                        <label for="role">Role</label>
                         @include('account.select-role')
                     </div>
                 </div>
                 @endif
 
-                <div class="raw50 raw-right raw-margin-top-24 text-right">
-                    <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-left-24" value="Save Settings">
+                <div class="raw50 raw-right text-right">
+                    <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-top-24 raw-margin-left-24" value="Save Settings">
                     @if ( ! isset($adminEditorMode))
-                        <a href="{{ URL::to('account/settings/password') }}" class="btn btn-info">Change Password</a>
+                        <a href="{{ URL::to('account/settings/password') }}" class="btn raw-margin-top-24 btn-info">Change Password</a>
                     @endif
                 </div>
             </form>

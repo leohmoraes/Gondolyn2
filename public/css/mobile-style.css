@@ -1,3 +1,7 @@
 .raw-t-hide {
     display: hidden;
 }
+
+#mainNavbar {
+    background-color: #333;
+}
