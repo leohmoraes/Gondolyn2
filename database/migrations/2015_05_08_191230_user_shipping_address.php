@@ -20,7 +20,6 @@ class UserShippingAddress extends Migration {
             $table->string('country')->nullable();
             $table->string('postal')->nullable();
             $table->string('other')->nullable();
-            $table->string('profile')->nullable();
         });
     }
 

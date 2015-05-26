@@ -1,5 +1,7 @@
 <?php namespace App\Helpers;
 
+use App;
+use Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -113,15 +115,40 @@ class Utilities
     public static function saveFile($fileName, $location = 'local')
     {
         $file = Request::file($fileName);
+
+        if (is_null($file) || File::size($file) > Config::get('gondolyn.max_file_upload_size')) {
+            return false;
+        }
+
         $extension = $file->getClientOriginalExtension();
         $newFileName = md5(rand(1111,9999).time());
 
         Storage::disk($location)->put($newFileName.'.'.$extension,  File::get($file));
 
         return [
-            'original' => $file->getFilename(),
-            'name'  => $newFileName,
+            'original' => $file->getFilename().'.'.$extension,
+            'name'  => $newFileName.'.'.$extension,
         ];
+    }
+
+    /**
+     * Provide a URL for the file as a public asset
+     * @param  string $fileName File name
+     * @return string
+     */
+    public static function fileAsPublicAsset($fileName)
+    {
+        return url('public-asset/'.Crypto::encrypt($fileName));
+    }
+
+    /**
+     * Provides a URL for the file as a download
+     * @param  string $fileName File name
+     * @return string
+     */
+    public static function fileAsDownload($fileName)
+    {
+        return url('public-download/'.Crypto::encrypt($fileName));
     }
 
 }

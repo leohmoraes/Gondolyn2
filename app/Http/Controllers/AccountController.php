@@ -61,8 +61,11 @@ class AccountController extends BaseController
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
+        $profileImage = Utilities::fileAsPublicAsset($user->profile);
+        // dd($profileImage);
+
         $data['user']               = $user;
-        $data['gravatar']           = $gravatarHash;
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['shippingColumns']    = Config::get('forms.shipping');
 

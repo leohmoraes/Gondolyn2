@@ -5,6 +5,8 @@ return array(
     'app_admin_email' => '',
     'app_admin_name' => '',
 
+    'max_file_upload_size' => 6291456, // 6MB
+
     'signup' => TRUE,
 
     'smLogin' => FALSE,

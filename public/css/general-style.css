@@ -138,12 +138,17 @@ html, body {
             text-decoration: none;
         }
 
-    .gondolyn-profile {
+    .gondolyn-profile-container{
         height: 300px;
     }
 
-    .gondolyn-profile img {
+    .gondolyn-profile {
         border-radius: 150px;
+        height: 300px;
+        width: 300px;
+        margin: 0 auto;
+        background-size: cover;
+        background-position: center center;
     }
 
 /*

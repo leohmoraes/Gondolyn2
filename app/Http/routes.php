@@ -49,6 +49,17 @@ Route::group(array('prefix' => 'api'), function() {
 
 /*
 |--------------------------------------------------------------------------
+| Assets & Downloads
+|--------------------------------------------------------------------------
+*/
+
+Route::group(array('before' => 'is_logged_in', 'role' => 'groups.all'), function() {
+    Route::get('public-asset/{encFileName}', "AssetController@asPublic");
+    Route::get('public-download/{encFileName}', "AssetController@asDownload");
+});
+
+/*
+|--------------------------------------------------------------------------
 | Admins
 |--------------------------------------------------------------------------
 */

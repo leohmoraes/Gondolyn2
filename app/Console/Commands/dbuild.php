@@ -52,6 +52,7 @@ class dbuild extends Command
                 $table->string('user_facebook_id')->nullable();
                 $table->string('user_twitter_id')->nullable();
                 $table->string('user_active');
+                $table->string('profile')->nullable();
                 $table->string('user_api_token')->nullable();
                 $table->string('remember_token')->nullable();
                 $table->string('updated_at');

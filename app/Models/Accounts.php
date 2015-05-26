@@ -87,9 +87,14 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     {
         $user = Accounts::findOrFail($id);
 
+        $file = Utilities::saveFile('profile');
+
         $user->user_email = Input::get("email");
         $user->user_name = Input::get("username");
         $user->user_alt_email = Input::get("alt_email");
+        if ($file) {
+            $user->profile = $file['name'];
+        }
         $user->user_role = Input::get("role") ?: 'member';
 
         foreach ($user['attributes'] as $column => $value) {

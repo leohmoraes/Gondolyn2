@@ -38,12 +38,9 @@
     <div class="raw100 rg-row raw-margin-top-24">
         <div class="rg-col-4 text-center raw-block-300">
             <div class="raw100 raw-left raw-margin-top-24">
-                <div class="gondolyn-profile">
-                    <img src="http://www.gravatar.com/avatar/{{ $gravatar }}?s=300" />
+                <div class="gondolyn-profile-container">
+                    <div class="gondolyn-profile" style="background-image: url({{ $profileImage }})" ></div>
                 </div>
-            </div>
-            <div class="raw100 raw-left raw-margin-top-24">
-                <a href="http://www.gravatar.com" taregt="_blank">Update on Gravatar</a>
             </div>
         </div>
 
@@ -64,9 +61,9 @@
                 @endif
             </div>
             @if (isset($adminEditorMode))
-            <form id="userSettings" method="post" action="{{ URL::to('admin/update') }}">
+            <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/update') }}">
             @else
-            <form id="userSettings" method="post" action="{{ URL::to('account/settings/update') }}">
+            <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('account/settings/update') }}">
             @endif
                 <?= Form::token(); ?>
                 <div class="raw100 raw-left raw-margin-top-24">
