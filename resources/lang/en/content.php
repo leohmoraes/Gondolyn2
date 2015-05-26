@@ -18,6 +18,7 @@ return array(
 
     "menu" => [
         'account' => 'Account',
+        'dashboard' => 'Dashboard',
         'home' => 'Home',
         'settings' => 'Settings',
         'users' => 'Users',

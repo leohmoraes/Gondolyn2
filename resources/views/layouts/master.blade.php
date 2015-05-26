@@ -69,20 +69,10 @@
 
         @yield("navigation")
 
-        <div class="raw100 raw-left raw-margin-top-60">
-            <div class="raw-device raw-margin-auto">
-                @yield("header")
+        <div class="container-fluid">
+            <div class="row">
+                @yield("page-content")
             </div>
-        </div>
-
-        <div class="raw100 raw-left raw-margin-bottom-60">
-            <div class="raw-device raw-margin-auto">
-                @yield("content")
-            </div>
-        </div>
-
-        <div class="raw100 raw-left navbar navbar-fixed-bottom">
-            @yield("footer")
         </div>
 
         {!! Minify::javascript(url('/js/jquery.min.js')) !!}
