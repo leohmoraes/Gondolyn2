@@ -112,7 +112,7 @@ class Utilities
      * @param  string $location Storage location
      * @return array
      */
-    public static function saveFile($fileName, $location = 'local')
+    public static function saveFile($fileName, $directory = "", $location = 'local')
     {
         $file = Request::file($fileName);
 
@@ -123,11 +123,11 @@ class Utilities
         $extension = $file->getClientOriginalExtension();
         $newFileName = md5(rand(1111,9999).time());
 
-        Storage::disk($location)->put($newFileName.'.'.$extension,  File::get($file));
+        Storage::disk($location)->put($directory.$newFileName.'.'.$extension,  File::get($file));
 
         return [
             'original' => $file->getFilename().'.'.$extension,
-            'name'  => $newFileName.'.'.$extension,
+            'name'  => $directory.$newFileName.'.'.$extension,
         ];
     }
 
