@@ -50,7 +50,7 @@
     </head>
     <body>
 
-        @include('layouts.loading-overlay');
+        @include('layouts.loading-overlay')
 
         @include('account.login-panel')
 
