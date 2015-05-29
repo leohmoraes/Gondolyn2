@@ -7,7 +7,11 @@
 
     {!! Form::open(['route' => '$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
 
-        @include('$MODEL_NAME_PLURAL_CAMEL$.fields')
+        {!! FormMaker::fromTable('$MODEL_NAME_PLURAL_CAMEL$') !!}
+
+        <div class="form-group">
+            {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+        </div>
 
     {!! Form::close() !!}
 </div>
