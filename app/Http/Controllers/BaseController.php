@@ -5,6 +5,14 @@ use App\Services\AccountServices;
 class BaseController extends Controller
 {
     /**
+     * Sharing is caring!
+     */
+    public function __construct()
+    {
+        View::share(Config::get("gondolyn.basic-app-info"));
+    }
+
+    /**
      * Setup the layout used by the controller.
      *
      * @return void

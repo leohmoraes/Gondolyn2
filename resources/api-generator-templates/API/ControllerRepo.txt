@@ -17,6 +17,7 @@ class $MODEL_NAME$APIController extends BaseController
 
     function __construct($MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repo)
     {
+        parent::__construct();
         $this->$MODEL_NAME_CAMEL$Repository = $$MODEL_NAME_CAMEL$Repo;
     }
 

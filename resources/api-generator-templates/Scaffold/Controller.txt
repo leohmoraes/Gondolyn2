@@ -11,7 +11,6 @@ use Schema;
 
 class $MODEL_NAME$Controller extends BaseController
 {
-
     /**
      * Display a listing of the Post.
      *
