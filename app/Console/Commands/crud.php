@@ -4,6 +4,7 @@ use Schema;
 use Config;
 use Artisan;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -124,7 +125,7 @@ class crud extends BaseCommand
         $repositoryGenerator = new RepositoryGenerator($this->commandData);
         $repositoryGenerator->generate();
 
-        if (stristr($this->argument('platform'), 'api')) {
+        if (stristr($this->argument('scope'), 'api')) {
             $repoControllerGenerator = new RepoAPIControllerGenerator($this->commandData);
             $repoControllerGenerator->generate();
         }
@@ -138,7 +139,11 @@ class crud extends BaseCommand
         $routeGenerator = new RoutesGenerator($this->commandData);
         $routeGenerator->generate();
 
-        if($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
+        if ( ! stristr($this->argument('platform'), 'core')) {
+            $this->cleanupViews(ucfirst($this->argument('platform')), ucfirst($this->argument('model')));
+        }
+
+        if ($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
             $this->call('migrate');
         }
     }
@@ -165,5 +170,32 @@ class crud extends BaseCommand
     {
         return array_merge(parent::getOptions(), []);
 
+    }
+
+    private function cleanupViews($platform, $model)
+    {
+        if (is_dir(app_path().'/Modules/'.$platform.'/Controllers')) {
+            $files = glob(app_path().'/Modules/'.ucfirst($platform).'/Controllers/*');
+
+            foreach ($files as $file) {
+                $fileContents = file_get_contents($file);
+                $cleanedViews = str_replace("view('".lcfirst($model), "view('".lcfirst($platform)."::".lcfirst($model), $fileContents);
+                file_put_contents($file, $cleanedViews);
+            }
+
+        }
+
+        if (is_dir(app_path().'/Modules/'.$platform.'/Views')) {
+            $files = glob(app_path().'/Modules/'.ucfirst($platform).'/Views/'.Str::plural(lcfirst($model)).'/*');
+
+            foreach ($files as $file) {
+                $fileContents = file_get_contents($file);
+                $cleanedViews = str_replace("@include('".lcfirst($model), "@include('".lcfirst($platform)."::".lcfirst($model), $fileContents);
+                file_put_contents($file, $cleanedViews);
+            }
+
+        }
+
+        return true;
     }
 }
