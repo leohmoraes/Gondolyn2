@@ -25,6 +25,7 @@
 
         <!-- App style -->
         {!! Minify::stylesheet(url('/css/main.css')) !!}
+        {!! Minify::stylesheet(url('/css/loaders.css')) !!}
         {!! Minify::stylesheet(url('/css/device-desktop.css'), array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
         {!! Minify::stylesheet(url('/css/device-tablet.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
         {!! Minify::stylesheet(url('/css/device-mobile.css'), array("media" => 'screen and (max-width: 696px)')) !!}
@@ -48,6 +49,8 @@
         {!! $page_assets; !!}
     </head>
     <body>
+
+        @include('layouts.loading-overlay');
 
         @include('account.login-panel')
 

@@ -8,6 +8,15 @@ $(function() {
     $(".non-form-btn").bind("click", function(e){
         e.preventDefault();
     });
+
+    $('form').submit(function(){
+        $('.loading-overlay').show();
+        $(this).submit();
+    });
+
+    $('a.slow-link').click(function(){
+        $('.loading-overlay').show();
+    });
 });
 
 /*
@@ -32,6 +41,15 @@ function gondolynNotify(message) {
             $(".gondolyn-notify-comment").html("");
         });
     });
+
+    setTimeout(function(){
+        $(".gondolyn-notification").animate({
+            right: "-300px"
+        },"", function(){
+            $(".gondolyn-notification").css("display", "none");
+            $(".gondolyn-notify-comment").html("");
+        });
+    }, 8000);
 }
 
 /*
