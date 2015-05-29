@@ -36,7 +36,9 @@ return array(
 
     "profile" => array(
         "update_success" => "Your profile was successfully updated.",
+        "admin_update_success" => "Their profile was successfully updated.",
         "update_failed" => "Your profile failed to update.",
+        "admin_update_failed" => "Their profile failed to update.",
         "password_success" => "Your password was successfully updated.",
         "password_failed" => "Your password failed to update.",
     ),
@@ -57,6 +59,10 @@ return array(
         "not_logged_in" => "Sorry but you're not logged in",
         "ajax_only" => "Sorry only AJAX calls allowed",
         "not_api_call" => "Sorry this is not an API call",
+    ),
+
+    "errors" => array(
+        "bad-file-type" => "We don't recognize that file type for this action.",
     ),
 
 );

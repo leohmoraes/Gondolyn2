@@ -2,6 +2,8 @@
 
 use App;
 use Config;
+use Exception;
+use Lang;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -112,7 +114,7 @@ class Utilities
      * @param  string $location Storage location
      * @return array
      */
-    public static function saveFile($fileName, $directory = "", $location = 'local')
+    public static function saveFile($fileName, $directory = "", $fileTypes = array(), $location = 'local')
     {
         $file = Request::file($fileName);
 
@@ -122,6 +124,13 @@ class Utilities
 
         $extension = $file->getClientOriginalExtension();
         $newFileName = md5(rand(1111,9999).time());
+
+        // In case we don't want that file type
+        if ( ! empty($fileTypes)) {
+            if ( ! in_array($extension, $fileTypes)) {
+                throw new Exception(Lang::get('notification.errors.bad-file-type'), 1);
+            }
+        }
 
         Storage::disk($location)->put($directory.$newFileName.'.'.$extension,  File::get($file));
 
