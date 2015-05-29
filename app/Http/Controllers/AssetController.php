@@ -8,7 +8,7 @@ class AssetController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     public function asPublic($encFileName)
@@ -17,7 +17,6 @@ class AssetController extends BaseController
 
         $fileSystem = new Filesystem;
 
-        $file = Storage::get($fileName);
         $storagePath = App::storagePath().'/app/';
         $ext = $fileSystem->extension($fileName);
         $fileSize = $fileSystem->size($storagePath.$fileName);
@@ -40,13 +39,13 @@ class AssetController extends BaseController
         readfile($storagePath.$fileName);
     }
 
-    public function asDownload($encFileName)
+    public function asDownload($encFileName, $encRealFileName)
     {
         $fileName = Crypto::decrypt($encFileName);
+        $realFileName = Crypto::decrypt($encRealFileName);
 
         $fileSystem = new Filesystem;
 
-        $file = Storage::get($fileName);
         $storagePath = App::storagePath().'/app/';
         $ext = $fileSystem->extension($fileName);
         $fileSize = $fileSystem->size($storagePath.$fileName);
@@ -58,7 +57,7 @@ class AssetController extends BaseController
         }
 
         header("Content-Type: ".$contentType);
-        header("Content-Disposition: attachment; filename='".$file['original'].'.'.$ext."'");
+        header("Content-Disposition: attachment; filename='".$realFileName.'.'.$ext."'");
         header('Connection: Keep-Alive');
         header('Expires: 0');
         header("Content-Transfer-Encoding: binary");
