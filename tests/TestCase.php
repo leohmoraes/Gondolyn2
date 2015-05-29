@@ -9,6 +9,8 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
      */
     public function createApplication()
     {
+        $_SERVER['HTTP_HOST'] = 'cli';
+
         if (php_sapi_name() === 'cli' && ! function_exists('getallheaders'))
         {
             function getallheaders()

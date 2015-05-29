@@ -37,14 +37,14 @@ return [
     'facebook' => [
         'client_id'     => '',
         'client_secret' => '',
-        'redirect'      => url('login/facebook'),
+        'redirect'      => $_SERVER['HTTP_HOST'].'/login/facebook',
         'scope'         => ['email','read_friendlists','user_online_presence'],
     ],
 
     'twitter' => [
         'client_id'     => '',
         'client_secret' => '',
-        'redirect'      => url('login/twitter'),
+        'redirect'      => $_SERVER['HTTP_HOST'].'/login/twitter',
     ],
 
 ];
