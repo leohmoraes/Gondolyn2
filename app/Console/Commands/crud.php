@@ -113,6 +113,12 @@ class crud extends BaseCommand
             $this->commandData->inputFields = $this->commandData->getInputFields();
         }
 
+        if (is_file(app_path().'/Modules/'.$platform.'/routes.php')) {
+            $fileContents = file_get_contents(app_path().'/Modules/'.$platform.'/routes.php');
+            $cleanedViews = $this->str_lreplace("});", "", $fileContents);
+            file_put_contents($file, $cleanedViews);
+        }
+
         $migrationGenerator = new MigrationGenerator($this->commandData);
         $migrationGenerator->generate();
 
@@ -140,7 +146,7 @@ class crud extends BaseCommand
         $routeGenerator->generate();
 
         if ( ! stristr($this->argument('platform'), 'core')) {
-            $this->cleanupViews(ucfirst($this->argument('platform')), ucfirst($this->argument('model')));
+            $this->cleanup(ucfirst($this->argument('platform')), ucfirst($this->argument('model')));
         }
 
         if ($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
@@ -169,10 +175,9 @@ class crud extends BaseCommand
     public function getOptions()
     {
         return array_merge(parent::getOptions(), []);
-
     }
 
-    private function cleanupViews($platform, $model)
+    private function cleanup($platform, $model)
     {
         if (is_dir(app_path().'/Modules/'.$platform.'/Controllers')) {
             $files = glob(app_path().'/Modules/'.ucfirst($platform).'/Controllers/*');
@@ -196,6 +201,23 @@ class crud extends BaseCommand
 
         }
 
+        if (is_file(app_path().'/Modules/'.$platform.'/routes.php')) {
+            $fileContents = file_get_contents(app_path().'/Modules/'.$platform.'/routes.php');
+            $cleanedViews = $fileContents."\n });"
+            file_put_contents($file, $cleanedViews);
+        }
+
         return true;
+    }
+
+    public function str_lreplace($search, $replace, $subject)
+    {
+        $pos = strrpos($subject, $search);
+
+        if ($pos !== false) {
+            $subject = substr_replace($subject, $replace, $pos, strlen($search));
+        }
+
+        return $subject;
     }
 }

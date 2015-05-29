@@ -81,7 +81,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$))
         {
             Flash::error('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
@@ -100,7 +100,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$))
         {
             Flash::error('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
@@ -121,7 +121,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$))
         {
             Flash::error('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
@@ -145,7 +145,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$))
         {
             Flash::error('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));

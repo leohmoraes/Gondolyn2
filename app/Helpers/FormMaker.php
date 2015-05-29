@@ -279,4 +279,18 @@ class FormMaker {
     {
         return preg_replace("/[^a-z0-9 ]/i", "", ucwords(str_replace('_', ' ', $string)));
     }
+
+    public static function getGenerateColumnsList($table)
+    {
+        $tableColumns = Schema::getColumnListing($table);
+
+        $tableTypeColumns = [];
+
+        foreach ($tableColumns as $column) {
+            $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+            $tableTypeColumns[$column]['type'] = $type;
+        }
+
+        return $tableTypeColumns;
+    }
 }
