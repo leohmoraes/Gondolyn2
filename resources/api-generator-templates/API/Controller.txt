@@ -9,6 +9,10 @@ use Response;
 
 class $MODEL_NAME$APIController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('cors');
+    }
 
     /**
      * Display a listing of the $MODEL_NAME$.
@@ -17,13 +21,16 @@ class $MODEL_NAME$APIController extends BaseController
      */
     public function index(Request $request)
     {
-         $input = $request->all();
+        $input = $request->all();
 
-         $result = $this->$MODEL_NAME_CAMEL$Repository->search($input);
+        $result = $this->$MODEL_NAME_CAMEL$Repository->search($input);
 
-         $$MODEL_NAME_PLURAL_CAMEL$ = $result[0];
+        $$MODEL_NAME_PLURAL_CAMEL$ = $result[0];
 
-        return Response::json(ResponseManager::makeResult($$MODEL_NAME_PLURAL_CAMEL$->toArray(), "$MODEL_NAME_PLURAL$ retrieved successfully."));
+        $data = ResponseManager::makeResult($$MODEL_NAME_PLURAL_CAMEL$->toArray();
+        $data['message'] = "$MODEL_NAME_PLURAL$ retrieved successfully.";
+
+        return Gondolyn::response("success", $data);
     }
 
     /**
@@ -52,7 +59,10 @@ class $MODEL_NAME$APIController extends BaseController
 
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::create($input);
 
-        return Response::json(ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray(), "$MODEL_NAME$ saved successfully."));
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data['message'] = "$MODEL_NAME_PLURAL$ saved successfully.";
+
+        return Gondolyn::response("success", $data);
     }
 
     /**
@@ -71,7 +81,10 @@ class $MODEL_NAME$APIController extends BaseController
         if(empty($$MODEL_NAME_CAMEL$))
             $this->throwRecordNotFoundException("$MODEL_NAME$ not found", ERROR_CODE_RECORD_NOT_FOUND);
 
-        return Response::json(ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray(), "$MODEL_NAME$ retrieved successfully."));
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data['message'] = "$MODEL_NAME_PLURAL$ retrieved successfully.";
+
+        return Gondolyn::response("success", $data);
     }
 
     /**
@@ -104,7 +117,10 @@ class $MODEL_NAME$APIController extends BaseController
         $$MODEL_NAME_CAMEL$->fill($input);
         $$MODEL_NAME_CAMEL$->save();
 
-        return Response::json(ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray(), "$MODEL_NAME$ updated successfully."));
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data['message'] = "$MODEL_NAME_PLURAL$ updated successfully.";
+
+        return Gondolyn::response("success", $data);
     }
 
     /**
@@ -123,7 +139,10 @@ class $MODEL_NAME$APIController extends BaseController
 
         $$MODEL_NAME_CAMEL$->delete();
 
-        return Response::json(ResponseManager::makeResult($id, "$MODEL_NAME$ deleted successfully."));
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data['message'] = "$MODEL_NAME_PLURAL$ deleted successfully.";
+
+        return Gondolyn::response("success", $data);
     }
 
 }

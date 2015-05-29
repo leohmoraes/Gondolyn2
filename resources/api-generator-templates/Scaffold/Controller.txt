@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use BaseController;
 use Response;
 use Flash;
+use Gondolyn;
 use Schema;
 
 class $MODEL_NAME$Controller extends BaseController
@@ -64,7 +65,7 @@ class $MODEL_NAME$Controller extends BaseController
 
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::create($input);
 
-        Flash::message('$MODEL_NAME$ saved successfully.');
+        Gondolyn::notification('$MODEL_NAME$ saved successfully.');
 
         return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
     }
@@ -82,7 +83,7 @@ class $MODEL_NAME$Controller extends BaseController
 
         if(empty($$MODEL_NAME_CAMEL$))
         {
-            Flash::error('$MODEL_NAME$ not found');
+            Gondolyn::notification('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
@@ -101,7 +102,7 @@ class $MODEL_NAME$Controller extends BaseController
 
         if(empty($$MODEL_NAME_CAMEL$))
         {
-            Flash::error('$MODEL_NAME$ not found');
+            Gondolyn::notification('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
@@ -123,14 +124,14 @@ class $MODEL_NAME$Controller extends BaseController
 
         if(empty($$MODEL_NAME_CAMEL$))
         {
-            Flash::error('$MODEL_NAME$ not found');
+            Gondolyn::notification('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
         $$MODEL_NAME_CAMEL$->fill($request->all());
         $$MODEL_NAME_CAMEL$->save();
 
-        Flash::message('$MODEL_NAME$ updated successfully.');
+        Gondolyn::notification('$MODEL_NAME$ updated successfully.');
 
         return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
     }
@@ -149,13 +150,13 @@ class $MODEL_NAME$Controller extends BaseController
 
         if(empty($$MODEL_NAME_CAMEL$))
         {
-            Flash::error('$MODEL_NAME$ not found');
+            Gondolyn::notification('$MODEL_NAME$ not found');
             return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
         $$MODEL_NAME_CAMEL$->delete();
 
-        Flash::message('$MODEL_NAME$ deleted successfully.');
+        Gondolyn::notification('$MODEL_NAME$ deleted successfully.');
 
         return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
     }
