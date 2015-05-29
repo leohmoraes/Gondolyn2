@@ -203,8 +203,8 @@ class crud extends BaseCommand
 
         if (is_file(app_path().'/Modules/'.$platform.'/routes.php')) {
             $fileContents = file_get_contents(app_path().'/Modules/'.$platform.'/routes.php');
-            $cleanedViews = $fileContents."\n });"
-            file_put_contents($file, $cleanedViews);
+            $cleanedViews = $fileContents."\n });";
+            file_put_contents(app_path().'/Modules/'.$platform.'/routes.php', $cleanedViews);
         }
 
         return true;
