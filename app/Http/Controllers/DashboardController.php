@@ -19,7 +19,7 @@ class DashboardController extends BaseController
         // $data["user"] = "";
 
         // // If we are logged in lets get personal
-        // if (AccountServices::loggedIn()) {
+        // if (AccountServices::isLoggedIn()) {
         //     $data["back"] = " back ";
         //     $data["user"] = Session::get("username");
         // }

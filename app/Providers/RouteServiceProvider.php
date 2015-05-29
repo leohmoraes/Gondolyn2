@@ -3,6 +3,10 @@
 use Session;
 use Config;
 use Lang;
+use Auth;
+use Accounts;
+use Request;
+use App\Services\AccountServices;
 use Gondolyn;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -54,8 +58,22 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::filter('is_logged_in', function() {
-            if (time() - Session::get("last_activity") > Config::get("session.lifetime") * 60) Session::flush();
-            else Session::put("last_activity", time());
+            if (AccountServices::isAccountRemembered()) {
+                $email      = Request::cookie("email");
+                $password   = Request::cookie("password");
+
+                $Users      = new Accounts;
+                $user       = $Users->loginWithEmail($email, $password, false);
+
+                AccountServices::login($user);
+            }
+
+            if (time() - Session::get("last_activity") > Config::get("session.lifetime") * 60) {
+                Session::flush();
+                Auth::logout();
+            } else {
+                Session::put("last_activity", time());
+            }
 
             if ( ! Session::get("logged_in")) {
                 Session::flash("notification", Lang::get("notification.login.expired-session"));

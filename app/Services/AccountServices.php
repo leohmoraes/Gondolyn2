@@ -1,6 +1,6 @@
 <?php namespace App\Services;
 
-use Session, Auth, Cookie, Request;
+use Session, Auth, Cookie, Request, Redirect, Accounts;
 
 class AccountServices
 {
@@ -12,13 +12,15 @@ class AccountServices
         // Kill the auth
         Auth::logout();
 
-        // Drop the remember details
-        Cookie::forget('email');
-        Cookie::forget('password');
+        return redirect('/');
+            // ->withCookie(Cookie::forget('email'))
+            // ->withCookie(Cookie::forget('password'));
     }
 
     public static function login($user)
     {
+        Auth::login($user);
+
         $username = ($user->user_name == "") ? $user->user_email : $user->user_name;
 
         $sessionData = array(
@@ -38,7 +40,7 @@ class AccountServices
         return $user->user_role."/home";
     }
 
-    public static function loggedIn()
+    public static function isLoggedIn()
     {
         if (Session::get('logged_in')) {
             return true;
@@ -49,12 +51,13 @@ class AccountServices
 
     public static function isAccountRemembered()
     {
-        if (Auth::viaRemember() && ! Session::get("logged_in")) {
-            $email      = Request::cookie("email");
-            $password   = Request::cookie("password");
+        $email      = Request::cookie("email");
+        $password   = Request::cookie("password");
 
-            $Users      = new Accounts;
-            $Users->loginWithEmail($email, $password, false);
+        if ( ! AccountServices::isLoggedIn() && $email && $password) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

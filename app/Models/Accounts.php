@@ -327,8 +327,6 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $minutes = Config::get("gondolyn.remember_me_duration");
 
         if ($exp == $user->user_salt && $realPasswd == hash("sha256", $password) && $user->user_role !== 'inactive') {
-            // Utilize Laravel Auth
-            Auth::login($user, $remember);
 
             if ($remember) {
                 Cookie::queue('email', $useremail, $minutes);
@@ -470,9 +468,6 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $user->save();
 
         $data['newPassword'] = $pwd;
-
-        // Utilize Laravel Auth
-        Auth::login($user, $remember);
 
         Session::flash("email", $data['email']);
 

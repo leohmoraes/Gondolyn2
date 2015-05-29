@@ -62,7 +62,6 @@ class AccountController extends BaseController
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
         $profileImage = Utilities::fileAsPublicAsset($user->profile);
-        // dd($profileImage);
 
         $data['user']               = $user;
         $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
@@ -339,8 +338,7 @@ class AccountController extends BaseController
 
     public function logout()
     {
-        AccountServices::logout();
-        return redirect("/");
+        return AccountServices::logout();
     }
 
     public function deleteAccount()

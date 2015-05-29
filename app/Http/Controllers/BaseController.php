@@ -4,12 +4,6 @@ use App\Services\AccountServices;
 
 class BaseController extends Controller
 {
-    public function __construct()
-    {
-        // Check for remember me
-        AccountServices::isAccountRemembered();
-    }
-
     /**
      * Setup the layout used by the controller.
      *
