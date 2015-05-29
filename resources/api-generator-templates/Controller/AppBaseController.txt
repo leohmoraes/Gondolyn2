@@ -1,21 +1,12 @@
-<?php
+<?php namespace Mitul\Controller;
 
-use App\Services\AccountServices;
+use $$BASE_NAMESPACE$$ as Controller;
+use Illuminate\Http\Exception\HttpResponseException;
+use Mitul\Generator\Utils\ResponseManager;
+use Response;
 
-class BaseController extends Controller
+class AppBaseController extends Controller
 {
-    /**
-     * Setup the layout used by the controller.
-     *
-     * @return void
-     */
-    protected function setupLayout()
-    {
-        if ( ! is_null($this->layout)) {
-            $this->layout = View::make($this->layout);
-        }
-    }
-
     public function validateRequest($request, $rules)
     {
         $validator = $this->getValidationFactory()->make($request->all(), $rules);
@@ -39,5 +30,4 @@ class BaseController extends Controller
     {
         throw new HttpResponseException(Response::json(ResponseManager::makeError($code, $message)));
     }
-
 }

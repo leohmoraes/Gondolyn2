@@ -155,6 +155,8 @@ return [
         'Laravel\Socialite\SocialiteServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'GrahamCampbell\Throttle\ThrottleServiceProvider',
+        'Laracasts\Flash\FlashServiceProvider',
+        'Mitul\Generator\GeneratorServiceProvider',
 
     ],
 
@@ -207,6 +209,7 @@ return [
         'Minify'    => 'Devfactory\Minify\Facades\MinifyFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Flash'     => 'Laracasts\Flash\Flash',
         'Debugbar'  => 'Barryvdh\Debugbar\Facade',
         'Throttle'  => 'GrahamCampbell\Throttle\Facades\Throttle',
     ],
