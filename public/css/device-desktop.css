@@ -7,3 +7,8 @@
 .raw-t-hide {
     display: block !important;
 }
+
+.gondolyn-login {
+    width: 612px;
+    margin: -260px -306px;
+}

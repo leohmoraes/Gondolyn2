@@ -19,15 +19,15 @@
         {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-mobile.css'), array("media" => 'screen and (max-width: 696px)')) !!}
         {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-offset.css')) !!}
         {!! Minify::stylesheet(url('/css/raw-grid/raw-grid.css')) !!}
-        {!! Minify::stylesheet(url('/css/raw-t.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-m.css'), array("media" => 'screen and (max-width: 732px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw.min.css')) !!}
+        {!! Minify::stylesheet(url('/css/raw-grid/raw-t.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
+        {!! Minify::stylesheet(url('/css/raw-grid/raw-m.css'), array("media" => 'screen and (max-width: 732px)')) !!}
+        {!! Minify::stylesheet(url('/css/raw-grid/raw.min.css')) !!}
 
-        <!-- Gondolyn style -->
-        {!! Minify::stylesheet(url('/css/general-style.css')) !!}
-        {!! Minify::stylesheet(url('/css/desktop-style.css'), array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
-        {!! Minify::stylesheet(url('/css/tablet-style.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
-        {!! Minify::stylesheet(url('/css/mobile-style.css'), array("media" => 'screen and (max-width: 696px)')) !!}
+        <!-- App style -->
+        {!! Minify::stylesheet(url('/css/main.css')) !!}
+        {!! Minify::stylesheet(url('/css/device-desktop.css'), array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
+        {!! Minify::stylesheet(url('/css/device-tablet.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
+        {!! Minify::stylesheet(url('/css/device-mobile.css'), array("media" => 'screen and (max-width: 696px)')) !!}
 
         <!-- Card JS -->
         {!! Minify::stylesheet(url('/css/card.css')) !!}
