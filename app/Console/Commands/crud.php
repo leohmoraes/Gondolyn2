@@ -116,7 +116,7 @@ class crud extends BaseCommand
         if (is_file(app_path().'/Modules/'.$platform.'/routes.php')) {
             $fileContents = file_get_contents(app_path().'/Modules/'.$platform.'/routes.php');
             $cleanedViews = $this->str_lreplace("});", "", $fileContents);
-            file_put_contents($file, $cleanedViews);
+            file_put_contents(app_path().'/Modules/'.$platform.'/routes.php', $cleanedViews);
         }
 
         $migrationGenerator = new MigrationGenerator($this->commandData);
