@@ -12,9 +12,9 @@ class AccountServices
         // Kill the auth
         Auth::logout();
 
-        return redirect('/');
-            // ->withCookie(Cookie::forget('email'))
-            // ->withCookie(Cookie::forget('password'));
+        return redirect('/')
+            ->withCookie(Cookie::forget('email'))
+            ->withCookie(Cookie::forget('password'));
     }
 
     public static function login($user)
