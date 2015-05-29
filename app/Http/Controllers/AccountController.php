@@ -61,7 +61,7 @@ class AccountController extends BaseController
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
-        $profileImage = Utilities::fileAsPublicAsset($user->profile);
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
 
         $data['user']               = $user;
         $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
@@ -140,8 +140,7 @@ class AccountController extends BaseController
                 Session::flash("notification", Lang::get("notification.profile.update_failed"));
             }
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.error"));
-            return redirect('errors/general');
+            Session::flash("notification", $e->getMessage());
         }
 
         return redirect('account/settings');

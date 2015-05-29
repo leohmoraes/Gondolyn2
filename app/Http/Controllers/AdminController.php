@@ -46,8 +46,10 @@ class AdminController extends BaseController
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
 
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+
         $data['user']               = $user;
-        $data['gravatar']           = $gravatarHash;
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['notification']       = Session::get("notification") ?: "";
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
@@ -63,13 +65,12 @@ class AdminController extends BaseController
             $status = Accounts::updateAccount($user->id);
 
             if ($status) {
-                Session::flash("notification", "The profile was successfully updated.");
+                Session::flash("notification", Lang::get("notification.profile.admin_update_success"));
             } else {
-                Session::flash("notification", "The profile failed to update.");
+                Session::flash("notification", Lang::get("notification.profile.admin_update_failed"));
             }
         } catch (Exception $e) {
-            Session::flash("notification", "We seem to have encountered an error");
-            return redirect('errors/general');
+            Session::flash("notification", $e->getMessage());
         }
 
         return redirect('admin/editor/'.Crypto::encrypt($user->id));
