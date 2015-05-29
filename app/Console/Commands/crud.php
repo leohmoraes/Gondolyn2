@@ -183,9 +183,11 @@ class crud extends BaseCommand
             $files = glob(app_path().'/Modules/'.ucfirst($platform).'/Controllers/*');
 
             foreach ($files as $file) {
-                $fileContents = file_get_contents($file);
-                $cleanedViews = str_replace("view('".lcfirst($model), "view('".lcfirst($platform)."::".lcfirst($model), $fileContents);
-                file_put_contents($file, $cleanedViews);
+                if (is_file($file)) {
+                    $fileContents = file_get_contents($file);
+                    $cleanedViews = str_replace("view('".lcfirst($model), "view('".lcfirst($platform)."::".lcfirst($model), $fileContents);
+                    file_put_contents($file, $cleanedViews);
+                }
             }
 
         }
