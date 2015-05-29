@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use BaseController;
 use Mitul\Generator\Utils\ResponseManager;
 use Response;
+use Gondolyn;
 
 class $MODEL_NAME$APIController extends BaseController
 {
@@ -27,7 +28,7 @@ class $MODEL_NAME$APIController extends BaseController
 
         $$MODEL_NAME_PLURAL_CAMEL$ = $result[0];
 
-        $data = ResponseManager::makeResult($$MODEL_NAME_PLURAL_CAMEL$->toArray();
+        $data = ResponseManager::makeResult($$MODEL_NAME_PLURAL_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ retrieved successfully.";
 
         return Gondolyn::response("success", $data);
@@ -59,7 +60,7 @@ class $MODEL_NAME$APIController extends BaseController
 
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::create($input);
 
-        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ saved successfully.";
 
         return Gondolyn::response("success", $data);
@@ -81,7 +82,7 @@ class $MODEL_NAME$APIController extends BaseController
         if(empty($$MODEL_NAME_CAMEL$))
             $this->throwRecordNotFoundException("$MODEL_NAME$ not found", ERROR_CODE_RECORD_NOT_FOUND);
 
-        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ retrieved successfully.";
 
         return Gondolyn::response("success", $data);
@@ -117,7 +118,7 @@ class $MODEL_NAME$APIController extends BaseController
         $$MODEL_NAME_CAMEL$->fill($input);
         $$MODEL_NAME_CAMEL$->save();
 
-        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ updated successfully.";
 
         return Gondolyn::response("success", $data);
@@ -139,7 +140,7 @@ class $MODEL_NAME$APIController extends BaseController
 
         $$MODEL_NAME_CAMEL$->delete();
 
-        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray();
+        $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ deleted successfully.";
 
         return Gondolyn::response("success", $data);
