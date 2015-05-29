@@ -86,27 +86,30 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     public static function updateAccount($id)
     {
         $user = Accounts::findOrFail($id);
+        $shouldBeMe = Accounts::where('user_email', '=', Input::get("email"))->first();
 
-        $file = Utilities::saveFile('profile', 'profiles/');
+        if (is_null($shouldBeMe) || $shouldBeMe === $user) {
+            $file = Utilities::saveFile('profile', 'profiles/');
 
-        $user->user_email = Input::get("email");
-        $user->user_name = Input::get("username");
-        $user->user_alt_email = Input::get("alt_email");
-        $user->user_role = Input::get("role") ?: 'member';
+            $user->user_email = Input::get("email");
+            $user->user_name = Input::get("username");
+            $user->user_alt_email = Input::get("alt_email");
+            $user->user_role = Input::get("role") ?: 'member';
 
-        if ($file) {
-            $user->profile = $file['name'];
-        }
-
-        foreach ($user['attributes'] as $column => $value) {
-            if ( ! is_null(Input::get($column))) {
-                $user->$column = Input::get($column);
+            if ($file) {
+                $user->profile = $file['name'];
             }
+
+            foreach ($user['attributes'] as $column => $value) {
+                if ( ! is_null(Input::get($column))) {
+                    $user->$column = Input::get($column);
+                }
+            }
+
+            return $user->save();
+        } else {
+            return false;
         }
-
-        $user->save();
-
-        return true;
     }
 
     /**

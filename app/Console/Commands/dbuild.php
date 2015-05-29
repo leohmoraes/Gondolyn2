@@ -42,7 +42,7 @@ class dbuild extends Command
         if ( ! Schema::hasTable('users')) {
             Schema::create('users', function ($table) {
                 $table->increments('id');
-                $table->string('user_email');
+                $table->string('user_email')->unique();
                 $table->string('user_phone')->nullable();
                 $table->string('user_passwd');
                 $table->string('user_salt');
