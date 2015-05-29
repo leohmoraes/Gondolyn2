@@ -446,6 +446,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         // Check for remember me
         $remember = ($remember_me === "on") ? TRUE : FALSE;
 
+        if ($remember) {
+            Cookie::queue('email', $useremail, $minutes);
+            Cookie::queue('password', $password, $minutes);
+        }
+
         $currentUserCount = DB::table('users')->get();
 
         $user = new Accounts;
