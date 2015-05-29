@@ -10,6 +10,9 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
+        <testsuite name="Gondolyn Test Suite">
+            <directory>./tests/gondolyn</directory>
+        </testsuite>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
         </testsuite>

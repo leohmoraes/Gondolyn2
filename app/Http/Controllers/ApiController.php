@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\AccountServices;
+
 class ApiController extends BaseController
 {
     public function __construct()
@@ -20,7 +22,7 @@ class ApiController extends BaseController
                 return Gondolyn::response("error", Lang::get("notification.login.fail"));
             }
 
-            $Login = new Users;
+            $Login = new Accounts;
             $user = $Login->loginWithEmail(Utilities::jsonInput("email"), Utilities::jsonInput("password"), Utilities::jsonInput("remember"));
 
             if ( ! $user) {

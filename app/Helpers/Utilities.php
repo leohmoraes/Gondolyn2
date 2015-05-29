@@ -153,11 +153,12 @@ class Utilities
     /**
      * Provides a URL for the file as a download
      * @param  string $fileName File name
+     * @param  string $realFileName Real file name
      * @return string
      */
-    public static function fileAsDownload($fileName)
+    public static function fileAsDownload($fileName, $realFileName)
     {
-        return url('public-download/'.Crypto::encrypt($fileName));
+        return url('public-download/'.Crypto::encrypt($fileName).'/'.Crypto::encrypt($realFileName));
     }
 
 }

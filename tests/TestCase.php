@@ -2,6 +2,21 @@
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+    public function __construct()
+    {
+        $this->session = [
+            "logged_in"        => true,
+            "id"               => "1",
+            "role"             => "admin",
+            "token"            => "fooToken",
+            "plan"             => null,
+            "subscribed"       => false,
+            "last_activity"    => 1427863774,
+            "username"         => "foo@bar.com",
+            "email"            => "foo@bar.com"
+        ];
+    }
+
     /**
      * Creates the application.
      *
