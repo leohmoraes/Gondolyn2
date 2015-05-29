@@ -1,6 +1,6 @@
 @extends('layouts.standard')
 
 @section('content')
-<div class="container">
+<div class="container raw-margin-top-24">
 </div>
 @endsection

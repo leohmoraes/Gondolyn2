@@ -1,9 +1,7 @@
 @extends('layouts.standard')
 
 @section('content')
-<div class="container">
-
-    @include('common.errors')
+<div class="container raw-margin-top-24">
 
     {!! Form::open(['route' => '$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
 

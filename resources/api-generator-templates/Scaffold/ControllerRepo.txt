@@ -60,11 +60,15 @@ class $MODEL_NAME$Controller extends BaseController
      *
      * @return Response
      */
-    public function store(Create$MODEL_NAME$Request $request)
+    public function store(Request $request)
     {
-        $input = $request->all();
+        $validation = Validation::check($MODEL_NAME$::$rules);
 
-        $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->store($input);
+        if ( ! $validation['errors']) {
+            $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->store($request->all());
+        } else {
+            return $validation['redirect'];
+        }
 
         Gondolyn::notification('$MODEL_NAME$ saved successfully.');
 

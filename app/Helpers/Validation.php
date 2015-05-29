@@ -16,12 +16,16 @@ class Validation
         $errors = array();
         $inputs = array();
 
-        if ( ! is_null($module)) {
-            $conditions = Module::config(strtolower($module).'.validation.'.$form);
-            $fields = $conditions;
+        if (is_array($form)) {
+            $fields = $form;
         } else {
-            $conditions = Config::get("validation");
-            $fields = Utilities::assignArrayByPath($conditions, $form);
+            if ( ! is_null($module)) {
+                $conditions = Module::config(strtolower($module).'.validation.'.$form);
+                $fields = $conditions;
+            } else {
+                $conditions = Config::get("validation");
+                $fields = Utilities::assignArrayByPath($conditions, $form);
+            }
         }
 
         foreach ($fields as $key => $value) {
