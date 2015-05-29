@@ -72,4 +72,9 @@ class Gondolyn
         }
     }
 
+    public static function notification($string)
+    {
+        Session::flash("notification", $string);
+    }
+
 }
