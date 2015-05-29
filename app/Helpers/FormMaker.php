@@ -287,8 +287,10 @@ class FormMaker {
         $tableTypeColumns = [];
 
         foreach ($tableColumns as $column) {
-            $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
-            $tableTypeColumns[$column]['type'] = $type;
+            if ( ! in_array($column, array('id', 'created_at', 'updated_at'))) {
+                $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+                $tableTypeColumns[$column]['type'] = $type;
+            }
         }
 
         return $tableTypeColumns;
