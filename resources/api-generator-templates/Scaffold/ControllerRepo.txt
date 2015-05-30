@@ -4,9 +4,12 @@ use App\Http\Requests;
 use $REQUEST_NAMESPACE$\Create$MODEL_NAME$Request;
 use Illuminate\Http\Request;
 use $REPO_NAMESPACE$\$MODEL_NAME$Repository;
+use $MODEL_NAMESPACE$;
 use BaseController;
 use Response;
 use Gondolyn;
+use Permission;
+use Validation;
 use Flash;
 
 class $MODEL_NAME$Controller extends BaseController
@@ -18,6 +21,7 @@ class $MODEL_NAME$Controller extends BaseController
     function __construct($MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repo)
     {
         parent::__construct();
+        Permission::role('groups.all');
         $this->$MODEL_NAME_CAMEL$Repository = $$MODEL_NAME_CAMEL$Repo;
     }
 

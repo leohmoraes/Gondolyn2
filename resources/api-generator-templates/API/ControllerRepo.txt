@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use $REPO_NAMESPACE$\$MODEL_NAME$Repository;
 use Response;
 use Gondolyn;
+use Permission;
 use Schema;
 
 class $MODEL_NAME$APIController extends BaseController
@@ -19,6 +20,7 @@ class $MODEL_NAME$APIController extends BaseController
     function __construct($MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repo)
     {
         parent::__construct();
+        Permission::role('groups.all');
         $this->$MODEL_NAME_CAMEL$Repository = $$MODEL_NAME_CAMEL$Repo;
     }
 
@@ -80,8 +82,9 @@ class $MODEL_NAME$APIController extends BaseController
      */
     public function store(Request $request)
     {
-        if(sizeof($MODEL_NAME$::$rules) > 0)
+        if (sizeof($MODEL_NAME$::$rules) > 0) {
             $this->validateRequest($request, $MODEL_NAME$::$rules);
+        }
 
         $input = $request->all();
 
@@ -104,8 +107,9 @@ class $MODEL_NAME$APIController extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$)) {
             $this->throwRecordNotFoundException("$MODEL_NAME$ not found", ERROR_CODE_RECORD_NOT_FOUND);
+        }
 
         $data = ResponseManager::makeResult($$MODEL_NAME_CAMEL$->toArray());
         $data['message'] = "$MODEL_NAME_PLURAL$ retrieved successfully.";
@@ -136,8 +140,9 @@ class $MODEL_NAME$APIController extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$)) {
             $this->throwRecordNotFoundException("$MODEL_NAME$ not found", ERROR_CODE_RECORD_NOT_FOUND);
+        }
 
         $input = $request->all();
 
@@ -160,8 +165,9 @@ class $MODEL_NAME$APIController extends BaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find$MODEL_NAME$ById($id);
 
-        if(empty($$MODEL_NAME_CAMEL$))
+        if (empty($$MODEL_NAME_CAMEL$)) {
             $this->throwRecordNotFoundException("$MODEL_NAME$ not found", ERROR_CODE_RECORD_NOT_FOUND);
+        }
 
         $$MODEL_NAME_CAMEL$->delete();
 
@@ -169,6 +175,5 @@ class $MODEL_NAME$APIController extends BaseController
         $data['message'] = "$MODEL_NAME_PLURAL$ updated successfully.";
 
         return Gondolyn::response("success", $data);
-
     }
 }
