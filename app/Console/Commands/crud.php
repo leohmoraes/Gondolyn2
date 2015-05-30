@@ -18,7 +18,7 @@ use Mitul\Generator\Generators\Common\RepositoryGenerator;
 use Mitul\Generator\Generators\Common\RequestGenerator;
 use Mitul\Generator\Generators\Common\RoutesGenerator;
 use Mitul\Generator\Generators\Scaffold\RepoViewControllerGenerator;
-use Mitul\Generator\Generators\Scaffold\ViewGenerator;
+use App\Console\Commands\CRUD\ResponsiveViewGenerator;
 
 class crud extends BaseCommand
 {
@@ -136,7 +136,7 @@ class crud extends BaseCommand
             $repoControllerGenerator->generate();
         }
 
-        $viewsGenerator = new ViewGenerator($this->commandData);
+        $viewsGenerator = new ResponsiveViewGenerator($this->commandData);
         $viewsGenerator->generate();
 
         $repoControllerGenerator = new RepoViewControllerGenerator($this->commandData);
