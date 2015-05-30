@@ -72,7 +72,7 @@ class PermissionsMatrix implements Middleware
         // Role Checking
         if (isset($action['role'])) {
             $permission = $action['role'];
-            if (Session::get('logged_in') && ! $this->checkRole(Session::get('role'), $permission)) {
+            if (Session::get('logged_in') && ! PermissionsMatrix::checkRole(Session::get('role'), $permission)) {
                 throw new \Exception(Lang::get('notification.general.incorrect-permission'), 1);
             }
         }
@@ -80,7 +80,7 @@ class PermissionsMatrix implements Middleware
         // Subscription Checking
         if (isset($action['subscription'])) {
             $subscription = $action['subscription'];
-            if (Session::get('logged_in') && ! $this->checkSubscription(Session::get('plan'), $subscription)) {
+            if (Session::get('logged_in') && ! PermissionsMatrix::checkSubscription(Session::get('plan'), $subscription)) {
                 throw new \Exception(Lang::get('notification.subscription.incorrect-subscription'), 1);
             }
         }
@@ -95,7 +95,7 @@ class PermissionsMatrix implements Middleware
      * @param  string $permission Role by string or by group string
      * @return boolean
      */
-    public function checkRole($role, $permission)
+    public static function checkRole($role, $permission)
     {
         $permissionsConfig = Config::get('permissions.matrix');
 
@@ -122,7 +122,7 @@ class PermissionsMatrix implements Middleware
      * @param  mixed $subscription Array of plans or string of plan
      * @return boolean
      */
-    public function checkSubscription($plan, $subscription)
+    public static function checkSubscription($plan, $subscription)
     {
         if (is_array($subscription)) {
             if (in_array($plan, $subscription)) {
