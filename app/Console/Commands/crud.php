@@ -205,8 +205,14 @@ class crud extends BaseCommand
 
         if (is_file(app_path().'/Modules/'.$platform.'/routes.php')) {
             $fileContents = file_get_contents(app_path().'/Modules/'.$platform.'/routes.php');
-            $cleanedViews = $fileContents."\n });";
-            file_put_contents(app_path().'/Modules/'.$platform.'/routes.php', $cleanedViews);
+            $cleanedRoutes = $fileContents."\n });";
+            if (lcfirst($platform) !== 'core') {
+                $cleanedRoutes = str_replace("ontrollers\API", "API", $cleanedRoutes);
+                $cleanedRoutes = str_replace("Route::resource('api/".lcfirst($model)."'", "Route::resource('api/".lcfirst($platform)."/".lcfirst($model)."'", $cleanedRoutes);
+                $cleanedRoutes = str_replace("Route::resource('".lcfirst($model)."'", "Route::resource('".lcfirst($platform)."/".lcfirst($model)."'", $cleanedRoutes);
+                $cleanedRoutes = str_replace("Route::get('".lcfirst($model), "Route::get('".lcfirst($platform)."/".lcfirst($model), $cleanedRoutes);
+            }
+            file_put_contents(app_path().'/Modules/'.$platform.'/routes.php', $cleanedRoutes);
         }
 
         return true;
