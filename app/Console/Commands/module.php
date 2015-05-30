@@ -207,7 +207,7 @@ return [
 
 $this->makeModuleFile(app_path().'/Modules/'.$module.'/Controllers/'.$module.'Controller.php', '<?php namespace App\Modules\\'.$module.'\Controllers;
 
-use Auth, Input, Redirect, View, Config, Session, Log, App;
+use Auth, Input, Redirect, View, Config, Session, Log, App, Gondolyn;
 
 use App\Modules\\'.$module.'\Services\\'.$module.'Service;
 use App\Modules\\'.$module.'\Models\\'.$module.';
