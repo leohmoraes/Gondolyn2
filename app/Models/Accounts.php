@@ -91,10 +91,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         if (is_null($shouldBeMe) || $shouldBeMe->user_passwd === $user->user_passwd) {
             $file = Utilities::saveFile('profile', 'profiles/', ['jpg', 'jpeg', 'png', 'gif']);
 
-            $user->user_email = Input::get("email");
-            $user->user_name = Input::get("username");
-            $user->user_alt_email = Input::get("alt_email");
-            $user->user_role = Input::get("role") ?: 'member';
+            $user->user_email               = Input::get("email");
+            $user->user_name                = Input::get("username");
+            $user->user_alt_email           = Input::get("alt_email");
+            $user->in_app_notifications     = Input::get("in_app_notifications");
+            $user->user_role                = Input::get("role") ?: 'member';
 
             if ($file) {
                 $user->profile = $file['name'];
@@ -472,6 +473,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $user->user_api_token   = md5(Utilities::addSalt(30));
         $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
         $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');
+        $user->in_app_notifications = 'on';
 
         $user->save();
 

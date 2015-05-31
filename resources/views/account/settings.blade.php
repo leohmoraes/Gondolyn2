@@ -96,6 +96,15 @@
                 </div>
                 @endif
 
+                <div class="raw100 raw-left raw-margin-top-24">
+                    <div class="raw100 raw-left">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="in_app_notifications" {{ $inAppNotifications }}> In App Notifications
+                        </label>
+                    </div>
+                </div>
+
                 <div class="raw50 raw-right text-right">
                     <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-top-24 raw-margin-left-24" value="Save Settings">
                     @if ( ! isset($adminEditorMode))

@@ -60,4 +60,13 @@ class AccountServices
             return false;
         }
     }
+
+    public static function inAppNotification($notification)
+    {
+        if (Auth::user()->in_app_notifications === 'on') {
+            return 'gondolynNotify("'.$notification.'");';
+        }
+
+        return '';
+    }
 }

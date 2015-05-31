@@ -88,12 +88,7 @@
 
             $(window).rawGrid();
 
-            <?php
-
-                $notification = Session::get("notification");
-                if ($notification) echo 'gondolynNotify("'.$notification.'");';
-
-            ?>
+            @include('commons.notifications');
 
             @yield('page_js')
 

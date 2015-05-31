@@ -65,6 +65,7 @@ class AccountController extends BaseController
 
         $data['user']               = $user;
         $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
+        $data['inAppNotifications'] = ($user->in_app_notifications === 'on') ? 'checked' : '';
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['shippingColumns']    = Config::get('forms.shipping');
 

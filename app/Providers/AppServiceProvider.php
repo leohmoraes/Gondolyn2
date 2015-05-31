@@ -11,7 +11,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('AccountServices', 'App\Services\AccountServices');
     }
 
     /**
