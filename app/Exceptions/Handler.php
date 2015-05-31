@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
             return redirect('errors/general');
         }
 
-        if (is_a($e, 'App\Exceptions\LoginException')) {
+        if (is_a($e, 'App\Exceptions\LoginException') || is_a($e, 'App\Exceptions\PermissionException')) {
             Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }

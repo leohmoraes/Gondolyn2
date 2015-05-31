@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Lang;
 use App\Http\Middleware\PermissionsMatrix;
+use App\Exceptions\PermissionException;
 use App\Exceptions\LoginException;
 
 class Permission
@@ -30,7 +31,7 @@ class Permission
         if (isset($config['role'])) {
             $permission = $config['role'];
             if (Session::get('logged_in') && ! PermissionsMatrix::checkRole(Session::get('role'), $permission)) {
-                throw new \Exception(Lang::get('notification.general.incorrect-permission'), 1);
+                throw new PermissionException(Lang::get('notification.general.incorrect-permission'), 1);
             }
         }
 
@@ -38,7 +39,7 @@ class Permission
         if (isset($config['subscription'])) {
             $subscription = $config['subscription'];
             if (Session::get('logged_in') && ! PermissionsMatrix::checkSubscription(Session::get('plan'), $subscription)) {
-                throw new \Exception(Lang::get('notification.subscription.incorrect-subscription'), 1);
+                throw new PermissionException(Lang::get('notification.subscription.incorrect-subscription'), 1);
             }
         }
 

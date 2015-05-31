@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use App\Exceptions\PermissionException;
 
 class PermissionsMatrix implements Middleware
 {
@@ -73,7 +74,7 @@ class PermissionsMatrix implements Middleware
         if (isset($action['role'])) {
             $permission = $action['role'];
             if (Session::get('logged_in') && ! PermissionsMatrix::checkRole(Session::get('role'), $permission)) {
-                throw new \Exception(Lang::get('notification.general.incorrect-permission'), 1);
+                throw new PermissionException(Lang::get('notification.general.incorrect-permission'), 1);
             }
         }
 
@@ -81,7 +82,7 @@ class PermissionsMatrix implements Middleware
         if (isset($action['subscription'])) {
             $subscription = $action['subscription'];
             if (Session::get('logged_in') && ! PermissionsMatrix::checkSubscription(Session::get('plan'), $subscription)) {
-                throw new \Exception(Lang::get('notification.subscription.incorrect-subscription'), 1);
+                throw new PermissionException(Lang::get('notification.subscription.incorrect-subscription'), 1);
             }
         }
 
