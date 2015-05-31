@@ -11,9 +11,19 @@ return array(
 
     'smLogin' => FALSE,
 
-    'authKeys' => array(
-        'mon1ROG3aobtj2xN2utYcQ2PlG1x1b'
-    ),
+    'authKeys' => [
+        'XdTSB0kgxuEVzd8NSDejjeVUMJuj',
+        'BsmyFfqhgKxNfbIOpRChuQBN5wIR',
+        'fdbRFxqlNQC4BaSQmBFLsh3X7EKd',
+        'at4qGfilNIHBzkGavy1RaHDCYHz6',
+        'lkjwNoXuEfQsXx3wRKHniJfsqS5p',
+        'zFvV0PrOdpiRE8kCGn8x7QVqAaT1',
+        '3ZqDEWyFL0tZpLR3TbFzzO7GF37f',
+        'd0gg0HTFDrkpsNoRzfUsrA20paH4',
+        'dOkrPBHPiAuV2PluCJlbZgEqRHqh',
+        'S7m6WGxLheBAP6wRVRmyBIKAZp1Q',
+        '7s7ZAt6waDisSU2H0yzWpWu1EfBD',
+    ],
 
     'csrfIgnoredRoutes' => [
         'api/login',

@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\dbuild',
         'App\Console\Commands\module',
         'App\Console\Commands\crud',
+        'App\Console\Commands\key',
     ];
 
     /**

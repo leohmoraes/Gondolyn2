@@ -58,6 +58,7 @@
         "post-create-project-cmd": [
             "php -r \"copy('.env.example', '.env');\"",
             "php artisan key:generate",
+            "php artisan gondolyn:key",
             "php artisan gondolyn:dbuild",
             "php artisan migrate"
         ]
