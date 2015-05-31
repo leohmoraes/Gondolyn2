@@ -31,7 +31,7 @@
             @if($$MODEL_NAME_PLURAL_CAMEL$->isEmpty())
                 <div class="well text-center">No $MODEL_NAME_PLURAL$ found.</div>
             @else
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     $FIELD_HEADERS$
                     <th width="50px">Action</th>
