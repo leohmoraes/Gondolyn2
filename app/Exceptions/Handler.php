@@ -1,6 +1,7 @@
 <?php namespace App\Exceptions;
 
 use Exception;
+use Gondolyn;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -36,7 +37,7 @@ class Handler extends ExceptionHandler
 
     // public function render($request, Exception $e)
     // {
-    // 	return parent::render($request, $e);
+    //  return parent::render($request, $e);
     // }
 
     /**
@@ -49,6 +50,11 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if (is_a($e, 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException')) {
+            return redirect('errors/general');
+        }
+
+        if (is_a($e, 'App\Exceptions\LoginException')) {
+            Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Lang;
 use App\Http\Middleware\PermissionsMatrix;
+use App\Exceptions\LoginException;
 
 class Permission
 {
@@ -40,6 +41,11 @@ class Permission
                 throw new \Exception(Lang::get('notification.subscription.incorrect-subscription'), 1);
             }
         }
+
+        if ( ! Session::get('logged_in')) {
+            throw new LoginException(Lang::get('notification.login.expired-session'), 1);
+        }
+
     }
 
 }

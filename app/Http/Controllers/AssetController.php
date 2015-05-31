@@ -6,11 +6,6 @@ use Illuminate\Filesystem\Filesystem;
 
 class AssetController extends BaseController
 {
-    public function __construct()
-    {
-
-    }
-
     public function asPublic($encFileName)
     {
         $fileName = Crypto::decrypt($encFileName);

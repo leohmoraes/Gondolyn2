@@ -28,12 +28,10 @@ class BaseController extends Controller
     {
         $validator = $this->getValidationFactory()->make($request->all(), $rules);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $msg = "";
 
-            foreach($validator->errors()->getMessages() as $field => $errorMsg)
-            {
+            foreach ($validator->errors()->getMessages() as $field => $errorMsg) {
                 $msg .= $errorMsg[0] . ". ";
             }
 
