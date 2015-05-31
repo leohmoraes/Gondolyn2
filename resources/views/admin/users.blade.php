@@ -2,28 +2,43 @@
 
 @section('content')
 
+@include('admin.modals')
+
 <div class="raw100">
     <h2>Admin : User Manager</h2>
 </div>
 
-<div class="raw100 raw-margin-top-24">
+<table class="table table-striped">
+
+    <thead>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Account State</th>
+        <th width="50px">Action</th>
+    </thead>
 
     @foreach($users as $user)
 
-        <div class="raw100 raw-left user-row">
-            <div class="raw25 raw-left">
-                <p><a href="{{ URL::to('admin/editor/'.Crypto::encrypt($user->id)) }}">{{ $user->user_email }}</a></p>
-            </div>
-            <div class="raw25 raw-left">
-                <p>{{ $user->user_role }}</p>
-            </div>
-            <div class="raw50 raw-left text-right raw-padding-right-8">
-                <p>{{ ($user->user_active == "inactive") ? "Not Active" : "Active" }}</p>
-            </div>
-        </div>
+        <tr>
+            <td>
+                <a href="{{ URL::to('admin/editor/'.Crypto::encrypt($user->id)) }}">{{ $user->user_email }}</a>
+            </td>
+            <td>
+                {{ $user->user_role }}
+            </td>
+            <td>
+                {{ ($user->user_active == "inactive") ? "Not Active" : "Active" }}
+            </td>
+            <td>
+                <a href="{{ URL::to('admin/editor/'.Crypto::encrypt($user->id)) }}"><i class="text-info glyphicon glyphicon-edit"></i></a>
+                <a href="#" onclick="confirmDelete('{!! URL::to('admin/delete/user/'.Crypto::encrypt($user->id)) !!}')"><i class="text-danger glyphicon glyphicon-remove"></i></a>
+            </td>
+        </tr>
 
     @endforeach
 
-</div>
+</table>
+
+{!! Minify::javascript('/js/accounts/admin.js') !!}
 
 @stop

@@ -50,6 +50,7 @@ class AdminController extends BaseController
 
         $data['user']               = $user;
         $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
+        $data['inAppNotifications'] = ($user->in_app_notifications) ? 'checked' : '';
         $data['notification']       = Session::get("notification") ?: "";
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
@@ -99,9 +100,13 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function delete()
+    public function delete($id = null)
     {
-        $user = Session::get("userInEditor");
+        if ($id) {
+            $user = Accounts::getAccount(Crypto::decrypt($id));
+        } else {
+            $user = Session::get("userInEditor");
+        }
 
         Accounts::deleteAccount($user->id);
 

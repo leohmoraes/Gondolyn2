@@ -71,7 +71,7 @@ Route::group(array('before' => 'is_logged_in', 'role' => 'admin'), function() {
 
     Route::get('admin/deactivate', "AdminController@deactivate");
     Route::get('admin/activate', "AdminController@activate");
-    Route::get('admin/delete/user', "AdminController@delete");
+    Route::get('admin/delete/user/{id?}', "AdminController@delete");
 
     Route::post('admin/update', "AdminController@update");
 
