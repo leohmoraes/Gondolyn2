@@ -97,7 +97,7 @@ function showLoginPanel() {
 function _setDashboard () {
     if ($(window).width() < 768) {
         $('.sidebar').css({
-            left: '-'+$(window).width(),
+            left: '-'+$(window).width()+'px',
         });
 
         if ($('.sidebar-menu-btn').length === 0) {
@@ -113,7 +113,7 @@ function _setDashboard () {
         $('.overlay').unbind().bind('click', function(){
             $('.overlay').fadeOut();
             $('.sidebar').animate({
-                left: '-'+$(window).width()
+                left: '-'+$(window).width()+'px',
             }, 'fast');
         });
     } else {
