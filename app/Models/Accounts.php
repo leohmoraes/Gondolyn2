@@ -447,9 +447,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         // Check for remember me
         $remember = ($remember_me === "on") ? TRUE : FALSE;
 
+        $minutes = Config::get("gondolyn.remember_me_duration");
+
         if ($remember) {
-            Cookie::queue('email', $useremail, $minutes);
-            Cookie::queue('password', $password, $minutes);
+            Cookie::queue('email', $data['email'], $minutes);
+            Cookie::queue('password', $data['password'], $minutes);
         }
 
         $currentUserCount = DB::table('users')->get();
