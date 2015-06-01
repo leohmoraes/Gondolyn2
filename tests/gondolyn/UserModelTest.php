@@ -1,7 +1,5 @@
 <?php
 
-use DB;
-
 class UserModelTest extends TestCase {
 
     /**
