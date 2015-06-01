@@ -22,7 +22,6 @@ class ErrorController extends BaseController
             "page_title" => "General Error",
             "page_keywords" => "",
             "page_description" => "",
-            "page_assets" => "",
             "page_details" => ""
         );
 
@@ -41,7 +40,6 @@ class ErrorController extends BaseController
             "page_title" => "Critical Error",
             "page_keywords" => "",
             "page_description" => "",
-            "page_assets" => "",
             "page_details" => ""
         );
 

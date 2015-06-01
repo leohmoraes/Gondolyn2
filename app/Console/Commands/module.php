@@ -41,6 +41,9 @@ class module extends Command
         $module = ucfirst($this->argument('name'));
 
         mkdir(app_path().'/Modules/'.$module, 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Assets', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Assets/js', 0777);
+        mkdir(app_path().'/Modules/'.$module.'/Assets/css', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Config', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Controllers', 0777);
         mkdir(app_path().'/Modules/'.$module.'/Commands', 0777);

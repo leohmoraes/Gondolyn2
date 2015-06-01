@@ -37,7 +37,7 @@ class AccountServices
 
         Session::put($sessionData, null);
 
-        return $user->user_role."/home";
+        return "dashboard";
     }
 
     public static function isLoggedIn()

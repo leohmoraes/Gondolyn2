@@ -4,6 +4,7 @@
 | Generals
 |--------------------------------------------------------------------------
 */
+
 $(function() {
     $(".non-form-btn").bind("click", function(e){
         e.preventDefault();
@@ -11,12 +12,27 @@ $(function() {
 
     $('form').submit(function(){
         $('.loading-overlay').show();
-        $(this).submit();
     });
 
     $('a.slow-link').click(function(){
         $('.loading-overlay').show();
     });
+
+    $("#gondolynLoginPanel").bind("click", function(e) {
+        e.preventDefault();
+        gondolynModal();
+        showLoginPanel();
+    });
+
+    $(".gondolyn-modal").bind("click", function(){
+        $(".gondolyn-modal").fadeOut();
+        $(".gondolyn-login").removeClass("gondolyn-login-animate");
+    });
+
+    $(window).resize(function(){
+        _setDashboard();
+    });
+    _setDashboard();
 });
 
 /*
@@ -58,13 +74,6 @@ function gondolynNotify(message) {
 |--------------------------------------------------------------------------
 */
 
-$(function(){
-    $(".gondolyn-modal").bind("click", function(){
-        $(".gondolyn-modal").fadeOut();
-        $(".gondolyn-login").removeClass("gondolyn-login-animate");
-    });
-});
-
 function gondolynModal() {
     $(".gondolyn-modal").fadeIn();
 }
@@ -78,14 +87,6 @@ function gondolynModal() {
 function showLoginPanel() {
     $(".gondolyn-login").addClass("gondolyn-login-animate");
 }
-
-$(function(){
-    $("#gondolynLoginPanel").bind("click", function(e) {
-        e.preventDefault();
-        gondolynModal();
-        showLoginPanel();
-    });
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -122,10 +123,3 @@ function _setDashboard () {
         });
     }
 }
-
-$(function(){
-    $(window).resize(function(){
-        _setDashboard();
-    });
-    _setDashboard();
-});

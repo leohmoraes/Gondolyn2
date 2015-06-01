@@ -115,4 +115,9 @@ class Module {
 
         return $modulePermissionConfigs;
     }
+
+    public static function asset($module, $path)
+    {
+        return url('module-asset/'.lcfirst($module).'/'.Crypto::encrypt($path));
+    }
 }

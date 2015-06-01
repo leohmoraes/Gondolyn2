@@ -41,8 +41,6 @@ return array(
         "page_title" => "A seed application for Laravel 5",
         "page_keywords" => "Gondolyn, gondolin, Laravel 5, Seed App",
         "page_description" => "A clean seed application for Laravel 5",
-        "page_assets" => "",
-        "page_js" => "",
         "page_details" => ""
     ),
 

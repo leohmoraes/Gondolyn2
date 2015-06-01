@@ -46,7 +46,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        {!! $page_assets; !!}
+        @yield('stylesheets')
     </head>
     <body>
 
@@ -88,12 +88,12 @@
 
             $(window).rawGrid();
 
-            @include('commons.notifications');
-
-            @yield('page_js')
+            @include('commons.notifications')
 
             @yield('gondolyn_notifications')
 
         </script>
+
+        @yield("javascript")
     </body>
 </html>

@@ -63,4 +63,37 @@ class AssetController extends BaseController
 
         readfile($storagePath.$fileName);
     }
+
+    public function moduleAsset($module, $encPath)
+    {
+        $path = Crypto::decrypt($encPath);
+
+        $fileName = app_path().'/Modules/'.ucfirst($module).'/Assets/'.$path;
+
+        if ( ! is_file($fileName)) {
+            return redirect('errors/general');
+        }
+
+        $fileSystem = new Filesystem;
+
+        $ext = $fileSystem->extension($fileName);
+        $fileSize = $fileSystem->size($fileName);
+
+        $contentType = $fileSystem->mimeType($fileName);
+
+        if ( ! $contentType) {
+            $contentType = "application/".$ext;
+        }
+
+        header("Content-Type: ".$contentType);
+        header('Connection: Keep-Alive');
+        header('Expires: 0');
+        header("Content-Transfer-Encoding: binary");
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header("Content-Length: ".$fileSize);
+        header("Accept-Ranges: bytes");
+
+        readfile($fileName);
+    }
 }
