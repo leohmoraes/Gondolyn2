@@ -47,6 +47,13 @@
         <![endif]-->
 
         @yield('stylesheets')
+
+        <script type="text/javascript">
+
+            var _token = '{!! Session::token() !!}';
+            var _url = '{!! url("/") !!}';
+
+        </script>
     </head>
     <body>
 
