@@ -60,7 +60,7 @@
                     </div>
                     <div class="raw100 raw-left raw-margin-top-24">
                         <div class="raw100 raw-left">
-                            <label for="appCode">App Authorization Code</label>
+                            <label for="appCode">API Authorization Code</label>
                             <input id="appCode" disabled type="text" class="form-control" value="{{ AccountServices::appAuthCode($user->id) }}">
                         </div>
                     </div>

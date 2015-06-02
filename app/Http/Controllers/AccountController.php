@@ -102,14 +102,13 @@ class AccountController extends BaseController
         $data['page_title'] = Lang::get('titles.subscription-invoices');
 
         $user = Accounts::getAccount(Session::get("id"));
-
-        $data['invoices'] = '';
+        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
         $invoices = $user->invoices();
 
-        foreach ($invoices as $invoice) {
-            $data['invoices'] .= View::make('account.invoice', array('invoice' => $invoice));
-        }
+        $data['invoices'] = View::make('account.invoice', array('invoices' => $invoices));
 
         return view('account.subscription-invoices', $data);
     }

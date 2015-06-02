@@ -23,30 +23,41 @@
 
 <!-- Content -->
 
-<div class="raw100 raw-left text-center">
-    <h2>Settings: Change Subscription</h2>
-</div>
+<div class="raw100 rg-row raw-margin-top-24">
+    <div class="rg-col-4 text-center raw-block-350">
+        <div class="raw100 raw-left raw-margin-top-48">
+            <div class="gondolyn-profile-container">
+                <div class="gondolyn-profile" style="background-image: url({{ $profileImage }})" ></div>
+            </div>
+        </div>
+    </div>
+    <div class="rg-col-8">
+        <div class="tab-panel">
 
-<div class="raw-device raw-margin-auto raw-margin-top-24">
+            @include('account.tab-menu', [
+                'subscriptionTab' => true
+            ])
 
-    <div class="raw100 raw-left raw-margin-top-24">
-        <a class="raw-left btn btn-default raw-margin-left-24" href="{{ URL::to('account/settings/subscription/invoices') }}" data-toggle="modal">Subscription Invoices</a>
-        <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#cancelModal">Cancel Subscription</button>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="subscription">
+                <div class="raw100 raw-left raw-margin-top-24">
+                    <button class="raw-right btn btn-danger" data-toggle="modal" data-target="#cancelModal">Cancel Subscription</button>
 
-        <form id="userSubscription" method="post" action="{{ URL::to('account/settings/update/subscription') }}">
-            <?= Form::token(); ?>
-            <div class="raw100 raw-left rg-row raw-margin-top-24">
-                <div class="rg-col-4">
-                    <label for="cvv" class="raw-margin-top-8 raw-right">Plan</label>
-                </div>
-                <div class="rg-col-8">
-                    @include('account.select-plan')
+                    <form id="userSubscription" method="post" action="{{ URL::to('account/settings/update/subscription') }}">
+                        <?= Form::token(); ?>
+                        <div class="raw100 raw-left rg-row raw-margin-top-24">
+                            <label for="plan">Plan</label>
+                            @include('account.select-plan')
+                        </div>
+                        <div class="raw100 raw-left rg-row raw-margin-top-24">
+                            <input id="update" type="submit" class="btn btn-primary raw-right" value="Save Change">
+                        </div>
+                    </form>
+
                 </div>
             </div>
-            <div class="raw100 raw-left rg-row raw-margin-top-24">
-                <input id="update" type="submit" class="btn btn-primary raw-right" value="Save Change">
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
