@@ -14,6 +14,7 @@ class DashboardController extends BaseController
     public function main()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.dashboard');
         return view('dashboard.main', $data);
     }
 }

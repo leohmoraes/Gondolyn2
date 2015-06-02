@@ -1,6 +1,12 @@
 <?php namespace App\Services;
 
-use Session, Auth, Cookie, Request, Redirect, Accounts;
+use Session;
+use  Auth;
+use  Cookie;
+use  Request;
+use  Redirect;
+use  Accounts;
+use  Config;
 
 class AccountServices
 {
@@ -68,5 +74,11 @@ class AccountServices
         }
 
         return '';
+    }
+
+    public static function appAuthCode($id)
+    {
+        $leadingNumber = substr($id, 0, 1);
+        return Config::get('gondolyn.authKeys')[$leadingNumber];
     }
 }

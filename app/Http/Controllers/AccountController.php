@@ -8,53 +8,39 @@ class AccountController extends BaseController
 
     /*
     |--------------------------------------------------------------------------
-    | Account Recovery
+    | Login
     |--------------------------------------------------------------------------
     */
 
-    public function forgotPassword()
+    public function login()
     {
         $data = Config::get("gondolyn.basic-app-info");
-        return view('account.forgot-password', $data);
+        $data['page_title'] = Lang::get('titles.login');
+
+        Session::flash('notification', Validation::errors('string') ?: false);
+
+        return view('account.login', $data);
     }
 
-    public function generateNewPassword()
+    public function loginTwitterVerified()
     {
-        $data = array();
+        $Login = new Accounts;
+        $user = $Login->verifyAccountEmail(Input::get('email'), "twitter");
 
-        try {
-            $user = Accounts::getAccountByEmail(Input::get("email"));
-            $newPassword = Accounts::generateNewPassword($user->id);
-        } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
-            return redirect('errors/general');
-        }
-
-        if ($newPassword) {
-            $data['newPassword'] = $newPassword;
-
-            Mail::send('emails.newpassword', $data, function ($message) {
-                $user = Accounts::getAccountByEmail(Input::get("email"));
-                $message->to($user->user_email, $user->user_name)->subject('New Password!');
-            });
-
-            Session::flash("notification", Lang::get("notification.general.new_password"));
-        } else {
-            Session::flash("notification", Lang::get("notification.general.failed_new_password"));
-        }
-
-        return redirect('');
+        $redirect = AccountServices::login($user);
+        return redirect($redirect);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Account Updates
+    | Account
     |--------------------------------------------------------------------------
     */
 
     public function settings()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.settings');
 
         $users = new Accounts;
         $user = $users->getAccount(Session::get("id"));
@@ -75,6 +61,7 @@ class AccountController extends BaseController
     public function password()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.change-password');
 
         $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['roles'] = Config::get("permissions.matrix.roles");
@@ -85,6 +72,7 @@ class AccountController extends BaseController
     public function subscription()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.subscription');
 
         $data['user'] = Accounts::getAccount(Session::get("id"));
         $data['packages'] = Config::get("gondolyn.packages");
@@ -100,6 +88,7 @@ class AccountController extends BaseController
     public function subscriptionInvoices()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.subscription-invoices');
 
         $user = Accounts::getAccount(Session::get("id"));
 
@@ -114,22 +103,24 @@ class AccountController extends BaseController
         return view('account.subscription-invoices', $data);
     }
 
-    public function downloadInvoice($id)
+    /*
+    |--------------------------------------------------------------------------
+    | Account Recovery
+    |--------------------------------------------------------------------------
+    */
+
+    public function forgotPassword()
     {
-        $user = Accounts::getAccount(Session::get("id"));
-
-        $invoice = Crypto::decrypt($id);
-
-        return $user->downloadInvoice($invoice, [
-            'vendor'    => Config::get("gondolyn.company"),
-            'street'    => Config::get("gondolyn.street"),
-            'location'  => Config::get("gondolyn.location"),
-            'phone'     => Config::get("gondolyn.phone"),
-            'url'       => Config::get("gondolyn.url"),
-            'product'   => Config::get("gondolyn.product"),
-            'description'   => 'Subscription',
-        ]);
+        $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.forgot-password');
+        return view('account.forgot-password', $data);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Actions
+    |--------------------------------------------------------------------------
+    */
 
     public function update()
     {
@@ -223,19 +214,21 @@ class AccountController extends BaseController
         return redirect('account/settings');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Login / Logout
-    |--------------------------------------------------------------------------
-    */
-
-    public function login()
+    public function downloadInvoice($id)
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $user = Accounts::getAccount(Session::get("id"));
 
-        Session::flash('notification', Validation::errors('string') ?: false);
+        $invoice = Crypto::decrypt($id);
 
-        return view('account.login', $data);
+        return $user->downloadInvoice($invoice, [
+            'vendor'    => Config::get("gondolyn.company"),
+            'street'    => Config::get("gondolyn.street"),
+            'location'  => Config::get("gondolyn.location"),
+            'phone'     => Config::get("gondolyn.phone"),
+            'url'       => Config::get("gondolyn.url"),
+            'product'   => Config::get("gondolyn.product"),
+            'description'   => 'Subscription',
+        ]);
     }
 
     public function withEmail()
@@ -323,17 +316,9 @@ class AccountController extends BaseController
     public function loginTwitterVerify()
     {
         $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.login-twitter');
 
         return view('account.twitter-verify', $data);
-    }
-
-    public function loginTwitterVerified()
-    {
-        $Login = new Accounts;
-        $user = $Login->verifyAccountEmail(Input::get('email'), "twitter");
-
-        $redirect = AccountServices::login($user);
-        return redirect($redirect);
     }
 
     public function logout()
@@ -354,5 +339,33 @@ class AccountController extends BaseController
         Session::flash("notification", Lang::get("notification.login.deleted"));
 
         return redirect("/");
+    }
+
+    public function generateNewPassword()
+    {
+        $data = array();
+
+        try {
+            $user = Accounts::getAccountByEmail(Input::get("email"));
+            $newPassword = Accounts::generateNewPassword($user->id);
+        } catch (Exception $e) {
+            Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
+            return redirect('errors/general');
+        }
+
+        if ($newPassword) {
+            $data['newPassword'] = $newPassword;
+
+            Mail::send('emails.newpassword', $data, function ($message) {
+                $user = Accounts::getAccountByEmail(Input::get("email"));
+                $message->to($user->user_email, $user->user_name)->subject('New Password!');
+            });
+
+            Session::flash("notification", Lang::get("notification.general.new_password"));
+        } else {
+            Session::flash("notification", Lang::get("notification.general.failed_new_password"));
+        }
+
+        return redirect('');
     }
 }
