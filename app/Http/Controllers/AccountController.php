@@ -46,11 +46,10 @@ class AccountController extends BaseController
         $user = $users->getAccount(Session::get("id"));
 
         $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
-
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
         $data['user']               = $user;
-        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['inAppNotifications'] = ($user->in_app_notifications === 'on') ? 'checked' : '';
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['shippingColumns']    = Config::get('forms.shipping');
@@ -63,7 +62,13 @@ class AccountController extends BaseController
         $data = Config::get("gondolyn.basic-app-info");
         $data['page_title'] = Lang::get('titles.change-password');
 
-        $data['user'] = Accounts::getAccount(Session::get("id"));
+        $user = Accounts::getAccount(Session::get("id"));
+
+        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
+
+        $data['user'] = $user;
         $data['roles'] = Config::get("permissions.matrix.roles");
 
         return view('account.password', $data);
@@ -74,7 +79,13 @@ class AccountController extends BaseController
         $data = Config::get("gondolyn.basic-app-info");
         $data['page_title'] = Lang::get('titles.subscription');
 
-        $data['user'] = Accounts::getAccount(Session::get("id"));
+        $user = Accounts::getAccount(Session::get("id"));
+
+        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
+
+        $data['user'] = $user;
         $data['packages'] = Config::get("gondolyn.packages");
 
         if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
