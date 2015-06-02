@@ -60,6 +60,12 @@
                     @endif
                 @endif
             </div>
+            <div class="raw100 raw-left raw-margin-top-24">
+                <div class="raw100 raw-left">
+                    <label for="appCode">App Authorization Code</label>
+                    <input id="appCode" disabled type="text" class="form-control" value="{{ AccountServices::appAuthCode($user->id) }}">
+                </div>
+            </div>
             @if (isset($adminEditorMode))
             <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/update') }}">
             @else
