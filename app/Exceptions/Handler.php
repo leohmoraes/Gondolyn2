@@ -38,6 +38,9 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if (is_a($e, 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException')) {
+            if (stristr($request->url(), 'api')) {
+                return Gondolyn::response('error', 'could not find route');
+            }
             return redirect('errors/general');
         }
 
