@@ -37,7 +37,7 @@
         {!! Minify::stylesheet(url('/font-awesome/css/font-awesome.css')) !!}
 
         <!-- Bootstrap Theme -->
-        {!! Minify::stylesheet(url('/themes/bootstrap-united.css')) !!}
+        {!! Minify::stylesheet(url('/themes/bootstrap-cosmo.css')) !!}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
