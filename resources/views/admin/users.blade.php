@@ -13,7 +13,7 @@
     <thead>
         <th>Email</th>
         <th>Role</th>
-        <th>Account State</th>
+        <th class="raw-m-hide">Account State</th>
         <th width="50px">Action</th>
     </thead>
 
@@ -26,10 +26,10 @@
             <td>
                 {{ $user->user_role }}
             </td>
-            <td>
+            <td class="raw-m-hide">
                 {{ ($user->user_active == "inactive") ? "Not Active" : "Active" }}
             </td>
-            <td>
+            <td class="text-right">
                 <a href="{{ URL::to('admin/editor/'.Crypto::encrypt($user->id)) }}"><i class="text-info glyphicon glyphicon-edit"></i></a>
                 <a href="#" onclick="confirmDelete('{!! URL::to('admin/delete/user/'.Crypto::encrypt($user->id)) !!}')"><i class="text-danger glyphicon glyphicon-remove"></i></a>
             </td>

@@ -13,6 +13,22 @@ jQuery(function($) {
 
         return false;
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Confirm the subscription change
+    |--------------------------------------------------------------------------
+    */
+
+    $('#changeBtn').click(function(e){
+        e.preventDefault();
+
+        $('#changeModal').modal('toggle');
+
+        $('#confirmChangeBtn').bind('click', function(){
+            $('#userSubscriptionChange').submit();
+        });
+    });
 });
 
 var stripeResponseHandler = function(status, response) {

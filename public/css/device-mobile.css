@@ -10,3 +10,12 @@
     width: 312px;
     margin: -260px -156px;
 }
+
+.gondolyn-profile {
+    width: 200px;
+    height: 200px;
+}
+
+.raw-m-hide-important {
+    display: none !important;
+}

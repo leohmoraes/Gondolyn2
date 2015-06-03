@@ -88,7 +88,7 @@ class AccountController extends BaseController
         $data['user'] = $user;
         $data['packages'] = Config::get("gondolyn.packages");
 
-        if ($data['user']->subscribed() && ! $data['user']->cancelled()) {
+        if ($data['user']->subscribed()) {
             $view = view('account.subscription-change', $data);
         } else {
             $view = view('account.subscription-set', $data);

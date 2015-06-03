@@ -2,8 +2,8 @@
 
     <thead>
         <th>Date</th>
-        <th>Identifier</th>
-        <th>Dollars</th>
+        <th class="raw-m-hide raw-t-hide">Identifier</th>
+        <th class="raw-m-hide">Dollars</th>
     </thead>
 
     <tbody>
@@ -11,8 +11,8 @@
         @foreach($invoices as $invoice)
         <tr>
             <td><a href="{{ URL::to('account/settings/subscription/download/'.Crypto::encrypt($invoice->id)) }}">{{ $invoice->dateString() }}</a></td>
-            <td>{{ $invoice->id }}</td>
-            <td>{{ $invoice->dollars() }}</td>
+            <td class="raw-m-hide raw-t-hide">{{ $invoice->id }}</td>
+            <td class="raw-m-hide">{{ $invoice->dollars() }}</td>
         </tr>
         @endforeach
 

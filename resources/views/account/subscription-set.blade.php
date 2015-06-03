@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="raw100 rg-row raw-margin-top-24">
-        <div class="rg-col-4 text-center raw-block-350">
-            <div class="raw100 raw-left raw-margin-top-48">
+        <div class="rg-col-4 text-center">
+            <div class="raw100 raw-left raw-margin-top-24 raw-margin-bottom-48">
                 <div class="gondolyn-profile-container">
                     <div class="gondolyn-profile" style="background-image: url({{ $profileImage }})" ></div>
                 </div>
@@ -35,13 +35,13 @@
                             <label for="name">Full Name</label>
                             <input id="name" type="text" name="name" class="form-control" placeholder="Full Name" data-stripe="name">
                         </div>
-                        <div class="raw100 raw-left rg-row raw-margin-top-24">
+                        <div class="raw100 raw-left rg-row">
                             <div class="raw100 raw-left">
-                                <div class="rg-inner-6">
+                                <div class="rg-inner-6 raw-margin-top-24">
                                     <label for="cvc">CVV</label>
                                     <input id="cvc" type="text" name="cvc" class="form-control" placeholder="CVV" data-stripe="cvc">
                                 </div>
-                                <div class="rg-inner-6">
+                                <div class="rg-inner-6 raw-margin-top-24">
                                     <label for="cvc">Expiry</label>
                                     <input id="expiry" type="text" name="expiry" class="form-control" placeholder="MM/YY">
                                 </div>

@@ -26,6 +26,11 @@ return array(
         'logout' => 'Log Out',
     ],
 
+    "subscription" => [
+        "cancel" => "Are you sure you wish to cancel your subscription?",
+        "change" => "Are you sure you wish to change your subscription?",
+    ],
+
     "home" => [
        'welcome' => 'Welcome to Gondolyn, an easy to modify, modular, subscription pre-configured, helper autoloaded, user managed, API pre-built and all around super-fast-prototyped seed application. The goal is to speed up deployment! -- oh, and development too :)',
     ],
