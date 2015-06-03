@@ -229,6 +229,7 @@ class AccountController extends BaseController
         $user = Accounts::getAccount(Session::get("id"));
 
         $invoice = Crypto::decrypt($id);
+        $plan = Config::get('gondolyn.packages.'.Session::get('plan'));
 
         return $user->downloadInvoice($invoice, [
             'vendor'    => Config::get("gondolyn.company"),
@@ -237,7 +238,7 @@ class AccountController extends BaseController
             'phone'     => Config::get("gondolyn.phone"),
             'url'       => Config::get("gondolyn.url"),
             'product'   => Config::get("gondolyn.product"),
-            'description'   => 'Subscription',
+            'description'   => 'Subscription ('.$plan['name'].')',
         ]);
     }
 
