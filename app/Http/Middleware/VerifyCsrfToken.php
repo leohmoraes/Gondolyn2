@@ -5,6 +5,7 @@ use Closure;
 use Lang;
 use Module;
 use Illuminate\Contracts\Auth\Guard;
+use App\Exceptions\ApiException;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as LaravelsVerifyCsrfToken;
 
 class VerifyCsrfToken extends LaravelsVerifyCsrfToken
@@ -20,7 +21,7 @@ class VerifyCsrfToken extends LaravelsVerifyCsrfToken
         }
 
         if (stristr($request->url(), 'api')) {
-            throw new \Exception(Lang::get('notification.api.incorrect'), 1);
+            throw new ApiException(Lang::get('notification.api.incorrect'), 1);
         }
 
         throw new \Illuminate\Session\TokenMismatchException;

@@ -28,18 +28,6 @@ class Handler extends ExceptionHandler
         return parent::report($e);
     }
 
-    // *
-    //  * Render an exception into an HTTP response.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \Exception  $e
-    //  * @return \Illuminate\Http\Response
-
-    // public function render($request, Exception $e)
-    // {
-    //  return parent::render($request, $e);
-    // }
-
     /**
      * Render an exception into a response.
      *
@@ -53,13 +41,18 @@ class Handler extends ExceptionHandler
             return redirect('errors/general');
         }
 
-        if (is_a($e, 'App\Exceptions\LoginException') || is_a($e, 'App\Exceptions\PermissionException')) {
+        if (is_a($e, 'App\Exceptions\LoginException')) {
             Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }
 
-        if (stristr($request->url(), 'api')) {
-            return \Gondolyn::response('error', $e->getMessage());
+        if (is_a($e, 'App\Exceptions\PermissionException')) {
+            Gondolyn::notification($e->getMessage());
+            return redirect('errors/general');
+        }
+
+        if (is_a($e, 'App\Exceptions\ApiException')) {
+            return Gondolyn::response('error', $e->getMessage());
         }
 
         return parent::render($request, $e);

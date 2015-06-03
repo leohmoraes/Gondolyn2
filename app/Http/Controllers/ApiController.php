@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\ApiException;
 use App\Services\AccountServices;
 
 class ApiController extends BaseController

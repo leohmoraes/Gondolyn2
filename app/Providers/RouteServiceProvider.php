@@ -79,7 +79,7 @@ class RouteServiceProvider extends ServiceProvider
                 Session::flash("notification", Lang::get("notification.login.expired-session"));
 
                 if (Gondolyn::is_api_call()) {
-                    throw new \Exception(Lang::get("notification.login.expired-session"), 1);
+                    throw new ApiException(Lang::get("notification.login.expired-session"), 1);
                 }
 
                 return redirect("errors/general");
