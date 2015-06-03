@@ -6,21 +6,25 @@
         <h2 class="text-center">Change Log</h2>
     </div>
 
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Version</th>
+        <th class="raw-m-hide raw-t-hide">Date</th>
+        <th class="raw-m-hide">Commit</th>
+        <th class="raw-m-hide raw-t-hide">Message</th>
+    </tr>
+
+    </thead>
+    <tbody>
     @foreach ($changes as $change)
-        <div class="raw100 raw-left user-row">
-            <div class="raw10 raw-left">
-                <p>{{ $change->version }}</p>
-            </div>
-            <div class="raw10 raw-m-hide raw-t-hide raw-left">
-                <p>{{ $change->date }}</p>
-            </div>
-            <div class="raw35 raw-m-hide raw-left">
-                <a href="{{ 'https://github.com/mlantz/Gondolyn2/commit/'.$change->commit }}">{{ $change->commit }}</a>
-            </div>
-            <div class="raw45 raw-m-hide raw-t-hide raw-left">
-                <p>{{ $change->message }}</p>
-            </div>
-        </div>
+        <tr>
+            <td>{{ $change->version }}</td>
+            <td class="raw-m-hide raw-t-hide">{{ $change->date }}</td>
+            <td class="raw-m-hide"><a href="{{ 'https://github.com/mlantz/Gondolyn2/commit/'.$change->commit }}">{{ $change->commit }}</a></td>
+            <td class="raw-m-hide raw-t-hide">{{ $change->message }}</td>
+        </tr>
     @endforeach
+    </table>
 
 @stop
