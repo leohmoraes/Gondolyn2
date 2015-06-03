@@ -28,7 +28,11 @@ class ApiTest extends TestCase {
 
         $response = $this->call('GET', '/api/');
 
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $decoded = json_decode($response->getContent());
+
+        $this->assertEquals('error', $decoded->status);
     }
 
     /**
