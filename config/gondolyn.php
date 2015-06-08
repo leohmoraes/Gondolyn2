@@ -9,7 +9,19 @@ return array(
 
     'signup' => TRUE,
 
-    'smLogin' => FALSE,
+    'confirmEmail' => TRUE,
+
+    'socialMediaLogin' => FALSE,
+
+    'two-factor-authentication' => [
+        'enabled' => FALSE,
+        'duration' => '60days', // session, lifetime, 60days
+        'twilio' => [
+            'account_sid' => '',
+            'auth_token' => '',
+            'from_number' => '+15005550006'
+        ],
+    ],
 
     'authKeys' => [
         'XdTSB0kgxuEVzd8NSDejjeVUMJuj',

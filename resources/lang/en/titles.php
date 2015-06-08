@@ -17,6 +17,7 @@ return array(
     "subscription" => "Subscription",
     "subscription-invoices" => "Subscription Invoices",
     "login" => "Login",
+    "two-factor" => "Two Factor Login",
     "login-twitter" => "Login: Twitter Verification",
 
     "admin-home" => "Admin",

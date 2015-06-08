@@ -9,7 +9,7 @@
                 <span class="gondolyn-login-text">Email</span>
             </a>
         </div>
-        @if (Config::get("gondolyn.smLogin"))
+        @if (Config::get("gondolyn.socialMediaLogin"))
         <div class="raw33 raw-left text-center">
             <a href="{{ URL::to('login/facebook') }}">
                 <div class="gondolyn-login-icon-wrapper">

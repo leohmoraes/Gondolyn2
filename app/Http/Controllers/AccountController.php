@@ -22,6 +22,16 @@ class AccountController extends BaseController
         return view('account.login', $data);
     }
 
+    public function loginConfirmEmail()
+    {
+        $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.login');
+
+        Session::flash('notification', Validation::errors('string') ?: false);
+
+        return view('account.login-confirm-email', $data);
+    }
+
     public function loginTwitterVerified()
     {
         $Login = new Accounts;
@@ -113,6 +123,18 @@ class AccountController extends BaseController
         return view('account.subscription-invoices', $data);
     }
 
+    public function twoFactor()
+    {
+        $data = Config::get("gondolyn.basic-app-info");
+        $data['page_title'] = Lang::get('titles.two-factor');
+
+        $user = Accounts::getAccount(Session::get("id"));
+
+        Log::info($user->two_factor_code);
+
+        return view('account.two-factor', $data);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Account Recovery
@@ -134,18 +156,25 @@ class AccountController extends BaseController
 
     public function update()
     {
-        try {
-            $status = Accounts::updateAccount(Session::get("id"));
-            if ($status) {
-                Session::flash("notification", Lang::get("notification.profile.update_success"));
-            } else {
-                Session::flash("notification", Lang::get("notification.profile.update_failed"));
+        $validation = Validation::check(Accounts::$rules);
+
+        if ( ! $validation['errors']) {
+            try {
+                $status = Accounts::updateAccount(Session::get("id"));
+                if ($status) {
+                    Session::flash("notification", Lang::get("notification.profile.update_success"));
+                } else {
+                    Session::flash("notification", Lang::get("notification.profile.update_failed"));
+                }
+            } catch (Exception $e) {
+                Session::flash("notification", $e->getMessage());
             }
-        } catch (Exception $e) {
-            Session::flash("notification", $e->getMessage());
+
+            return redirect('account/settings');
         }
 
-        return redirect('account/settings');
+        Session::flash("notification", Lang::get("notification.profile.update_failed"));
+        return $validation['redirect'];
     }
 
     public function updatePassword()
@@ -256,12 +285,17 @@ class AccountController extends BaseController
             $Users = new Accounts;
             $user = $Users->loginWithEmail(Input::get('email'), Input::get('password'), Input::get('remember_me'));
 
-            if ( ! $user) {
-                Session::flash("notification", Lang::get("notification.login.fail"));
-                return redirect('errors/general');
+            if (Config::get('autoConfirmEmail') && $user->user_active !== 'active') {
+                AccountServices::sendEmailConfirmation($user);
+                return redirect('login/confirm-email');
             } else {
-                $redirect = AccountServices::login($user);
-                return redirect($redirect);
+                if ( ! $user) {
+                    Session::flash("notification", Lang::get("notification.login.fail"));
+                    return redirect('errors/general');
+                } else {
+                    $redirect = AccountServices::login($user);
+                    return redirect($redirect);
+                }
             }
 
             Session::flash("notification", Lang::get("notification.login.success"));
@@ -271,6 +305,15 @@ class AccountController extends BaseController
             Session::flash("notification", $e->getMessage());
             return redirect('errors/general');
         }
+    }
+
+    public function confirmEmail($email)
+    {
+        $user = Accounts::getAccountByEmail(Crypto::decrypt($email));
+        $result = Accounts::modifyAccountStatus($user->id, 'active');
+
+        Session::flash("notification", Lang::get("notification.login.confirm"));
+        return redirect('login/email');
     }
 
     public function withFacebook()
@@ -378,5 +421,18 @@ class AccountController extends BaseController
         }
 
         return redirect('');
+    }
+
+    public function twoFactorAuthenticate()
+    {
+        $user = Auth::user();
+
+        if ($user->two_factor_code === Request::input('code')) {
+            AccountServices::authTwoFactors($user);
+        } else {
+            return redirect('account/two-factor')->with('bad-code', true);
+        }
+
+        return redirect('dashboard');
     }
 }

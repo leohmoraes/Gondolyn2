@@ -91,15 +91,15 @@ class FormMaker {
     {
         $formBuild = '';
 
-        if (is_null($view)) {
-            if (isset($errors[$column])) {
-                $errorHighlight = ' has-error';
-                $errorMessage = $errors[$column];
-            } else {
-                $errorHighlight = '';
-                $errorMessage = false;
-            }
+        if (isset($errors[$column])) {
+            $errorHighlight = ' has-error';
+            $errorMessage = $errors[$column];
+        } else {
+            $errorHighlight = '';
+            $errorMessage = false;
+        }
 
+        if (is_null($view)) {
             if (isset($field['type']) && (stristr($field['type'], 'radio') || stristr($field['type'], 'checkbox'))) {
                 $formBuild .= '<div class="'.$errorHighlight.'">';
                 $formBuild .= '<div class="'.$field['type'].'"><label>'.$input.FormMaker::cleanString(FormMaker::columnLabel($field, $column)).'</label>'.FormMaker::errorMessage($errorMessage).'</div>';
@@ -110,15 +110,8 @@ class FormMaker {
 
             $formBuild .= '</div>';
         } else {
-            if (isset($errors[$column])) {
-                $errorHighlight = ' has-error';
-                $errorMessage = $errors[$column];
-            } else {
-                $errorHighlight = '';
-                $errorMessage = false;
-            }
-
             $formBuild .= View::make($view, array(
+                'labelFor' => ucfirst($column),
                 'label' => FormMaker::columnLabel($field, $column),
                 'input' => $input,
                 'errorMessage' => FormMaker::errorMessage($errorMessage),
@@ -153,7 +146,7 @@ class FormMaker {
         $config['inputs'] = Validation::inputs();
 
         $config['objectName']     = (isset($object->$name)) ? $object->$name : $name;
-        $config['placeholder']    = FormMaker::columnLabel($field, $name);
+        $config['placeholder']    = FormMaker::placeholder($field, $name);
 
         // If validation inputs are available lets prepopulate the fields!
         if (isset($config['inputs'][$name])) {
@@ -162,7 +155,7 @@ class FormMaker {
         }
 
         if ($reformatted) {
-            $config['placeholder'] = FormMaker::cleanString(FormMaker::columnLabel($field, $name));
+            $config['placeholder'] = FormMaker::cleanString(FormMaker::placeholder($field, $name));
         }
 
         if ( ! isset($field['type'])) {
@@ -193,7 +186,7 @@ class FormMaker {
         $radioInputs    = ['radio', 'radio-inline'];
 
         $checkType      = (in_array($config['fieldType'], $checkboxInputs)) ? 'checked' : 'selected';
-        $selected       = (isset($config['inputs'][$config['name']]) || isset($config['field']['selected'])) ? $checkType : '';
+        $selected       = (isset($config['inputs'][$config['name']]) || isset($config['field']['selected']) || $config['objectName'] === 'on') ? $checkType : '';
 
         switch ($config['fieldType']) {
             case in_array($config['fieldType'], $textInputs):
@@ -237,7 +230,7 @@ class FormMaker {
     {
         $multiple           = (isset($config['field']['multiple'])) ? 'multiple' : '';
         $floatingNumber     = ($config['fieldType'] === 'float' || $config['fieldType'] === 'decimal') ? 'step="any"' : '';
-        $population         = ($config['populated']) ? 'value="'.$config['objectName'].'"' : '';
+        $population         = ($config['populated'] && $config['name'] !== $config['objectName']) ? 'value="'.$config['objectName'].'"' : '';
 
         $inputString        = '<input id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
         return $inputString;
@@ -268,6 +261,19 @@ class FormMaker {
     public static function columnLabel($field, $column)
     {
         return (isset($field['alt_name'])) ? $field['alt_name'] : ucfirst($column);
+    }
+
+    /**
+     * Create the placeholder
+     * @param  array  $field  Field from Column Array
+     * @param  string $column Column name
+     * @return string
+     */
+    public static function placeholder($field, $column)
+    {
+        $alt_name = (isset($field['alt_name'])) ? $field['alt_name'] : ucfirst($column);
+        $placeholder = (isset($field['placeholder'])) ? $field['placeholder'] : $alt_name;
+        return $placeholder;
     }
 
     /**

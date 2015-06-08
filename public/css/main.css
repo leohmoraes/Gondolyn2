@@ -32,7 +32,7 @@ html, body {
 .gondolyn-notification {
     width: 260px;
     min-height: 30px;
-    position: absolute;
+    position: fixed;
     z-index: 10000;
     right: -300px;
     top: 20px;

@@ -2,46 +2,52 @@
 
 return [
 
-    'shipping' => array(
+    'account' => [
 
-        'street'        => [
+        'user_email'      => [
+            'alt_name' => 'Email Address',
+        ],
+        'user_alt_email'  => [
+            'alt_name' => 'Alt. Email Address',
+        ],
+        'user_name'       => [
+            'alt_name' => 'Username',
+        ],
+        'in_app_notifications'       => [
+            'type' => 'checkbox',
+            'alt_name' => 'In App Notifications',
+        ]
+    ],
+
+    'two-factor' => [
+        'two_factor_enabled'       => [
+            'alt_name' => 'Enable Two Factor Logins',
+            'type' => 'checkbox'
+        ],
+        'two_factor_phone' => [
+            'alt_name' => 'Mobile Phone Number',
+            'placeholder' => '+1 (234) 567-8910',
             'type' => 'string'
         ],
+    ],
+
+    'shipping' => [
+
+        'street'        => [],
         'city'          => [],
         'state'         => [
-            'type' => 'select',
-            'options' => [
-                'Alberta' => 'AB',
-                'British Columbia' => 'BC',
-                'Manitoba' => 'MB',
-                'New Brunswick' => 'NB',
-                'Newfoundland and Labrador' => 'NL',
-                'Northwest Territories' => 'NT',
-                'Nova Scotia' => 'NS',
-                'Nunavut' => 'NU',
-                'Ontario' => 'ON',
-                'Prince Edward Island' => 'PE',
-                'Quebec' => 'QC',
-                'Saskatchewan' => 'SK',
-                'Yukon' => 'YT',
-            ]
+            'type' => 'string',
         ],
         'country'       => [
             'type' => 'select',
-            'options' => [
-                'Canada' => 'CA',
-            ]
+            'options' => include(__DIR__.'/countries.php'),
         ],
         'postal'        => [
             'alt_name' => 'Postal Code'
         ],
         'other'         => [
             'type' => 'textarea'
-        ],
-        'profile'         => [
-            'type' => 'file'
-        ],
-
-    )
+        ]
+    ]
 
 ];

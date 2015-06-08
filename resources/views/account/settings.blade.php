@@ -70,26 +70,8 @@
                     <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('account/settings/update') }}">
                     @endif
                         <?= Form::token(); ?>
-                        <div class="raw100 raw-left raw-margin-top-24">
-                            <div class="raw100 raw-left">
-                                <label for="email">Email Address</label>
-                                <input id="email" type="text" name="email" class="form-control" placeholder="Email Address" value="{{ $user->user_email }}">
-                            </div>
-                        </div>
-                        <div class="raw100 raw-left raw-margin-top-24">
-                            <div class="raw100 raw-left">
-                                <label for="alt_email">Alt. Email Address</label>
-                                <input id="alt_email" type="text" name="alt_email" class="form-control" placeholder="Alt. Email Address" value="{{ $user->user_alt_email }}">
-                            </div>
-                        </div>
-                        <div class="raw100 raw-left raw-margin-top-24">
-                            <div class="raw100 raw-left">
-                                <label for="username">Username</label>
-                                <input id="username" type="text" name="username" class="form-control" placeholder="Username" value="{{ $user->user_name }}">
-                            </div>
-                        </div>
 
-                        {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
+                        {!! FormMaker::fromObject(Config::get('forms.account'), 'account.settings-row', $user); !!}
 
                         @if (Session::get('role') == 'admin')
                         <div class="raw100 raw-left raw-margin-top-24">
@@ -101,13 +83,16 @@
                         @endif
 
                         <div class="raw100 raw-left raw-margin-top-24">
-                            <div class="raw100 raw-left">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="in_app_notifications" {{ $inAppNotifications }}> In App Notifications
-                                </label>
-                            </div>
+                            <h3>Billing/ Shipping Information</h3>
                         </div>
+                        {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
+
+                        @if(Config::get('gondolyn.two-factor-authentication.enabled'))
+                        <div class="raw100 raw-left raw-margin-top-24">
+                            <h3>Two Factor Authentication</h3>
+                        </div>
+                        {!! FormMaker::fromObject(Config::get('forms.two-factor'), 'account.settings-row', $user); !!}
+                        @endif
 
                         <div class="raw50 raw-right text-right">
                             <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-top-24 raw-margin-left-24" value="Save Settings">

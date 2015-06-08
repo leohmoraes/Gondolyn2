@@ -14,6 +14,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     use Authenticatable;
     use CanResetPassword;
 
+    public static $rules = [
+        'user_email' => 'email|required',
+        'user_alt_email' => 'email',
+        'two_factor_phone' => 'required_if:two_factor_enabled,on'
+    ];
+
     /**
      * The database table used by the model.
      *
@@ -107,6 +113,16 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
                 }
             }
 
+            if (Config::get('gondolyn.two-factor-authentication.enabled')) {
+                $user->two_factor_enabled       = Input::get("two_factor_enabled");
+                $user->two_factor_phone       = preg_replace('/[^\dxX]/', '', Input::get("two_factor_phone"));
+
+                if (Input::get("two_factor_enabled") === "on" && strlen(Input::get("two_factor_phone")) < 8) {
+                    return false;
+                }
+            }
+
+
             return $user->save();
         } else {
             return false;
@@ -128,6 +144,20 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $user->save();
 
         return $newPassword;
+    }
+
+    /**
+     * Set the two factor authentication code
+     * @param  integer $id User Id
+     * @param  string $code Two Factor Code
+     * @return string
+     */
+    public static function setTwoFactorCode($id, $code)
+    {
+        $user = Accounts::findOrFail($id);
+        $user->two_factor_code = $code;
+
+        return $user->save();
     }
 
     /**
@@ -471,7 +501,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $user->user_email       = $data['email'];
         $user->user_salt        = $userSalt;
-        $user->user_active      = "active";
+        $user->user_active      = (Config::get('gondolyn.confirmEmail')) ? "active" : "inactive";
         $user->user_api_token   = md5(Utilities::addSalt(30));
         $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
         $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');

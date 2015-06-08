@@ -112,6 +112,9 @@ Route::group(array('prefix' => 'account', 'before' => 'is_logged_in', 'role' => 
 
     Route::get('delete/account', "AccountController@deleteAccount");
     Route::get('cancel/subscription', "AccountController@cancelSubscription");
+
+    Route::get('two-factor', "AccountController@twoFactor");
+    Route::post('two-factor/authenticate', "AccountController@twoFactorAuthenticate");
 });
 
 /*
@@ -130,6 +133,8 @@ Route::post('failed/payment', 'Laravel\Cashier\WebhookController@handleWebhook')
 
 Route::get('login/email', "AccountController@login");
 Route::post('login/request', array('uses' => 'AccountController@withEmail'));
+Route::get('login/confirm-email', "AccountController@loginConfirmEmail");
+Route::get('login/confirm/{email}', "AccountController@confirmEmail");
 
 Route::get('login/facebook', "AccountController@withFacebook");
 Route::get('login/twitter', "AccountController@withTwitter");

@@ -14,6 +14,6 @@ return [
     'admin' => [
         'street' => ['required'],
         'city' => ['required'],
-    ]
+    ],
 
 ];

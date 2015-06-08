@@ -19,6 +19,7 @@ return array(
     "login" => array(
         "fail" => "Your email or password was incorrect",
         "success" => "We found you!",
+        "confirm" => "Your email has been confirmed.",
         "deleted" => "Your account was deleted",
         "expired-session" => "You're not currently logged in.",
         "missing" => "Missing login credentials",
