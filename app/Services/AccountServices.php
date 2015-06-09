@@ -46,7 +46,7 @@ class AccountServices
             "id" => $user->id
         );
 
-        if ($user->two_factor_enabled) {
+        if ($user->two_factor_enabled && Config::get('gondolyn.two-factor-authentication.enabled')) {
             $code = rand(111111, 999999);
             AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone, $username);
             Accounts::setTwoFactorCode($user->id, $code);
