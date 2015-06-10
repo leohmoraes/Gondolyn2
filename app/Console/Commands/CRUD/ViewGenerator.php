@@ -15,7 +15,7 @@ class ResponsiveViewGenerator extends ViewGenerator
 
     private $viewsPath;
 
-    function __construct($commandData)
+    public function __construct($commandData)
     {
         $this->commandData = $commandData;
         $this->path = Config::get('generator.path_views', base_path('resources/views')) . '/' . $this->commandData->modelNamePluralCamel . '/';

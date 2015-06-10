@@ -55,6 +55,8 @@ class crud extends BaseCommand
      */
     public function handle()
     {
+        $plaform = false;
+
         if (strtolower($this->argument('platform')) !== 'core') {
             $platform = ucfirst($this->argument('platform'));
             Config::set('generator', [

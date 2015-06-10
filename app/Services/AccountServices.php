@@ -48,7 +48,7 @@ class AccountServices
 
         if ($user->two_factor_enabled && Config::get('gondolyn.two-factor-authentication.enabled')) {
             $code = rand(111111, 999999);
-            AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone, $username);
+            AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone);
             Accounts::setTwoFactorCode($user->id, $code);
         }
 
@@ -72,7 +72,7 @@ class AccountServices
         return true;
     }
 
-    public static function sendTwoFactorAuthenticationCode($code, $phone, $username)
+    public static function sendTwoFactorAuthenticationCode($code, $phone)
     {
         $AccountSid = Config::get('gondolyn.two-factor-authentication.twilio.account_sid');
         $AuthToken = Config::get('gondolyn.two-factor-authentication.twilio.auth_token');

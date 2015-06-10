@@ -123,7 +123,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
                 if ($user->two_factor_enabled) {
                     $code = rand(111111, 999999);
-                    AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone, $user->user_name);
+                    AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone);
                     Accounts::setTwoFactorCode($user->id, $code);
                 }
             }
