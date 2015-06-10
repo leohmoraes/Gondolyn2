@@ -176,3 +176,13 @@ html, body {
 textarea {
     resize: vertical;
 }
+
+.table-input {
+    border: none;
+    background-color: transparent;
+}
+
+    .table-input:focus {
+        outline: 0;
+        border-bottom: 1px solid #BBB;
+    }

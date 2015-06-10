@@ -7,6 +7,7 @@ use View;
 use Config;
 use Session;
 use Gondolyn;
+use Validation;
 use App\Modules\Sample\Services\SampleService;
 use App\Modules\Sample\Models\Samples;
 
@@ -26,15 +27,8 @@ class SampleController extends \BaseController
     {
         $service = new SampleService;
 
-        $sysData = [
-            'config'        => Config::get("gondolyn.basic-app-info"),
-            'notification'  => Session::get("notification"),
-            'welcome'       => 'Welcome to the Sample module '.Session::get("username").' the sample module demonstrates the use of services which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to services, to views.'
-        ];
-
-        $modelData      = Samples::getASample(1);
-        $serviceData    = $service->dataModifier($modelData);
-        $data           = $service->processData($serviceData, $sysData);
+        $data                 = $service->serviceInformation(Config::get("gondolyn.basic-app-info"));
+        $data['samples']      = $service->getSamples();
 
         return view('sample::sample', $data);
     }
@@ -44,4 +38,21 @@ class SampleController extends \BaseController
         return Gondolyn::response("success", "You have accessed a module");
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Actions
+    |--------------------------------------------------------------------------
+    */
+
+    public function editRow()
+    {
+        $validation = Validation::check(Samples::$rules);
+
+        if ($validation['errors']) {
+            return Gondolyn::response("error", "Your information was not saved");
+        }
+
+        Samples::editSample(Input::get('_id'));
+        return Gondolyn::response("success", "Your information was saved.");
+    }
 }

@@ -2,6 +2,6 @@
 
 interface SampleInterface
 {
-    public function dataModifier($modelData);
-    public function processData($prototypeData, $sysData);
+    public function getSamples();
+    public function serviceInformation($config);
 }
