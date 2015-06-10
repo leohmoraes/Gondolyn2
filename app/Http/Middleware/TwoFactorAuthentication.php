@@ -7,6 +7,7 @@ use Cookie;
 use Gondolyn;
 use Lang;
 use Auth;
+use AccountServices;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
@@ -37,22 +38,24 @@ class TwoFactorAuthentication implements Middleware
      {
         $config = Config::get('gondolyn.two-factor-authentication');
         $duration = $config['duration'];
+        $twoFactorNotVerified = false;
 
         if ($config['enabled']) {
             $user = Auth::user();
 
             if ($user) {
                 if ($duration === 'session') {
-                    $hasTwoFactor = is_null(Session::get('twoFactored'));
+                    $twoFactorNotVerified = is_null(Session::get('twoFactored'));
                 } else if ($duration === 'lifetime' || $duration === '60days') {
-                    $hasTwoFactor = is_null(Cookie::get('twoFactored'));
+                    $twoFactorNotVerified = is_null(Cookie::get('twoFactored'));
                 }
 
-                if ($hasTwoFactor
+                if ($twoFactorNotVerified
                     && $user->two_factor_enabled === 'on'
                     && ! Gondolyn::is_api_call()
                     && $request->url() !== url('account/two-factor')
                     && ! stristr($request->url(), 'account/two-factor/authenticate')
+                    && ! stristr($request->url(), 'account/update')
                     && ! stristr($request->url(), 'debugbar')
                     && ! stristr($request->url(), 'login')
                     && ! stristr($request->url(), 'logout')

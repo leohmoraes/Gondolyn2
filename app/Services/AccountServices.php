@@ -77,16 +77,18 @@ class AccountServices
         $AccountSid = Config::get('gondolyn.two-factor-authentication.twilio.account_sid');
         $AuthToken = Config::get('gondolyn.two-factor-authentication.twilio.auth_token');
 
-        $client = new Services_Twilio($AccountSid, $AuthToken);
+        if ($AccountSid && $AuthToken) {
+            $client = new Services_Twilio($AccountSid, $AuthToken);
 
-        $message = $client->account->messages->create(array(
-            "From" => Config::get('gondolyn.two-factor-authentication.twilio.from_number'),
-            "To" => $phone,
-            "Body" => $code,
-        ));
+            $message = $client->account->messages->create(array(
+                "From" => Config::get('gondolyn.two-factor-authentication.twilio.from_number'),
+                "To" => $phone,
+                "Body" => $code,
+            ));
 
-        if ( ! $message->sid) {
-            return false;
+            if ( ! $message->sid) {
+                return false;
+            }
         }
 
         return true;

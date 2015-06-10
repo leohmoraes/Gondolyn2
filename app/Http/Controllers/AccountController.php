@@ -312,7 +312,12 @@ class AccountController extends BaseController
         $user = Accounts::getAccountByEmail(Crypto::decrypt($email));
         $result = Accounts::modifyAccountStatus($user->id, 'active');
 
-        Session::flash("notification", Lang::get("notification.login.confirm"));
+        if ($user && $result) {
+            Session::flash("notification", Lang::get("notification.login.confirm"));
+        } else {
+            Session::flash("notification", Lang::get("notification.login.not-confirmed"));
+        }
+
         return redirect('login/email');
     }
 
