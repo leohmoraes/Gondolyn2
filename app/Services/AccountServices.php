@@ -98,6 +98,7 @@ class AccountServices
     {
         $email = Crypto::encrypt($user->user_email);
 
+        $data = [];
         $data['link'] = url('login/confirm/'.$email);
 
         Mail::send('emails.confirmation', $data, function ($message) use ($user) {

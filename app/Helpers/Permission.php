@@ -21,8 +21,6 @@ class Permission
 
     public static function permission($config)
     {
-        $permissionMatrix = Config::get('permissions.matrix');
-
         if ( ! isset($config['role']) && ! isset($config['subscription'])) {
             throw new \Exception('Please set either a role or subscription as an array.', 1);
         }
