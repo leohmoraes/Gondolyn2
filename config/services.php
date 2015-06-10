@@ -37,14 +37,14 @@ return [
     'facebook' => [
         'client_id'     => '',
         'client_secret' => '',
-        'redirect'      => $_SERVER['HTTP_HOST'].'/login/facebook',
+        'redirect'      => (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/facebook',
         'scope'         => ['email','read_friendlists','user_online_presence'],
     ],
 
     'twitter' => [
         'client_id'     => '',
         'client_secret' => '',
-        'redirect'      => $_SERVER['HTTP_HOST'].'/login/twitter',
+        'redirect'      => (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/twitter',
     ],
 
 ];

@@ -157,14 +157,13 @@ class AccountController extends BaseController
     public function update()
     {
         $validation = Validation::check(Accounts::$rules);
+        Session::flash("notification", Lang::get("notification.profile.update_failed"));
 
         if ( ! $validation['errors']) {
             try {
                 $status = Accounts::updateAccount(Session::get("id"));
                 if ($status) {
                     Session::flash("notification", Lang::get("notification.profile.update_success"));
-                } else {
-                    Session::flash("notification", Lang::get("notification.profile.update_failed"));
                 }
             } catch (Exception $e) {
                 Session::flash("notification", $e->getMessage());
@@ -173,7 +172,6 @@ class AccountController extends BaseController
             return redirect('account/settings');
         }
 
-        Session::flash("notification", Lang::get("notification.profile.update_failed"));
         return $validation['redirect'];
     }
 

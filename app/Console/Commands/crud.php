@@ -55,7 +55,7 @@ class crud extends BaseCommand
      */
     public function handle()
     {
-        $plaform = false;
+        $platform = false;
 
         if (strtolower($this->argument('platform')) !== 'core') {
             $platform = ucfirst($this->argument('platform'));
