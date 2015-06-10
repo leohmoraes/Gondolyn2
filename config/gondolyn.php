@@ -24,17 +24,17 @@ return array(
     ],
 
     'authKeys' => [
-        'XdTSB0kgxuEVzd8NSDejjeVUMJuj',
-        'BsmyFfqhgKxNfbIOpRChuQBN5wIR',
-        'fdbRFxqlNQC4BaSQmBFLsh3X7EKd',
-        'at4qGfilNIHBzkGavy1RaHDCYHz6',
-        'lkjwNoXuEfQsXx3wRKHniJfsqS5p',
-        'zFvV0PrOdpiRE8kCGn8x7QVqAaT1',
-        '3ZqDEWyFL0tZpLR3TbFzzO7GF37f',
-        'd0gg0HTFDrkpsNoRzfUsrA20paH4',
-        'dOkrPBHPiAuV2PluCJlbZgEqRHqh',
-        'S7m6WGxLheBAP6wRVRmyBIKAZp1Q',
-        '7s7ZAt6waDisSU2H0yzWpWu1EfBD',
+        '7Hp6qlswIuLKSKRJ7FVOkAre2Bcs',
+        'jPKrx9yYv0vdugYm0Q67w2WQCn4E',
+        'Yg7i6SJE2hCxh7LMoJ9ozfv5isVU',
+        'PZzNgH6mzP1B7E9pMUbaDkydA4iS',
+        'weNmenau4gRE6TfdxoCjjOuW939K',
+        '7sCEHq1VObpSrhxxaNLHbo1vcvrm',
+        'yB6G4JlLamGYx6RZnowybifnGhST',
+        'MkfkWm016lMgItefA5eYuLwF3M3J',
+        '3WDPgT9dfaelw0BeuQu4WI2qty6x',
+        'l9go5UdmNnz3yNo4O0jjQNnMwqd0',
+        'ZjxktOIzIVWvjwzRkXW8YgsO3PBA',
     ],
 
     'csrfIgnoredRoutes' => [
