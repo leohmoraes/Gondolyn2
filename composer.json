@@ -7,7 +7,7 @@
     "repositories": [
     ],
     "require": {
-        "laravel/framework": "5.0.*",
+        "laravel/framework": "5.1.*",
         "patchwork/utf8": "1.1.*",
         "laravel/socialite": "~2.0",
         "devfactory/minify": "1.0.*",
