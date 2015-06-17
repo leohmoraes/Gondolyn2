@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         'App\Http\Middleware\VerifyCsrfToken',
         'App\Http\Middleware\PermissionsMatrix',
         'App\Http\Middleware\TwoFactorAuthentication',
+        'App\Http\Middleware\Before',
     ];
 
     /**

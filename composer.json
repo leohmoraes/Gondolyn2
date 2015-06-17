@@ -1,6 +1,6 @@
 {
     "name": "mlantz/gondolyn2",
-    "description": "A Seed Application built on Laravel 5.",
+    "description": "A Seed Application built on Laravel 5.1",
     "keywords": ["Gondolyn"],
     "license": "MIT",
     "type": "project",
@@ -15,7 +15,7 @@
         "nesbot/Carbon": "*",
         "laravel/cashier": "*",
         "illuminate/html": "~5.0",
-        "graham-campbell/throttle": "~3.0",
+        "graham-campbell/throttle": "~4.0",
         "mockery/mockery": "0.9.4",
         "doctrine/dbal": "~2.3",
         "mitulgolakiya/laravel-api-generator": "1.3.*",
