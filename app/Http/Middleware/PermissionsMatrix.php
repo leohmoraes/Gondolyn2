@@ -5,14 +5,13 @@ use Route;
 use Session;
 use Lang;
 use Module;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use App\Exceptions\PermissionException;
 
-class PermissionsMatrix implements Middleware
+class PermissionsMatrix
 {
     protected $app;
     protected $redirector;

@@ -8,13 +8,12 @@ use Gondolyn;
 use Lang;
 use Auth;
 use AccountServices;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 
-class TwoFactorAuthentication implements Middleware
+class TwoFactorAuthentication
 {
     protected $app;
     protected $redirector;

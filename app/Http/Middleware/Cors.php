@@ -1,11 +1,10 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 
-class Cors implements Middleware
+class Cors
 {
     /**
     * Handle an incoming request.

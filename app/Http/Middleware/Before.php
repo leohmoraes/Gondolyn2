@@ -9,14 +9,13 @@ use Module;
 use Auth;
 use Accounts;
 use App\Services\AccountServices;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use App\Exceptions\PermissionException;
 
-class Before implements Middleware
+class Before
 {
     protected $app;
     protected $redirector;
@@ -38,13 +37,13 @@ class Before implements Middleware
      */
      public function handle($request, Closure $next)
      {
-        $filterResult = null;
-
         $route = Route::getRoutes()->match($request);
         $action = $route->getAction();
 
         // Before Filters as Middleware
         if (isset($action['before'])) {
+            $filterResult = null;
+
             $beforeFilter = $action['before'];
 
             // Ensure we're working with an array
