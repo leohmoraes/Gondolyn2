@@ -13,6 +13,10 @@ return [
         'user_name'       => [
             'alt_name' => 'Username',
         ],
+        'profile'       => [
+            'type' => 'file',
+            'alt_name' => 'Profile Image',
+        ],
         'in_app_notifications'       => [
             'type' => 'checkbox',
             'alt_name' => 'In App Notifications',
