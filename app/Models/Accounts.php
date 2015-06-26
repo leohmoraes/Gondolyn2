@@ -139,10 +139,9 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      * @param  integer $id User Id
      * @return string
      */
-    public function generateNewPassword($id)
+    public static function generateNewPassword($id)
     {
         $user = Accounts::findOrFail($id);
-
         $newPassword = Utilities::addSalt(20);
 
         $user->user_passwd = Crypt::encrypt($user->user_salt.hash("sha256", $newPassword));
