@@ -35,12 +35,16 @@ class AccountTest extends TestCase {
     {
         $this->startSession();
 
+        DB::beginTransaction();
+
         $response = $this->call('POST', 'forgot/password/request', array(
             'email' => 'foo@bar.com',
             '_token' => Session::token()
         ));
 
-        $this->assertRedirectedTo('errors/general');
+        DB::rollback();
+
+        $this->assertRedirectedTo('/');
     }
 
     /**
