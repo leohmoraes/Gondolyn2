@@ -35,6 +35,8 @@ class AccountTest extends TestCase {
     {
         $this->startSession();
 
+        Config::set('mail.pretend', 'true');
+
         DB::beginTransaction();
 
         $response = $this->call('POST', 'forgot/password/request', array(
