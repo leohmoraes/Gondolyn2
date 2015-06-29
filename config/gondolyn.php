@@ -39,6 +39,7 @@ return array(
 
     'csrfIgnoredRoutes' => [
         'api/login',
+        'failed/payment'
     ],
 
     'cors' => [
