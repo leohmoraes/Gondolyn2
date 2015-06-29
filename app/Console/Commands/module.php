@@ -233,7 +233,7 @@ class '.$module.'Controller extends \BaseController {
         $service = new '.$module.'Service;
 
         $sysData = [
-            \'config\'        => Config::get("gondolyn.basic-app-info"),
+            \'config\'        => Config::get("gondolyn.appInfo"),
             \'notification\'  => Session::get("notification"),
             \'welcome\'       => \'Welcome to the '.$module.' module \'.Session::get("username").\' the sample module demonstrates the use of prototypes which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to prototypes, to views.\'
         ];

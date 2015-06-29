@@ -13,7 +13,7 @@ class MainController extends BaseController
 
     public function welcome()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.main');
 
         $data["back"] = "";
@@ -30,7 +30,7 @@ class MainController extends BaseController
 
     public function changelog()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.change-log');
 
         $data['changes'] = array_reverse(json_decode(file_get_contents("../build.json")));

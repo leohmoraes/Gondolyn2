@@ -113,7 +113,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
                 }
             }
 
-            if (Config::get('gondolyn.two-factor-authentication.enabled')) {
+            if (Config::get('gondolyn.twoFactorAuthentication.enabled')) {
                 $user->two_factor_enabled       = Input::get("two_factor_enabled");
                 $user->two_factor_phone       = preg_replace('/[^\dxX]/', '', Input::get("two_factor_phone"));
 
@@ -362,7 +362,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $remember = ($remember_me === "on") ? TRUE : FALSE;
 
         // Minutes for the remember me
-        $minutes = Config::get("gondolyn.remember_me_duration");
+        $minutes = Config::get("gondolyn.rememberMeDuration");
 
         if ($exp == $user->user_salt && $realPasswd == hash("sha256", $password) && $user->user_role !== 'inactive') {
 
@@ -474,14 +474,14 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $sendMail = false;
 
         // Do we allow new accounts?
-        if ( ! Config::get("gondolyn.signup")) {
+        if ( ! Config::get("gondolyn.signUp")) {
             throw new Exception(Lang::get('notification.login.denied'), 1);
         }
 
         // Check for remember me
         $remember = ($remember_me === "on") ? TRUE : FALSE;
 
-        $minutes = Config::get("gondolyn.remember_me_duration");
+        $minutes = Config::get("gondolyn.rememberMeDuration");
 
         if ($remember) {
             Cookie::queue('email', $data['email'], $minutes);

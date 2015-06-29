@@ -118,7 +118,7 @@ class Utilities
     {
         $file = Request::file($fileName);
 
-        if (is_null($file) || File::size($file) > Config::get('gondolyn.max_file_upload_size')) {
+        if (is_null($file) || File::size($file) > Config::get('gondolyn.maxFileUploadSize')) {
             return false;
         }
 

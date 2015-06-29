@@ -11,7 +11,7 @@ class MemberController extends BaseController
 
     public function home()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.member-home');
 
         $data['user'] = Session::get("username");

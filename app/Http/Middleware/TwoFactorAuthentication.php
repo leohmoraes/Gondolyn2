@@ -35,7 +35,7 @@ class TwoFactorAuthentication
      */
      public function handle($request, Closure $next)
      {
-        $config = Config::get('gondolyn.two-factor-authentication');
+        $config = Config::get('gondolyn.twoFactorAuthentication');
         $duration = $config['duration'];
         $twoFactorNotVerified = false;
 

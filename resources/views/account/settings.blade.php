@@ -87,7 +87,7 @@
                         </div>
                         {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
 
-                        @if(Config::get('gondolyn.two-factor-authentication.enabled'))
+                        @if(Config::get('gondolyn.twoFactorAuthentication.enabled'))
                         <div class="raw100 raw-left raw-margin-top-24">
                             <h3>Two Factor Authentication</h3>
                         </div>

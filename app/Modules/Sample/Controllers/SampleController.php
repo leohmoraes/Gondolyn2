@@ -27,7 +27,7 @@ class SampleController extends \BaseController
     {
         $service = new SampleService;
 
-        $data                 = $service->serviceInformation(Config::get("gondolyn.basic-app-info"));
+        $data                 = $service->serviceInformation(Config::get("gondolyn.appInfo"));
         $data['samples']      = $service->getSamples();
 
         return view('sample::sample', $data);

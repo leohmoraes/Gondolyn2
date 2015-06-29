@@ -2,18 +2,18 @@
 
 return array(
 
-    'app_admin_email' => '',
-    'app_admin_name' => '',
+    'appAdminEmail' => '',
+    'appAdminName' => '',
 
-    'max_file_upload_size' => 6291456, // 6MB
+    'maxFileUploadSize' => 6291456, // 6MB
 
-    'signup' => TRUE,
+    'signUp' => TRUE,
 
     'confirmEmail' => TRUE,
 
     'socialMediaLogin' => FALSE,
 
-    'two-factor-authentication' => [
+    'twoFactorAuthentication' => [
         'enabled' => FALSE,
         'duration' => '60days', // session, lifetime, 60days
         'twilio' => [
@@ -59,9 +59,9 @@ return array(
         ],
     ],
 
-    'remember_me_duration' => 20160,
+    'rememberMeDuration' => 20160,
 
-    'basic-app-info' => array(
+    'appInfo' => array(
         "page_title" => "A seed application for Laravel 5",
         "page_keywords" => "Gondolyn, gondolin, Laravel 5, Seed App",
         "page_description" => "A clean seed application for Laravel 5",

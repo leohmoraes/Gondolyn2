@@ -9,7 +9,7 @@ class BaseController extends Controller
      */
     public function __construct()
     {
-        View::share(Config::get("gondolyn.basic-app-info"));
+        View::share(Config::get("gondolyn.appInfo"));
     }
 
     /**

@@ -14,7 +14,7 @@ class AccountController extends BaseController
 
     public function login()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login');
 
         Session::flash('notification', Validation::errors('string') ?: false);
@@ -24,7 +24,7 @@ class AccountController extends BaseController
 
     public function loginConfirmEmail()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login');
 
         Session::flash('notification', Validation::errors('string') ?: false);
@@ -49,7 +49,7 @@ class AccountController extends BaseController
 
     public function settings()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.settings');
 
         $users = new Accounts;
@@ -69,7 +69,7 @@ class AccountController extends BaseController
 
     public function password()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.change-password');
 
         $user = Accounts::getAccount(Session::get("id"));
@@ -86,7 +86,7 @@ class AccountController extends BaseController
 
     public function subscription()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.subscription');
 
         $user = Accounts::getAccount(Session::get("id"));
@@ -108,7 +108,7 @@ class AccountController extends BaseController
 
     public function subscriptionInvoices()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.subscription-invoices');
 
         $user = Accounts::getAccount(Session::get("id"));
@@ -125,7 +125,7 @@ class AccountController extends BaseController
 
     public function twoFactor()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.two-factor');
 
         $user = Accounts::getAccount(Session::get("id"));
@@ -143,7 +143,7 @@ class AccountController extends BaseController
 
     public function forgotPassword()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.forgot-password');
         return view('account.forgot-password', $data);
     }
@@ -372,7 +372,7 @@ class AccountController extends BaseController
 
     public function loginTwitterVerify()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login-twitter');
 
         return view('account.twitter-verify', $data);

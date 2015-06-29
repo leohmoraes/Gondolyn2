@@ -46,7 +46,7 @@ class AccountServices
             "id" => $user->id
         );
 
-        if ($user->two_factor_enabled && Config::get('gondolyn.two-factor-authentication.enabled')) {
+        if ($user->two_factor_enabled && Config::get('gondolyn.twoFactorAuthentication.enabled')) {
             $code = rand(111111, 999999);
             AccountServices::sendTwoFactorAuthenticationCode($code, $user->two_factor_phone);
             Accounts::setTwoFactorCode($user->id, $code);
@@ -62,7 +62,7 @@ class AccountServices
         Accounts::setTwoFactorCode($user->id, '');
         Session::put('twoFactored', true);
 
-        $duration = Config::get('gondolyn.two-factor-authentication.duration');
+        $duration = Config::get('gondolyn.twoFactorAuthentication.duration');
 
         if ($duration === '60days' || $duration === 'lifetime') {
             $minutes = ($duration === 'lifetime') ? 2628000 : 86400;
@@ -74,14 +74,14 @@ class AccountServices
 
     public static function sendTwoFactorAuthenticationCode($code, $phone)
     {
-        $AccountSid = Config::get('gondolyn.two-factor-authentication.twilio.account_sid');
-        $AuthToken = Config::get('gondolyn.two-factor-authentication.twilio.auth_token');
+        $AccountSid = Config::get('gondolyn.twoFactorAuthentication.twilio.account_sid');
+        $AuthToken = Config::get('gondolyn.twoFactorAuthentication.twilio.auth_token');
 
         if ($AccountSid && $AuthToken) {
             $client = new Services_Twilio($AccountSid, $AuthToken);
 
             $message = $client->account->messages->create(array(
-                "From" => Config::get('gondolyn.two-factor-authentication.twilio.from_number'),
+                "From" => Config::get('gondolyn.twoFactorAuthentication.twilio.from_number'),
                 "To" => $phone,
                 "Body" => $code,
             ));

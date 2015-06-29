@@ -51,7 +51,7 @@ class ErrorController extends BaseController
             $data['error'] = Session::get("data");
 
             Mail::send('emails.critical', $data, function($message) {
-                $message->to(Config::get('gondolyn.app_admin_email'), Config::get('gondolyn.app_admin_name'))->subject('Critical Error!');
+                $message->to(Config::get('gondolyn.appAdminEmail'), Config::get('gondolyn.appAdminName'))->subject('Critical Error!');
             });
         } catch (Exception $e) {
             Session::flash("data", $e->getMessage());

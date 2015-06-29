@@ -14,7 +14,7 @@ class AdminController extends BaseController
 
     public function home()
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.admin-home');
 
         $user = Session::get("username");
@@ -30,7 +30,7 @@ class AdminController extends BaseController
     {
         Session::set("userInEditor", null);
 
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.admin-user-manager');
 
         $data['users'] = Accounts::getAllAccounts();
@@ -40,7 +40,7 @@ class AdminController extends BaseController
 
     public function editor($id)
     {
-        $data = Config::get("gondolyn.basic-app-info");
+        $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.admin-user-editor');
 
         $user = Accounts::getAccount(Crypto::decrypt($id));
