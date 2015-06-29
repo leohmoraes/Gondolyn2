@@ -70,7 +70,7 @@ class CRUDCommandData extends CommandData
 
         while(true)
         {
-            $fieldInputStr = $this->commandObj->ask("Field:");
+            $fieldInputStr = $this->commandObj->ask("Field:", '');
 
             if(empty($fieldInputStr) || $fieldInputStr == false || $fieldInputStr == "exit")
                 break;
@@ -81,7 +81,9 @@ class CRUDCommandData extends CommandData
                 continue;
             }
 
-            $validations = $this->commandObj->ask("Enter validations: ");
+            $validations = $this->commandObj->ask("Enter validations: ", false);
+
+            $validations = ($validations == false) ? '': $validations;
 
             $fields[] = GeneratorUtils::processFieldInput($fieldInputStr, $validations);
         }
