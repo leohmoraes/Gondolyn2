@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         'App\Http\Middleware\PermissionsMatrix',
         'App\Http\Middleware\TwoFactorAuthentication',
         'App\Http\Middleware\Before',
+        'App\Http\Middleware\SecurityGuard',
     ];
 
     /**
@@ -30,6 +31,7 @@ class Kernel extends HttpKernel
         'auth' => 'App\Http\Middleware\Authenticate',
         'permissions' => 'App\Http\Middleware\PermissionsMatrix',
         'cors' => 'App\Http\Middleware\Cors',
+        'security.guard' => 'App\Http\Middleware\SecurityGuard',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
     ];

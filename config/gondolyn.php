@@ -47,6 +47,14 @@ return array(
         'access-control-allow-headers' => 'Content-Type, X-Auth-Token, Origin, Token, Authorization',
     ],
 
+    'security' => [
+        'xss-protection' => '1',
+        'x-frame-option' => 'SAMEORIGIN',
+        'content-security-policy' => 'default-src \'self\' \'unsafe-inline\' \'unsafe-eval\' '.str_replace('|', ' ', env('SAFE_DOMAINS')).'; img-src *; frame-src *; font-src \'self\' data: *;',
+        'x-content-type-options' => 'nosniff',
+        'browser-cache' => '',
+    ],
+
     'remember_me_duration' => 20160,
 
     'basic-app-info' => array(
