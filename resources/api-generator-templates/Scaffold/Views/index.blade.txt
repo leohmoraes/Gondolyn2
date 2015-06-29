@@ -1,8 +1,14 @@
-@extends('layouts.standard')
+@extends('layouts.dashboard')
 
 @section('content')
 
-    <div class="container raw-margin-top-24">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <div class="raw100 raw-left raw-margin-bottom-90">
+            @include('dashboard.panel')
+        </div>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
         <div class="modal fade" id="deleteModal" tabindex="-3" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -52,6 +58,7 @@
             @endif
         </div>
     </div>
+
 @endsection
 
 <script type="text/javascript">

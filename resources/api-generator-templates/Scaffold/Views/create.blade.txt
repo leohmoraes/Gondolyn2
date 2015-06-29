@@ -1,16 +1,22 @@
-@extends('layouts.standard')
+@extends('layouts.dashboard')
 
 @section('content')
-<div class="container raw-margin-top-24">
-
-    {!! Form::open(['route' => '$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
-
-        {!! FormMaker::fromTable('$MODEL_NAME_PLURAL_CAMEL$', null, FormMaker::getGenerateColumnsList('$MODEL_NAME_PLURAL_CAMEL$')) !!}
-
-        <div class="form-group text-right">
-            {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    <div class="col-sm-3 col-md-2 sidebar">
+        <div class="raw100 raw-left raw-margin-bottom-90">
+            @include('dashboard.panel')
         </div>
+    </div>
 
-    {!! Form::close() !!}
-</div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+        {!! Form::open(['route' => '$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
+
+            {!! FormMaker::fromTable('$MODEL_NAME_PLURAL_CAMEL$', null, FormMaker::getGenerateColumnsList('$MODEL_NAME_PLURAL_CAMEL$')) !!}
+
+            <div class="form-group text-right">
+                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+            </div>
+
+        {!! Form::close() !!}
+    </div>
 @endsection
