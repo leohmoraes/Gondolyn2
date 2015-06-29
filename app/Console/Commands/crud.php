@@ -10,7 +10,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Illuminate\Foundation\Application;
 use Mitul\Generator\Commands\BaseCommand;
-use Mitul\Generator\CommandData;
 use Mitul\Generator\Generators\API\RepoAPIControllerGenerator;
 use Mitul\Generator\Generators\Common\MigrationGenerator;
 use Mitul\Generator\Generators\Common\ModelGenerator;
@@ -18,6 +17,7 @@ use Mitul\Generator\Generators\Common\RepositoryGenerator;
 use Mitul\Generator\Generators\Common\RequestGenerator;
 use Mitul\Generator\Generators\Common\RoutesGenerator;
 use Mitul\Generator\Generators\Scaffold\RepoViewControllerGenerator;
+use App\Console\Commands\CRUD\CRUDCommandData;
 use App\Console\Commands\CRUD\ResponsiveViewGenerator;
 
 class crud extends BaseCommand
@@ -80,7 +80,7 @@ class crud extends BaseCommand
             ]);
         }
 
-        $this->commandData = new CommandData($this, $this->argument('scope'));
+        $this->commandData = new CRUDCommandData($this, $this->argument('scope'));
         $this->commandData->modelName = $this->argument('model');
         $this->commandData->useSoftDelete = $this->option('softDelete');
         $this->commandData->useSearch = $this->option('search');
@@ -153,6 +153,10 @@ class crud extends BaseCommand
 
         if ($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
             $this->call('migrate');
+        }
+
+        if (strtolower($this->argument('platform')) === 'core') {
+            $this->info("\nYou need to remove the namespace from the Controller to get full functionality.");
         }
     }
 

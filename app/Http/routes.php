@@ -175,4 +175,3 @@ Route::group(array('before' => 'is_logged_in', 'role' => 'groups.all'), function
     // Put Routes Here
 
 });
-
