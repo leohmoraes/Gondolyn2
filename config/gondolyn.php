@@ -52,7 +52,11 @@ return array(
         'x-frame-option' => 'SAMEORIGIN',
         'content-security-policy' => 'default-src \'self\' \'unsafe-inline\' \'unsafe-eval\' '.str_replace('|', ' ', env('SAFE_DOMAINS')).'; img-src *; frame-src *; font-src \'self\' data: *;',
         'x-content-type-options' => 'nosniff',
-        'browser-cache' => '',
+        'browser-cache' => [
+            'cache-control' => 'no-cache, no-store, must-revalidate', // HTTP 1.1.
+            'pragma' => 'no-cache', // HTTP 1.0.
+            'expires' => '0', // Proxies.
+        ],
     ],
 
     'remember_me_duration' => 20160,
