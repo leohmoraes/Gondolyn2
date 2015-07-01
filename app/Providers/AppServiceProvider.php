@@ -1,6 +1,9 @@
 <?php namespace App\Providers;
 
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -9,10 +12,14 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Request $request, Kernel $kernel)
     {
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('AccountServices', 'App\Services\AccountServices');
+
+        if ($request->isMethod('OPTIONS')) {
+            $kernel->pushMiddleware('App\Http\Middleware\Preflight');
+        }
     }
 
     /**
