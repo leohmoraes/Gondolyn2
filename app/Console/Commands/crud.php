@@ -206,7 +206,7 @@ class crud extends BaseCommand
                 $fileContents = file_get_contents($file);
                 $cleanedViews = str_replace("@include('".lcfirst($model), "@include('".lcfirst($platform)."::".lcfirst($model), $fileContents);
                 if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
-                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("Form::open(['route' => '".lcfirst($model), "Form::open(['route' => '".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("'route' => '".lcfirst($model), "'route' => '".lcfirst($platform).".".lcfirst($model), $cleanedViews);
                 file_put_contents($file, $cleanedViews);
             }
 
@@ -219,6 +219,7 @@ class crud extends BaseCommand
                 $cleanedRoutes = str_replace("ontrollers\API", "API", $cleanedRoutes);
                 $cleanedRoutes = str_replace("Route::resource('api/".lcfirst($model)."'", "Route::resource('api/".lcfirst($platform)."/".lcfirst($model)."'", $cleanedRoutes);
                 $cleanedRoutes = str_replace("Route::resource('".lcfirst($model)."'", "Route::resource('".lcfirst($platform)."/".lcfirst($model)."'", $cleanedRoutes);
+                $cleanedRoutes = str_replace("'as' => '".lcfirst($model).".delete'", "'as' => '".lcfirst($platform).".".lcfirst($model).".delete'", $cleanedRoutes);
                 $cleanedRoutes = str_replace("Route::get('".lcfirst($model), "Route::get('".lcfirst($platform)."/".lcfirst($model), $cleanedRoutes);
             }
             file_put_contents(app_path().'/Modules/'.$platform.'/routes.php', $cleanedRoutes);
