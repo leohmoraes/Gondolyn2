@@ -36,7 +36,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $input = $request->all();
 
-        $result = $this->$MODEL_NAME_CAMEL$Repository->search($input);
+        $result = $this->$MODEL_NAME_CAMEL$Repository->search($input)->paginate(15);
 
         $$MODEL_NAME_PLURAL_CAMEL$ = $result[0];
 
