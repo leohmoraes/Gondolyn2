@@ -39,7 +39,9 @@ Route::get('/change-log', "MainController@changelog");
 */
 
 Route::group(array('prefix' => 'api'), function() {
-    Route::put('login', "ApiController@request");
+    Route::group(array('before' => array('valid_api_key')), function() {
+        Route::put('login', "ApiController@request");
+    });
 
     Route::group(array('before' => array('valid_api_key', 'valid_api_token')), function() {
         Route::get('logout', "ApiController@logout");

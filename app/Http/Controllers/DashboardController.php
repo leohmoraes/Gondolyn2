@@ -8,7 +8,7 @@ class DashboardController extends BaseController
 
     public function __construct()
     {
-        // Constructor Args
+        $this->middleware('security.guard');
     }
 
     public function main()

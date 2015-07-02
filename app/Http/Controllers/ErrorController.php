@@ -16,6 +16,11 @@ class ErrorController extends BaseController
      */
     protected $layout = 'layouts.master';
 
+    public function __construct()
+    {
+        $this->middleware('security.guard');
+    }
+
     public function general()
     {
         $data = array(

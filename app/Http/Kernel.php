@@ -19,7 +19,6 @@ class Kernel extends HttpKernel
         'App\Http\Middleware\PermissionsMatrix',
         'App\Http\Middleware\TwoFactorAuthentication',
         'App\Http\Middleware\Before',
-        'App\Http\Middleware\SecurityGuard',
     ];
 
     /**

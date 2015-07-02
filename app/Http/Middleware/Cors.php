@@ -9,6 +9,8 @@ class Cors
     /**
     * Handle an incoming request.
     *
+    * Is intended for use with APIs for all other components use SecurityGuard.
+    *
     * @param \Illuminate\Http\Request $request
     * @param \Closure $next
     * @return mixed

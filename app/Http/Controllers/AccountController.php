@@ -6,6 +6,11 @@ class AccountController extends BaseController
 {
     protected $layout = 'layouts.master';
 
+    public function __construct()
+    {
+        $this->middleware('security.guard');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Login

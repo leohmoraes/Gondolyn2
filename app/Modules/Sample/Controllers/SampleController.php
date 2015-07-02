@@ -21,6 +21,7 @@ class SampleController extends \BaseController
     public function __construct()
     {
         \Log::info("Loading Sample Module");
+        $this->middleware('security.guard');
     }
 
     public function main()

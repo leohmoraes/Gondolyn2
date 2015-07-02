@@ -7,6 +7,7 @@ class MemberController extends BaseController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('security.guard');
     }
 
     public function home()
