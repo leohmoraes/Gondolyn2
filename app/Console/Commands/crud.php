@@ -192,6 +192,7 @@ class crud extends BaseCommand
                 if (is_file($file)) {
                     $fileContents = file_get_contents($file);
                     $cleanedViews = str_replace("view('".lcfirst($model), "view('".lcfirst($platform)."::".lcfirst($model), $fileContents);
+                    if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
                     file_put_contents($file, $cleanedViews);
                 }
             }
@@ -204,6 +205,8 @@ class crud extends BaseCommand
             foreach ($files as $file) {
                 $fileContents = file_get_contents($file);
                 $cleanedViews = str_replace("@include('".lcfirst($model), "@include('".lcfirst($platform)."::".lcfirst($model), $fileContents);
+                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("Form::open(['route' => '".lcfirst($model), "Form::open(['route' => '".lcfirst($platform).".".lcfirst($model), $cleanedViews);
                 file_put_contents($file, $cleanedViews);
             }
 

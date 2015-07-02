@@ -22,6 +22,7 @@ class $MODEL_NAME$Controller extends BaseController
     {
         parent::__construct();
         Permission::role('groups.all');
+        $this->middleware('security.guard');
         $this->$MODEL_NAME_CAMEL$Repository = $$MODEL_NAME_CAMEL$Repo;
     }
 
@@ -36,15 +37,18 @@ class $MODEL_NAME$Controller extends BaseController
     {
         $input = $request->all();
 
-        $result = $this->$MODEL_NAME_CAMEL$Repository->search($input)->paginate(15);
+        $result = $this->$MODEL_NAME_CAMEL$Repository->search($input);
 
         $$MODEL_NAME_PLURAL_CAMEL$ = $result[0];
 
         $attributes = $result[1];
 
+        $pagination = $result[2];
+
         return view('$MODEL_NAME_PLURAL_CAMEL$.index')
             ->with('$MODEL_NAME_PLURAL_CAMEL$', $$MODEL_NAME_PLURAL_CAMEL$)
-            ->with('attributes', $attributes);;
+            ->with('pagination', $pagination)
+            ->with('attributes', $attributes);
     }
 
     /**
