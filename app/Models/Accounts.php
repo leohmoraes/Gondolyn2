@@ -81,7 +81,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     public static function getAllAccounts()
     {
-        return Accounts::where('user_role', '=', 'member')->get();
+        return Accounts::where('user_role', '=', 'member')->paginate(25);
     }
 
     /**

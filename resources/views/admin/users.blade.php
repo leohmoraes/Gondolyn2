@@ -39,6 +39,8 @@
 
 </table>
 
+{!! $users !!}
+
 {!! Minify::javascript('/js/accounts/admin.js') !!}
 
 @stop
