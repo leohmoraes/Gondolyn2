@@ -59,7 +59,7 @@ class UserModelTest extends TestCase {
     public function testGetAllAccounts()
     {
         $test = Accounts::getAllAccounts();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $test);
+        $this->assertInstanceOf('Illuminate\Pagination\LengthAwarePaginator', $test);
     }
 
     /**
