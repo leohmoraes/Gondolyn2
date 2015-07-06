@@ -3,13 +3,14 @@
 use View;
 use Schema;
 use DB;
-use Validation;
+use App\Helpers\Validation;
 use Config;
 
 /**
  * FormMaker helper to make table and object form mapping easy
  */
-class FormMaker {
+class FormMaker
+{
 
     /**
      * Generate a form from a table
@@ -242,7 +243,11 @@ class FormMaker {
         $multiple           = (isset($config['field']['multiple'])) ? 'multiple' : '';
         $multipleArray      = (isset($config['field']['multiple'])) ? '[]' : '';
         $floatingNumber     = ($config['fieldType'] === 'float' || $config['fieldType'] === 'decimal') ? 'step="any"' : '';
-        $population         = ($config['populated'] && $config['name'] !== $config['objectName']) ? 'value="'.$config['objectName'].'"' : '';
+        if (is_array($config['objectName']) && $config['type'] === 'file') {
+            $population = '';
+        } else {
+            $population = ($config['populated'] && $config['name'] !== $config['objectName']) ? 'value="'.$config['objectName'].'"' : '';
+        }
 
         $inputString        = '<input '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
         return $inputString;
