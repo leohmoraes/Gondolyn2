@@ -74,7 +74,7 @@ class module extends Command
 
 ?>
 
-<li><a href="<?= URL::to(\''.lcfirst($module).'\'); ?>"><span class="fa fa-gear"></span> '.$module.' Module</a></li>');
+<li><a href="<?= URL::to(\''.lcfirst($module).'\'); ?>"><span class="fa fa-gear"></span> '.$module.'</a></li>');
 
 
         /*

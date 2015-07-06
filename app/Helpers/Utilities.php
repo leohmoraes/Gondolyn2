@@ -116,7 +116,13 @@ class Utilities
      */
     public static function saveFile($fileName, $directory = "", $fileTypes = array(), $location = 'local')
     {
-        $file = Request::file($fileName);
+        if (is_object($fileName)) {
+            $file = $fileName;
+            $originalName = $file->getClientOriginalName();
+        } else {
+            $file = Request::file($fileName);
+            $originalName = false;
+        }
 
         if (is_null($file) || File::size($file) > Config::get('gondolyn.maxFileUploadSize')) {
             return false;
@@ -135,7 +141,7 @@ class Utilities
         Storage::disk($location)->put($directory.$newFileName.'.'.$extension,  File::get($file));
 
         return [
-            'original' => $file->getFilename().'.'.$extension,
+            'original' => $originalName ?: $file->getFilename().'.'.$extension,
             'name'  => $directory.$newFileName.'.'.$extension,
         ];
     }

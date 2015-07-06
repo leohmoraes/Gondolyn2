@@ -64,7 +64,7 @@ class AssetController extends BaseController
         readfile($storagePath.$fileName);
     }
 
-    public function moduleAsset($module, $encPath)
+    public function moduleAsset($module, $encPath, $contentType = null)
     {
         $path = Crypto::decrypt($encPath);
 
@@ -79,10 +79,14 @@ class AssetController extends BaseController
         $ext = $fileSystem->extension($fileName);
         $fileSize = $fileSystem->size($fileName);
 
-        $contentType = $fileSystem->mimeType($fileName);
+        if (Crypto::decrypt($contentType) === 'null') {
+            $contentType = $fileSystem->mimeType($fileName);
 
-        if ( ! $contentType) {
-            $contentType = "application/".$ext;
+            if ( ! $contentType) {
+                $contentType = "application/".$ext;
+            }
+        } else {
+            $contentType = Crypto::decrypt($contentType);
         }
 
         header("Content-Type: ".$contentType);

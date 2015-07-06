@@ -57,7 +57,7 @@ Route::group(array('prefix' => 'api'), function() {
 
 Route::get('public-asset/{encFileName}', "AssetController@asPublic");
 Route::get('public-download/{encFileName}/{encRealFileName}', "AssetController@asDownload");
-Route::get('module-asset/{module}/{path}', "AssetController@moduleAsset");
+Route::get('module-asset/{module}/{path}/{contentType}', "AssetController@moduleAsset");
 
 /*
 |--------------------------------------------------------------------------

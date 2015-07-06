@@ -103,6 +103,9 @@ class FormMaker {
             if (isset($field['type']) && (stristr($field['type'], 'radio') || stristr($field['type'], 'checkbox'))) {
                 $formBuild .= '<div class="'.$errorHighlight.'">';
                 $formBuild .= '<div class="'.$field['type'].'"><label>'.$input.FormMaker::cleanString(FormMaker::columnLabel($field, $column)).'</label>'.FormMaker::errorMessage($errorMessage).'</div>';
+            } else if (isset($field['type']) && (stristr($field['type'], 'hidden'))) {
+                $formBuild .= '<div class="form-group '.$errorHighlight.'">';
+                $formBuild .= $input;
             } else {
                 $formBuild .= '<div class="form-group '.$errorHighlight.'">';
                 $formBuild .= '<label class="control-label" for="'.ucfirst($column).'">'.FormMaker::cleanString(FormMaker::columnLabel($field, $column)).'</label>'.$input.FormMaker::errorMessage($errorMessage);
@@ -182,16 +185,23 @@ class FormMaker {
     {
         $textInputs     = ['text', 'textarea'];
         $selectInputs   = ['select'];
+        $hiddenInputs   = ['hidden'];
         $checkboxInputs = ['checkbox', 'checkbox-inline'];
         $radioInputs    = ['radio', 'radio-inline'];
 
         $checkType      = (in_array($config['fieldType'], $checkboxInputs)) ? 'checked' : 'selected';
         $selected       = (isset($config['inputs'][$config['name']]) || isset($config['field']['selected']) || $config['objectName'] === 'on') ? $checkType : '';
+        $custom         = (isset($config['field']['custom'])) ? $config['field']['custom'] : '';
 
         switch ($config['fieldType']) {
+            case in_array($config['fieldType'], $hiddenInputs):
+                $population = ($config['populated']) ? $config['objectName'] : '';
+                $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
+                break;
+
             case in_array($config['fieldType'], $textInputs):
                 $population = ($config['populated']) ? $config['objectName'] : '';
-                $inputString = '<textarea id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
+                $inputString = '<textarea '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
                 break;
 
             case in_array($config['fieldType'], $selectInputs):
@@ -200,15 +210,15 @@ class FormMaker {
                     $selected = ($config['objectName'] === $value) ? 'selected' : '';
                     $options .= '<option value="'.$value.'" '.$selected.'>'.$key.'</option>';
                 }
-                $inputString = '<select id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
+                $inputString = '<select '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
                 break;
 
             case in_array($config['fieldType'], $checkboxInputs):
-                $inputString = '<input id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'">';
+                $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'">';
                 break;
 
             case in_array($config['fieldType'], $radioInputs):
-                $inputString = '<input id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'">';
+                $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'">';
                 break;
 
             default:
@@ -228,11 +238,13 @@ class FormMaker {
      */
     public static function makeHTMLInputString($config)
     {
+        $custom             = (isset($config['field']['custom'])) ? $config['field']['custom'] : '';
         $multiple           = (isset($config['field']['multiple'])) ? 'multiple' : '';
+        $multipleArray      = (isset($config['field']['multiple'])) ? '[]' : '';
         $floatingNumber     = ($config['fieldType'] === 'float' || $config['fieldType'] === 'decimal') ? 'step="any"' : '';
         $population         = ($config['populated'] && $config['name'] !== $config['objectName']) ? 'value="'.$config['objectName'].'"' : '';
 
-        $inputString        = '<input id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
+        $inputString        = '<input '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
         return $inputString;
     }
 

@@ -36,7 +36,7 @@ class $MODEL_NAME$Repository
             }
         };
 
-        return [$query, $attributes, $query->render];
+        return [$query, $attributes, $query->render()];
 
     }
 

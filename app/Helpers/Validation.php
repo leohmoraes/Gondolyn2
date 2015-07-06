@@ -53,6 +53,7 @@ class Validation
             $result["errors"] = $errors;
         } else {
             $result["errors"] = false;
+            $result["inputs"] = $inputs;
         }
 
         return $result;

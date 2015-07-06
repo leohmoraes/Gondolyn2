@@ -8,4 +8,4 @@
 
 ?>
 
-<li><a href="<?= URL::to('sample'); ?>"><span class="fa fa-gear"></span> Sample Module</a></li>
+<li><a href="<?= URL::to('sample'); ?>"><span class="fa fa-gear"></span> Sample</a></li>

@@ -116,8 +116,8 @@ class Module {
         return $modulePermissionConfigs;
     }
 
-    public static function asset($module, $path)
+    public static function asset($module, $path, $contentType = 'null')
     {
-        return url('module-asset/'.lcfirst($module).'/'.Crypto::encrypt($path));
+        return url('module-asset/'.lcfirst($module).'/'.Crypto::encrypt($path).'/'.Crypto::encrypt($contentType));
     }
 }
