@@ -63,6 +63,11 @@
                     <button class="raw-right btn btn-danger" data-toggle="modal" data-target="#cancelModal">Cancel Subscription</button>
                     <a class="raw-right btn btn-info raw-margin-right-8" href="{{ URL::to('account/settings/subscription/change-card') }}">Change Credit Card</a>
 
+                    <div class="raw100 raw-left raw-margin-top-24">
+                        <label for="plan">Credit Card</label>
+                        <input disabled class="form-control" value="**** **** **** {!! Auth::user()->last_four !!}">
+                    </div>
+
                     <form id="userSubscriptionChange" method="post" action="{{ URL::to('account/settings/update/subscription') }}">
                         <?= Form::token(); ?>
                         <div class="raw100 raw-left rg-row raw-margin-top-24">
