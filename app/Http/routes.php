@@ -105,12 +105,14 @@ Route::group(array('prefix' => 'account', 'before' => 'is_logged_in', 'role' => 
     Route::get('settings/password', "AccountController@password");
     Route::get('settings/subscription', "AccountController@subscription");
     Route::get('settings/subscription/invoices', "AccountController@subscriptionInvoices");
+    Route::get('settings/subscription/change-card', array('uses' => 'AccountController@subscriptionChangeCard'));
     Route::get('settings/subscription/download/{id}', array('uses' => 'AccountController@downloadInvoice'));
 
     Route::post('settings/update', array('uses' => 'AccountController@update'));
     Route::post('settings/update/password', array('uses' => 'AccountController@updatePassword'));
     Route::post('settings/set/subscription', array('uses' => 'AccountController@setSubscription'));
     Route::post('settings/update/subscription', array('uses' => 'AccountController@updateSubscription'));
+    Route::post('settings/change-card/subscription', array('uses' => 'AccountController@changeCardSubscription'));
 
     Route::get('delete/account', "AccountController@deleteAccount");
     Route::get('cancel/subscription', "AccountController@cancelSubscription");

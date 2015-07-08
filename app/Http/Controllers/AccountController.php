@@ -102,6 +102,7 @@ class AccountController extends BaseController
 
         $data['user'] = $user;
         $data['packages'] = Config::get("gondolyn.packages");
+        $data['subscriptionPostURL'] = URL::to('account/settings/set/subscription');
 
         if ($data['user']->subscribed()) {
             $view = view('account.subscription-change', $data);
@@ -109,6 +110,25 @@ class AccountController extends BaseController
             $view = view('account.subscription-set', $data);
         }
         return $view;
+    }
+
+    public function subscriptionChangeCard()
+    {
+        $data = Config::get("gondolyn.appInfo");
+        $data['page_title'] = Lang::get('titles.subscription');
+
+        $user = Accounts::getAccount(Session::get("id"));
+
+        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
+
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
+        $data['changeCard']         = true;
+        $data['user']               = $user;
+        $data['packages']           = Config::get("gondolyn.packages");
+        $data['subscriptionPostURL'] = URL::to('account/settings/change-card/subscription');
+
+        return view('account.subscription-set', $data);
     }
 
     public function subscriptionInvoices()
@@ -223,6 +243,25 @@ class AccountController extends BaseController
         try {
             $users = new Accounts;
             $status = $users->updateAccountSubscription(Session::get("id"), Input::get("plan"));
+
+            if ($status) {
+                Session::flash("notification", Lang::get("notification.subscription.success"));
+            } else {
+                Session::flash("notification", Lang::get("notification.subscription.failed"));
+            }
+        } catch (Exception $e) {
+            Session::flash("notification", Lang::get("notification.general.error"));
+            return redirect('errors/general');
+        }
+
+        return redirect('account/settings');
+    }
+
+    public function changeCardSubscription()
+    {
+        try {
+            $users = new Accounts;
+            $status = $users->changeCardAccountSubscription(Session::get("id"), Input::get("stripeToken"));
 
             if ($status) {
                 Session::flash("notification", Lang::get("notification.subscription.success"));
