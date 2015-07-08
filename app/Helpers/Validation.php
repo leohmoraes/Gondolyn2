@@ -94,6 +94,8 @@ class Validation
     {
         if ($jsonInput) {
             $input = Utilities::jsonInput($key);
+        } else if (Input::file($key)) {
+            $input = Input::file($key);
         } else {
             $input = Input::get($key);
         }
