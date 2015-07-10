@@ -190,3 +190,34 @@ textarea {
         outline: 0;
         border-bottom: 1px solid #BBB;
     }
+
+/*
+|--------------------------------------------------------------------------
+| Twitter Typeahead
+|--------------------------------------------------------------------------
+*/
+
+span.twitter-typeahead {
+    width: 100%;
+}
+
+.tt-menu {
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+
+    .tt-suggestion {
+        min-width: 200px;
+        padding: 8px;
+    }
+        .tt-suggestion:hover {
+            cursor: pointer;
+            background-color: #222;
+            color: #FFF;
+        }
+
+        .tt-suggestion:focus {
+            text-decoration: underline;
+        }
+
+
