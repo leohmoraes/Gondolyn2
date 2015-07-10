@@ -47,25 +47,31 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="settings">
                     <div class="raw100 raw-left raw-margin-top-24">
-                        @if (isset($adminEditorMode))
-                            <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#adminDeleteModal">Delete Account</button>
-                            @if ($user->user_active == "inactive")
-                            <button class="raw-right btn btn-success raw-margin-left-24" data-toggle="modal" data-target="#adminActivateModal">Activate Account</button>
+                        @if (! isset($newAccount))
+                            @if (isset($adminEditorMode))
+                                <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#adminDeleteModal">Delete Account</button>
+                                @if ($user->user_active === "inactive")
+                                <button class="raw-right btn btn-success raw-margin-left-24" data-toggle="modal" data-target="#adminActivateModal">Activate Account</button>
+                                @else
+                                <button class="raw-right btn btn-warning raw-margin-left-24" data-toggle="modal" data-target="#adminDeactivateModal">Deactivate Account</button>
+                                @endif
                             @else
-                            <button class="raw-right btn btn-warning raw-margin-left-24" data-toggle="modal" data-target="#adminDeactivateModal">Deactivate Account</button>
+                            <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
                             @endif
-                        @else
-                        <button class="raw-right btn btn-danger raw-margin-left-24" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
                         @endif
                     </div>
+                    @if ( ! isset($newAccount))
                     <div class="raw100 raw-left raw-margin-top-24">
                         <div class="raw100 raw-left">
                             <label for="appCode">API Authorization Code</label>
                             <input id="appCode" disabled type="text" class="form-control" value="{{ AccountServices::appAuthCode($user->id) }}">
                         </div>
                     </div>
-                    @if (isset($adminEditorMode))
-                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/update') }}">
+                    @endif
+                    @if (isset($adminEditorMode) && ! isset($newAccount))
+                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/update') }}">
+                    @elseif (isset($adminEditorMode) && isset($newAccount))
+                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/generate') }}">
                     @else
                     <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('account/settings/update') }}">
                     @endif
@@ -82,10 +88,12 @@
                         </div>
                         @endif
 
+                        @if ( ! isset($newAccount))
                         <div class="raw100 raw-left raw-margin-top-24">
                             <h3>Billing/ Shipping Information</h3>
                         </div>
                         {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
+                        @endif
 
                         @if(Config::get('gondolyn.twoFactorAuthentication.enabled'))
                         <div class="raw100 raw-left raw-margin-top-24">

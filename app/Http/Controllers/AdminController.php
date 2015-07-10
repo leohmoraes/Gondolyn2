@@ -39,6 +39,29 @@ class AdminController extends BaseController
         return view('admin.users', $data);
     }
 
+    public function creator()
+    {
+        $data = Config::get("gondolyn.appInfo");
+
+        $accounts = new Accounts;
+        $settings = [
+            'user_email' => '',
+            'user_name' => '',
+        ];
+
+        $data['page_title']         = Lang::get('titles.admin-user-editor');
+        $data['user']               = $accounts->newFromBuilder($settings);
+        $data['profileImage']       = null;
+        $data['inAppNotifications'] = 'checked';
+        $data['notification']       = Session::get("notification") ?: "";
+        $data['options']            = Config::get("permissions.matrix.roles");
+        $data['adminEditorMode']    = true;
+        $data['newAccount']         = true;
+        $data['shippingColumns']    = Config::get('forms.shipping');
+
+        return view('account.settings', $data);
+    }
+
     public function editor($id)
     {
         $data = Config::get("gondolyn.appInfo");
@@ -69,6 +92,33 @@ class AdminController extends BaseController
     |--------------------------------------------------------------------------
     */
 
+    public function createAccount()
+    {
+        // Validation
+        $validation = Validation::check('conditions.create_account');
+
+        // Validation errors
+        if ($validation['errors']) {
+            return $validation['redirect'];
+        }
+
+        try {
+            $account = [];
+            $account['email'] = $validation['inputs']['user_email'];
+            $account['password'] = Utilities::addSalt(10);
+            $account['role'] = $validation['inputs']['role'];
+
+            $Users = new Accounts;
+            $user = $Users->makeNewAccount($account, 'email', false, true);
+
+        } catch (Exception $e) {
+            Session::flash("notification", $e->getMessage());
+            return redirect('errors/general');
+        }
+
+        return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
+    }
+
     public function update()
     {
         try {
@@ -84,7 +134,7 @@ class AdminController extends BaseController
             Session::flash("notification", $e->getMessage());
         }
 
-        return redirect('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
     }
 
     public function deactivate()
@@ -93,7 +143,7 @@ class AdminController extends BaseController
 
         Accounts::modifyAccountStatus($user->id, "inactive");
 
-        return redirect('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
     }
 
     public function activate()
@@ -102,7 +152,7 @@ class AdminController extends BaseController
 
         Accounts::modifyAccountStatus($user->id, "active");
 
-        return redirect('admin/editor/'.Crypto::encrypt($user->id));
+        return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
     }
 
     /**

@@ -67,7 +67,6 @@ class FormMaker
 
         $tableColumns = array_keys($object['attributes']);
 
-
         foreach ($columns as $column => $field) {
             if (in_array($column, $tableColumns)) {
                 $errors = Validation::errors('array');

@@ -70,13 +70,15 @@ Route::group(array('before' => 'is_logged_in', 'role' => 'admin'), function() {
 
     Route::get('admin/home', "AdminController@home");
     Route::get('admin/users', "AdminController@users");
-    Route::get('admin/editor/{id}', "AdminController@editor");
+    Route::get('admin/users/create', "AdminController@creator");
+    Route::get('admin/users/editor/{id}', "AdminController@editor");
 
-    Route::get('admin/deactivate', "AdminController@deactivate");
-    Route::get('admin/activate', "AdminController@activate");
-    Route::get('admin/delete/user/{id?}', "AdminController@delete");
+    Route::get('admin/users/deactivate', "AdminController@deactivate");
+    Route::get('admin/users/activate', "AdminController@activate");
+    Route::get('admin/users/delete/{id?}', "AdminController@delete");
 
-    Route::post('admin/update', "AdminController@update");
+    Route::post('admin/users/generate', "AdminController@createAccount");
+    Route::post('admin/users/update', "AdminController@update");
 
     // General FormMaker with Validation example
     Route::post('admin/submit/form',  array('uses' => 'AdminController@formSubmission'));

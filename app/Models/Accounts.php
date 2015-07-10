@@ -481,12 +481,11 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      * @param  array  $data        Account data
      * @param  string  $account     Account type
      * @param  boolean $remember_me Remember me?
+     * @param  boolean $sendMail Send an email?
      * @return object               User
      */
-    private function makeNewAccount($data, $account, $remember_me = false)
+    public function makeNewAccount($data, $account, $remember_me = false, $sendMail = false)
     {
-        $sendMail = false;
-
         // Do we allow new accounts?
         if ( ! Config::get("gondolyn.signUp")) {
             throw new Exception(Lang::get('notification.login.denied'), 1);
@@ -522,18 +521,24 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $user->user_active      = (Config::get('gondolyn.confirmEmail')) ? "active" : "inactive";
         $user->user_api_token   = md5(Utilities::addSalt(30));
         $user->user_passwd      = Crypt::encrypt($userSalt.hash("sha256", $pwd));
-        $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');
+
+        if ( ! isset($data['role'])) {
+            $user->user_role        = (count($currentUserCount) == 0) ? "admin" : Config::get('permissions.matrix.default_role');
+        } else {
+            $user->user_role        = $data['role'];
+        }
+
         $user->in_app_notifications = 'on';
 
         $user->save();
 
         $data['newPassword'] = $pwd;
 
-        Session::flash("email", $data['email']);
+        $email = $data['email'];
 
         if ($sendMail) {
-            Mail::send('emails.newpassword', $data, function($message) {
-                $user = $this->getAccountByEmail(Session::get("email"));
+            Mail::send('emails.newpassword', $data, function($message) use ($email) {
+                $user = $this->getAccountByEmail($email);
                 $message->to($user->user_email)->subject('New Password!');
             });
         }
