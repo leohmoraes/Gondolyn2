@@ -486,6 +486,8 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     public function makeNewAccount($data, $account, $remember_me = false, $sendMail = false)
     {
+        $socialMedia = false;
+
         // Do we allow new accounts?
         if ( ! Config::get("gondolyn.signUp")) {
             throw new Exception(Lang::get('notification.login.denied'), 1);
@@ -510,6 +512,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
             $pwd = Utilities::addSalt(20);
             $user->$account_id = $data['id'];
             $sendMail = true;
+            $socialMedia = true;
         } else {
             $pwd = $data['password'];
         }
@@ -536,10 +539,12 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
         $email = $data['email'];
 
-        if ($sendMail) {
-            Mail::send('emails.newpassword', $data, function($message) use ($email) {
+        $data['socialMedia'] = $socialMedia;
+
+        if ($sendMail || $socialMedia) {
+            Mail::send('emails.new-account', $data, function($message) use ($email) {
                 $user = $this->getAccountByEmail($email);
-                $message->to($user->user_email)->subject('New Password!');
+                $message->to($user->user_email)->subject('New Account!');
             });
         }
 

@@ -457,7 +457,7 @@ class AccountController extends BaseController
         if ($newPassword) {
             $data['newPassword'] = $newPassword;
 
-            Mail::send('emails.newpassword', $data, function ($message) {
+            Mail::send('emails.new-password', $data, function ($message) {
                 $user = Accounts::getAccountByEmail(Input::get("email"));
                 $message->to($user->user_email, $user->user_name)->subject('New Password!');
             });
