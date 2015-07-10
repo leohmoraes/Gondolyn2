@@ -1,9 +1,10 @@
 <?php
 
-class LandingTest extends TestCase {
+class LandingTest extends TestCase
+{
 
     /**
-     * A basic functional test example.
+     * Landing page
      *
      * @return void
      */

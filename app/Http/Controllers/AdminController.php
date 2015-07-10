@@ -141,6 +141,10 @@ class AdminController extends BaseController
     {
         $user = Session::get("userInEditor");
 
+        if ( ! $user) {
+            return redirect('errors/general');
+        }
+
         Accounts::modifyAccountStatus($user->id, "inactive");
 
         return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
@@ -149,6 +153,10 @@ class AdminController extends BaseController
     public function activate()
     {
         $user = Session::get("userInEditor");
+
+        if ( ! $user) {
+            return redirect('errors/general');
+        }
 
         Accounts::modifyAccountStatus($user->id, "active");
 

@@ -1,10 +1,11 @@
 <?php
 
-class ApiTest extends TestCase {
+class ApiTest extends TestCase
+{
 
     public function __construct()
     {
-        $this->session = [
+        $this->sessionInfo = [
             "logged_in"        => true,
             "id"               => "1",
             "role"             => "admin",
@@ -42,10 +43,10 @@ class ApiTest extends TestCase {
      */
     public function testNotLoggedIn()
     {
-        $this->session['logged_in'] = false;
-        $this->session['token'] = 'foo';
+        $this->sessionInfo['logged_in'] = false;
+        $this->sessionInfo['token'] = 'foo';
 
-        $this->session($this->session);
+        $this->session($this->sessionInfo);
 
         $response = $this->call('GET', '/api/user');
 
@@ -63,10 +64,10 @@ class ApiTest extends TestCase {
      */
     public function testInvalidToken()
     {
-        $this->session['logged_in'] = true;
-        $this->session['token'] = 'foo';
+        $this->sessionInfo['logged_in'] = true;
+        $this->sessionInfo['token'] = 'foo';
 
-        $this->session($this->session);
+        $this->session($this->sessionInfo);
 
         $response = $this->call('GET', '/api/user');
 
@@ -105,10 +106,10 @@ class ApiTest extends TestCase {
      */
     public function testLogout()
     {
-        $this->session['logged_in'] = true;
-        $this->session['token'] = 'fooToken';
+        $this->sessionInfo['logged_in'] = true;
+        $this->sessionInfo['token'] = 'fooToken';
 
-        $this->session($this->session);
+        $this->session($this->sessionInfo);
 
         $response = $this->call('GET', '/api/logout');
 
@@ -123,7 +124,7 @@ class ApiTest extends TestCase {
      */
     public function testLoggedIn()
     {
-        $this->session($this->session);
+        $this->session($this->sessionInfo);
 
         $response = $this->call('GET', '/api/user');
 

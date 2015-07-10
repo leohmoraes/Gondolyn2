@@ -44,7 +44,7 @@ class UserModelTest extends TestCase {
      */
     public function testGetBillableName()
     {
-        $this->session($this->session);
+        $this->session($this->sessionInfo);
 
         $accounts = new Accounts;
         $test = $accounts->getBillableName();

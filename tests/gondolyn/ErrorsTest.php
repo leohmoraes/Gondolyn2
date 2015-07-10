@@ -3,7 +3,7 @@
 class ErrorsTest extends TestCase {
 
     /**
-     * A basic functional test example.
+     * Main Error page
      *
      * @return void
      */
@@ -15,7 +15,7 @@ class ErrorsTest extends TestCase {
     }
 
     /**
-     * A basic functional test example.
+     * General Error page
      *
      * @return void
      */
@@ -27,7 +27,7 @@ class ErrorsTest extends TestCase {
     }
 
     /**
-     * A basic functional test example.
+     * Critical Error
      *
      * @return void
      */

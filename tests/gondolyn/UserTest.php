@@ -88,4 +88,125 @@ class AccountTest extends TestCase {
         $this->assertRedirectedTo('http://localhost');
     }
 
+    /**
+     * User Settings - Standard
+     *
+     * @return void
+     */
+    public function testUserSettings()
+    {
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        $response = $this->call('GET', 'account/settings');
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertViewHas('user', $user);
+    }
+
+    /**
+     * User Settings - Password
+     *
+     * @return void
+     */
+    public function testUserSettingsPassword()
+    {
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        $response = $this->call('GET', 'account/settings/password');
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertViewHas('user', $user);
+    }
+
+    /**
+     * User Settings - Subscription
+     *
+     * @return void
+     */
+    public function testUserSettingsSubscription()
+    {
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        $response = $this->call('GET', 'account/settings/subscription');
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertViewHas('user', $user);
+    }
+
+    /**
+     * User Settings - Delete
+     *
+     * @return void
+     */
+    public function testUserAccountDelete()
+    {
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        DB::beginTransaction();
+
+        $response = $this->call('GET', 'account/delete/account');
+
+        DB::rollback();
+
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertRedirectedTo('http://localhost');
+    }
+
+    /**
+     * User Settings - Setting Save Fail
+     *
+     * @return void
+     */
+    public function testUserSettingsSaveFail()
+    {
+        $this->startSession();
+
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        DB::beginTransaction();
+
+        $response = $this->call('POST', 'account/settings/update', [
+            'user_name' => 'mr. awesome',
+            'user_alt_email' => 'mrawesome@bar.com',
+            '_token' => Session::token(),
+        ]);
+
+        DB::rollback();
+
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertRedirectedTo('http://localhost');
+    }
+
+    /**
+     * User Settings - Setting Save
+     *
+     * @return void
+     */
+    public function testUserSettingsSave()
+    {
+        $this->startSession();
+
+        $user = Accounts::find(1);
+        AccountServices::login($user);
+
+        DB::beginTransaction();
+
+        $response = $this->call('POST', 'account/settings/update', [
+            'user_email' => $user->user_email,
+            'user_name' => 'mr. awesome',
+            'user_alt_email' => 'mrawesome@bar.com',
+            '_token' => Session::token(),
+        ]);
+
+        DB::rollback();
+
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertRedirectedTo('account/settings');
+    }
+
 }

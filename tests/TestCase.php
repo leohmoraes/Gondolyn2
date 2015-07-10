@@ -6,7 +6,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
     public function __construct()
     {
-        $this->session = [
+        $this->sessionInfo = [
             "logged_in"        => true,
             "id"               => "1",
             "role"             => "admin",
