@@ -60,7 +60,7 @@ class dbuild extends Command
             });
 
             Schema::create('samples', function ($table) {
-                $table->increments('id');
+                $table->increments('id')->unique();
                 $table->string('updated_at');
                 $table->string('created_at');
             });
