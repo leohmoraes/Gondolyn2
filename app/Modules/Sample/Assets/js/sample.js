@@ -22,6 +22,8 @@ $(function(){
             _updateData[_column] = $(this).children('input').val();
         });
 
+        console.log(_updateData);
+
         $.ajax({
             type: "POST",
             url: _url+"/sample/edit",
@@ -34,7 +36,7 @@ $(function(){
         });
     }
 
-    $(".table-input").bind("keydown change", function(e){
+    $(".table-input").bind("keydown", function(e){
         var _id = $(this).parent().parent().attr('data-id');
         clearTimeout(striker);
         striker = setTimeout(function() {

@@ -10,14 +10,14 @@ class Samples extends \Eloquent
         'created_at' => 'required',
     ];
 
-    public static function getSamples()
+    public static function getSamples($sortby)
     {
-        return Samples::all();
+        return Samples::orderby($sortby[0], $sortby[1])->get();
     }
 
     public static function getSample($id)
     {
-        return Samples::find($id)->first();
+        return Samples::find($id);
     }
 
     public static function editSample($id)

@@ -2,6 +2,6 @@
 
 interface SampleInterface
 {
-    public function getSamples();
+    public function getSamples($sortby);
     public function serviceInformation($config);
 }

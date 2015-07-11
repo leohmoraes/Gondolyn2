@@ -22,9 +22,9 @@
         <div class="col-md-6 col-md-offset-3">
             <table class="table table-striped">
                 <tr>
-                    <th>ID</th>
-                    <th>Created At</th>
-                    <th>Edited At</th>
+                    <th><a href="{!! URL::to('sample?sort=id|'.$dir) !!}"><span class="fa fa-sort"></span> ID</a></th>
+                    <th><a href="{!! URL::to('sample?sort=created_at|'.$dir) !!}"><span class="fa fa-sort"></span> Created At</a></th>
+                    <th><a href="{!! URL::to('sample?sort=updated_at|'.$dir) !!}"><span class="fa fa-sort"></span> Edited At</a></th>
                 </tr>
                 @foreach($samples as $sample)
                     <tr data-id="{{ $sample->id }}">

@@ -7,6 +7,7 @@ use View;
 use Config;
 use Session;
 use Gondolyn;
+use Illuminate\Http\Request;
 use Validation;
 use App\Modules\Sample\Services\SampleService;
 use App\Modules\Sample\Models\Samples;
@@ -24,12 +25,16 @@ class SampleController extends \BaseController
         $this->middleware('security.guard');
     }
 
-    public function main()
+    public function main(Request $request)
     {
         $service = new SampleService;
 
-        $data                 = $service->serviceInformation(Config::get("gondolyn.appInfo"));
-        $data['samples']      = $service->getSamples();
+        $sort = $request->input('sort');
+        $data = $service->serviceInformation(Config::get("gondolyn.appInfo"));
+        $sorter = SampleService::sorter($sort);
+
+        $data['dir']            = $sorter['dir'];
+        $data['samples']        = $service->getSamples($sorter['sortby']);
 
         return view('sample::sample', $data);
     }
