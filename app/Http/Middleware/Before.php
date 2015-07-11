@@ -56,7 +56,7 @@ class Before
                 foreach ($beforeFilter as $filter) {
                     if (method_exists($this, $filter)) {
 
-                        $filterResult = $this->$filter();
+                        $filterResult = $this->$filter($request);
                         // Fail immediately
                         if ( ! is_null($filterResult)) {
                             return $filterResult;
@@ -76,25 +76,25 @@ class Before
     |--------------------------------------------------------------------------
     */
 
-    public function is_ajax_call()
+    public function is_ajax_call($request)
     {
         if ( ! Gondolyn::is_ajax_call()) {
             return Gondolyn::response("error", Lang::get("notification.api.ajax_only"));
         }
     }
 
-    public function is_api_call()
+    public function is_api_call($request)
     {
         if ( ! Gondolyn::is_api_call()) {
             return Gondolyn::response("error", Lang::get("notification.api.not_api_call"));
         }
     }
 
-    public function is_logged_in()
+    public function is_logged_in($request)
     {
         if (AccountServices::isAccountRemembered()) {
-            $email      = Request::cookie("email");
-            $password   = Request::cookie("password");
+            $email      = $request->cookie("email");
+            $password   = $request->cookie("password");
 
             $Users      = new Accounts;
             $user       = $Users->loginWithEmail($email, $password, false);
@@ -120,14 +120,14 @@ class Before
         }
     }
 
-    public function valid_api_key()
+    public function valid_api_key($request)
     {
         if ( ! Gondolyn::valid_api_key()) {
             return Gondolyn::response("error", Lang::get("notification.api.bad_key"));
         }
     }
 
-    public function valid_api_token()
+    public function valid_api_token($request)
     {
         if ( ! Gondolyn::valid_api_token()) {
             return Gondolyn::response("error", Lang::get("notification.api.bad_token"));
