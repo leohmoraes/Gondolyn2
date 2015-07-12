@@ -71,6 +71,12 @@ class dbuild extends Command
                 'updated_at' => date('Y-m-d h:i:s')
             ]);
 
+            DB::table('samples')->insert([
+                'id' => 2,
+                'created_at' => date('Y-m-d h:i:s'),
+                'updated_at' => date('Y-m-d h:i:s')
+            ]);
+
             $this->info("Your database has been constructed");
         } else {
             $this->info("Your database already exists");
