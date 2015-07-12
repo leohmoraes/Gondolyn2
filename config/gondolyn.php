@@ -84,8 +84,8 @@ return array(
     'product'   => '',
 
     'stripe' => array(
-        'secret_key' => '',
-        'publish_key' => '',
+        'secret_key' => env('STRIPE_SEC_KEY'),
+        'publish_key' => env('STRIPE_PUB_KEY'),
     ),
 
     'trial' => 30,
@@ -97,7 +97,7 @@ return array(
             'type'          => 'monthly',           // monthly or yearly
             'cost'          => '$5',                // cost
             'dollar'        => 'CAD',               // Dollar type
-            'stripe_id'     => 'basic',             // Stipe Plan ID
+            'stripe_id'     => 'grafite_api_basic',             // Stipe Plan ID
         ),
         'advanced' => array(
             'id'            => 'advanced',
