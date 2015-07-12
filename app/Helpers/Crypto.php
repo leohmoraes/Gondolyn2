@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Session;
 
 class Crypto
 {
+    /**
+     * Encrypt the string
+     * @param  string $value String to encrypt
+     * @return string
+     */
     public static function encrypt($value)
     {
         $config_key = Config::get('app.key');
@@ -19,6 +24,11 @@ class Crypto
         return trim($encrypted);
     }
 
+    /**
+     * Decrypt a string
+     * @param  string $value Encrypted string
+     * @return string
+     */
     public static function decrypt($value)
     {
         $config_key = Config::get('app.key');
@@ -32,6 +42,11 @@ class Crypto
         return trim($decrypted);
     }
 
+    /**
+     * Base 64 encode
+     * @param  string $str String to encode
+     * @return string
+     */
     public static function url_base64_encode($str)
     {
         return strtr(base64_encode($str),
@@ -43,6 +58,11 @@ class Crypto
         );
     }
 
+    /**
+     * Base 64 decode
+     * @param  string $str String to decode
+     * @return string
+     */
     public static function url_base64_decode($str)
     {
         return base64_decode(strtr($str,

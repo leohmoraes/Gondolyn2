@@ -11,7 +11,7 @@
 
         {!! Form::open(['route' => '$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
 
-            {!! FormMaker::fromTable('$MODEL_NAME_PLURAL_CAMEL$', null, FormMaker::getGenerateColumnsList('$MODEL_NAME_PLURAL_CAMEL$')) !!}
+            {!! FormMaker::fromTable('$MODEL_NAME_PLURAL_CAMEL$', null, FormMaker::getTableColumns('$MODEL_NAME_PLURAL_CAMEL$')) !!}
 
             <div class="form-group text-right">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

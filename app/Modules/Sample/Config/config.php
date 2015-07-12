@@ -10,7 +10,7 @@ return [
 
     // CSRF Ignored Routes
     "csrfIgnoredRoutes" => [
-        // "sample/edit",
+        "sample/edit",
     ],
 
 ];

@@ -178,7 +178,7 @@ return [
         $this->makeModuleFile(app_path().'/Modules/'.$module.'/filters.php', '<?php
 
     // Filters to be run in routes
-    Route::filter("'.lcfirst($module).'Filter", function () {
+    Route::filter("'.lcfirst($module).'Filter", function() {
         Log::info("Filtering '.$module.' Module");
     });
 
@@ -191,11 +191,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    Route::group(array(\'module\' => \''.$module.'\', \'namespace\' => \'App\Modules\\'.$module.'\Controllers\'), function () {
+    Route::group(array(\'module\' => \''.$module.'\', \'namespace\' => \'App\Modules\\'.$module.'\Controllers\'), function() {
         Route::get(\''.lcfirst($module).'\',  array(\'before\' => \''.lcfirst($module).'Filter\', \'uses\' => \''.$module.'Controller@main\'));
 
         // API actions
-        Route::group(array(\'prefix\' => \'api\', \'before\' => array(\'valid_api_key\', \'valid_api_token\')), function () {
+        Route::group(array(\'prefix\' => \'api\', \'before\' => array(\'valid_api_key\', \'valid_api_token\')), function() {
             Route::get(\''.lcfirst($module).'\',  array(\'uses\' => \''.$module.'Controller@api\'));
         });
 

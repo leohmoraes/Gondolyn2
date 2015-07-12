@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Config;
 
 class Validation
 {
+    /**
+     * Validation check
+     * @param  string  $form      form in question from the config
+     * @param  string  $module    module name
+     * @param  bool    $jsonInput JSON input
+     * @return array
+     */
     public static function check($form, $module = null, $jsonInput = false)
     {
         $result = array();
@@ -59,6 +66,11 @@ class Validation
         return $result;
     }
 
+    /**
+     * Validation Errors
+     * @param  string $format Type of error request
+     * @return mixed
+     */
     public static function errors($format = 'array')
     {
         $errorMessage = "";
@@ -79,6 +91,10 @@ class Validation
         return $errorMessage;
     }
 
+    /**
+     * Validation inputs
+     * @return mixed
+     */
     public static function inputs()
     {
         $inputs = Session::get("validationInputs") ?: false;
@@ -90,6 +106,12 @@ class Validation
         return $inputs;
     }
 
+    /**
+     * Get input
+     * @param  string $key       Input name
+     * @param  bool $jsonInput JSON or not
+     * @return mixed
+     */
     private static function getInput($key, $jsonInput)
     {
         if ($jsonInput) {
@@ -103,6 +125,11 @@ class Validation
         return $input;
     }
 
+    /**
+     * Get the inputs as an array
+     * @param  bool $jsonInput JSON or not
+     * @return array
+     */
     private static function inputsArray($jsonInput)
     {
         if ($jsonInput) {
@@ -115,6 +142,22 @@ class Validation
         unset($inputs['_token']);
 
         return $inputs;
+    }
+
+    /**
+     * Get the value last attempted in valuation
+     * @param  string $key Input key
+     * @return string
+     */
+    public static function value($key)
+    {
+        $inputs = Session::get("validationInputs") ?: false;
+
+        if ( ! $inputs) {
+            return '';
+        }
+
+        return $inputs[$key];
     }
 
 }

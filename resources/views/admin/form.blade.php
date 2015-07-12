@@ -10,7 +10,7 @@
 
     <div class="form-group">
         <label>Automobile</label>
-        <input class="form-control typeahead" placeholder="Brand of Automobile">
+        <input class="form-control typeahead" name="automobile" placeholder="Brand of Automobile" value="{!! Validation::value('automobile') !!}">
     </div>
 
     {!! FormMaker::fromTable('users', null, Config::get('forms.shipping')); !!}

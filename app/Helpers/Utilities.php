@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\File;
 
 class Utilities
 {
+    /**
+     * Create a salt string
+     * @param integer $length string length
+     * @return  string
+     */
     public static function addSalt($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

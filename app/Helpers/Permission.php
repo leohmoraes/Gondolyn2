@@ -9,16 +9,31 @@ use App\Exceptions\LoginException;
 
 class Permission
 {
+    /**
+     * Test role permission
+     * @param  string $role Role
+     * @return void
+     */
     public static function role($role)
     {
-        return Permission::permission(['role' => $role]);
+        Permission::permission(['role' => $role]);
     }
 
+    /**
+     * Test subscription plan
+     * @param  string $plan Plan name
+     * @return void
+     */
     public static function subscription($plan)
     {
-        return Permission::permission(['plan' => $plan]);
+        Permission::permission(['subscription' => $plan]);
     }
 
+    /**
+     * Checks the different types of permission
+     * @param  array $config Array of permission types
+     * @return void
+     */
     public static function permission($config)
     {
         if ( ! isset($config['role']) && ! isset($config['subscription'])) {
@@ -44,7 +59,6 @@ class Permission
         if ( ! Session::get('logged_in')) {
             throw new LoginException(Lang::get('notification.login.expired-session'), 1);
         }
-
     }
 
 }

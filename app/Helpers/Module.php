@@ -5,8 +5,8 @@ use View;
 /**
  * For Common Actions regarding languages within the store
  */
-class Module {
-
+class Module
+{
     /**
      * Get the language value
      * @param  string $key string of array as path
@@ -116,6 +116,13 @@ class Module {
         return $modulePermissionConfigs;
     }
 
+    /**
+     * Get a module's asset
+     * @param  string $module      Module name
+     * @param  string $path        Path to module asset
+     * @param  string $contentType Asset type
+     * @return string
+     */
     public static function asset($module, $path, $contentType = 'null')
     {
         return url('module-asset/'.lcfirst($module).'/'.Crypto::encrypt($path).'/'.Crypto::encrypt($contentType));

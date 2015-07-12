@@ -76,7 +76,7 @@ class Before
     |--------------------------------------------------------------------------
     */
 
-    public function is_ajax_call($request)
+    public function is_ajax_call()
     {
         if ( ! Gondolyn::is_ajax_call()) {
             return Gondolyn::response("error", Lang::get("notification.api.ajax_only"));
@@ -85,7 +85,7 @@ class Before
 
     public function is_api_call($request)
     {
-        if ( ! Gondolyn::is_api_call()) {
+        if ( ! Gondolyn::is_api_call($request)) {
             return Gondolyn::response("error", Lang::get("notification.api.not_api_call"));
         }
     }
@@ -112,7 +112,7 @@ class Before
         if ( ! Session::get("logged_in")) {
             Gondolyn::notification(Lang::get("notification.login.expired-session"), 'warning');
 
-            if (Gondolyn::is_api_call()) {
+            if (Gondolyn::is_api_call($request)) {
                 throw new ApiException(Lang::get("notification.login.expired-session"), 1);
             }
 
@@ -120,14 +120,14 @@ class Before
         }
     }
 
-    public function valid_api_key($request)
+    public function valid_api_key()
     {
         if ( ! Gondolyn::valid_api_key()) {
             return Gondolyn::response("error", Lang::get("notification.api.bad_key"));
         }
     }
 
-    public function valid_api_token($request)
+    public function valid_api_token()
     {
         if ( ! Gondolyn::valid_api_token()) {
             return Gondolyn::response("error", Lang::get("notification.api.bad_token"));

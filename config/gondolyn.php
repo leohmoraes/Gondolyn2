@@ -97,7 +97,7 @@ return array(
             'type'          => 'monthly',           // monthly or yearly
             'cost'          => '$5',                // cost
             'dollar'        => 'CAD',               // Dollar type
-            'stripe_id'     => 'grafite_api_basic',             // Stipe Plan ID
+            'stripe_id'     => 'basic',             // Stipe Plan ID
         ),
         'advanced' => array(
             'id'            => 'advanced',

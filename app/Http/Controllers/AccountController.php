@@ -60,10 +60,10 @@ class AccountController extends BaseController
         $users = new Accounts;
         $user = $users->getAccount(Session::get("id"));
 
-        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $gravatarHash = md5(strtolower(trim($user->user_email)));
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
-        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
+        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['user']               = $user;
         $data['inAppNotifications'] = ($user->in_app_notifications === 'on') ? 'checked' : '';
         $data['options']            = Config::get("permissions.matrix.roles");
@@ -79,10 +79,10 @@ class AccountController extends BaseController
 
         $user = Accounts::getAccount(Session::get("id"));
 
-        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $gravatarHash = md5(strtolower(trim($user->user_email)));
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
-        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
+        $data['profileImage'] = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['user'] = $user;
         $data['roles'] = Config::get("permissions.matrix.roles");
 
@@ -96,10 +96,10 @@ class AccountController extends BaseController
 
         $user = Accounts::getAccount(Session::get("id"));
 
-        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $gravatarHash = md5(strtolower(trim($user->user_email)));
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
-        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
+        $data['profileImage'] = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['user'] = $user;
         $data['packages'] = Config::get("gondolyn.packages");
         $data['subscriptionPostURL'] = URL::to('account/settings/set/subscription');
@@ -137,12 +137,12 @@ class AccountController extends BaseController
         $data['page_title'] = Lang::get('titles.subscription-invoices');
 
         $user = Accounts::getAccount(Session::get("id"));
-        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $gravatarHash = md5(strtolower(trim($user->user_email)));
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
-        $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
 
         $invoices = $user->invoices();
 
+        $data['profileImage'] = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
         $data['invoices'] = View::make('account.invoice', array('invoices' => $invoices));
 
         return view('account.subscription-invoices', $data);
@@ -205,7 +205,6 @@ class AccountController extends BaseController
         try {
             $users = new Accounts;
             $status = $users->updateMyPassword(Session::get("id"));
-
             if ($status) {
                 Gondolyn::notification(Lang::get("notification.profile.password_success"), 'success');
             } else {
@@ -340,7 +339,7 @@ class AccountController extends BaseController
                 }
             }
 
-            Gondolyn::notification(Lang::get("notification.login.success"), 'danger');
+            Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
             return redirect('errors/general');
 
         } catch (Exception $e) {
@@ -457,7 +456,7 @@ class AccountController extends BaseController
         if ($newPassword) {
             $data['newPassword'] = $newPassword;
 
-            Mail::send('emails.new-password', $data, function ($message) {
+            Mail::send('emails.new-password', $data, function($message) {
                 $user = Accounts::getAccountByEmail(Input::get("email"));
                 $message->to($user->user_email, $user->user_name)->subject('New Password!');
             });

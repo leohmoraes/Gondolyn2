@@ -9,19 +9,21 @@ use Session;
 use Gondolyn;
 use Illuminate\Http\Request;
 use Validation;
+use BaseController;
+use Log;
 use App\Modules\Sample\Services\SampleService;
 use App\Modules\Sample\Models\Samples;
 
 /**
  * Sample Module Controller
  */
-class SampleController extends \BaseController
+class SampleController extends BaseController
 {
     protected $layout = 'layouts.master';
 
     public function __construct()
     {
-        \Log::info("Loading Sample Module");
+        Log::info("Loading Sample Module");
         $this->middleware('security.guard');
     }
 

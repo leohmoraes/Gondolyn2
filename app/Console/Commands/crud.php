@@ -183,6 +183,12 @@ class crud extends BaseCommand
         return array_merge(parent::getOptions(), []);
     }
 
+    /**
+     * Cleanup misswritten terms
+     * @param  string $platform Platform
+     * @param  string $model    Model in question
+     * @return bool
+     */
     private function cleanup($platform, $model)
     {
         if (is_dir(app_path().'/Modules/'.$platform.'/Controllers')) {
@@ -228,6 +234,13 @@ class crud extends BaseCommand
         return true;
     }
 
+    /**
+     * Replace the last occurance of a string
+     * @param  string $search  Search string
+     * @param  string $replace Replace string
+     * @param  string $subject String in question
+     * @return string
+     */
     public function str_lreplace($search, $replace, $subject)
     {
         $pos = strrpos($subject, $search);

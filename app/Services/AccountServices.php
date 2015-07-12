@@ -4,17 +4,18 @@ use Session;
 use Auth;
 use Cookie;
 use Request;
-use Redirect;
 use Accounts;
 use Config;
-use Utilities;
-use Lang;
 use Crypto;
 use Mail;
 use Services_Twilio;
 
 class AccountServices
 {
+    /**
+     * Logout the user
+     * @return Redirect
+     */
     public static function logout()
     {
         // Kill the session
@@ -28,6 +29,11 @@ class AccountServices
             ->withCookie(Cookie::forget('password'));
     }
 
+    /**
+     * Login a user
+     * @param  User $user User object
+     * @return string
+     */
     public static function login($user)
     {
         Auth::login($user);
@@ -57,6 +63,11 @@ class AccountServices
         return "dashboard";
     }
 
+    /**
+     * Two factor auth
+     * @param  User $user User object
+     * @return bool
+     */
     public static function authTwoFactors($user)
     {
         Accounts::setTwoFactorCode($user->id, '');
@@ -72,6 +83,12 @@ class AccountServices
         return true;
     }
 
+    /**
+     * Send two factor Auth code
+     * @param  string $code  Auth code
+     * @param  string $phone Phone number
+     * @return bool
+     */
     public static function sendTwoFactorAuthenticationCode($code, $phone)
     {
         $AccountSid = Config::get('gondolyn.twoFactorAuthentication.twilio.account_sid');
@@ -94,6 +111,11 @@ class AccountServices
         return true;
     }
 
+    /**
+     * Send email confirmation
+     * @param  User $user User object
+     * @return void
+     */
     public static function sendEmailConfirmation($user)
     {
         $email = Crypto::encrypt($user->user_email);
@@ -106,6 +128,10 @@ class AccountServices
         });
     }
 
+    /**
+     * Check if User is logged in
+     * @return boolean
+     */
     public static function isLoggedIn()
     {
         if (Session::get('logged_in')) {
@@ -115,6 +141,10 @@ class AccountServices
         return false;
     }
 
+    /**
+     * Check if account is remembered
+     * @return boolean
+     */
     public static function isAccountRemembered()
     {
         $email      = Request::cookie("email");
@@ -127,6 +157,12 @@ class AccountServices
         }
     }
 
+    /**
+     * Check if User wants in app notification
+     * @param  string $notification     Notification string
+     * @param  string $notificationType Notification type
+     * @return string
+     */
     public static function inAppNotification($notification, $notificationType)
     {
         if (Auth::user()->in_app_notifications === 'on') {
@@ -136,6 +172,11 @@ class AccountServices
         return '';
     }
 
+    /**
+     * Get user App Auth Code
+     * @param  integer $id User ID
+     * @return string     Auth code
+     */
     public static function appAuthCode($id)
     {
         $leadingNumber = substr($id, 0, 1);
