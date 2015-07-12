@@ -72,9 +72,14 @@ class Gondolyn
         }
     }
 
-    public static function notification($string)
+    public static function notification($string, $type = null)
     {
+        if (is_null($type)) {
+            $type = 'info';
+        }
+
         Session::flash("notification", $string);
+        Session::flash("notificationType", 'alert-'.$type);
     }
 
 }

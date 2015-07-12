@@ -41,8 +41,10 @@ $(function() {
 |--------------------------------------------------------------------------
 */
 
-function gondolynNotify(message) {
+function gondolynNotify(message, _type) {
+    console.log(_type);
     $(".gondolyn-notification").css("display", "block");
+    $(".gondolyn-notification").addClass(_type);
 
     $(".gondolyn-notify-comment").html(message);
     $(".gondolyn-notification").animate({
@@ -97,7 +99,7 @@ function showLoginPanel() {
 function _setDashboard () {
     if ($(window).width() < 768) {
         $('.sidebar').css({
-            left: '-'+$(window).width()+'px',
+            left: '-300px',
         });
 
         if ($('.sidebar-menu-btn').length === 0) {

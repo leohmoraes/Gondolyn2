@@ -22,7 +22,7 @@ class AccountController extends BaseController
         $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login');
 
-        Session::flash('notification', Validation::errors('string') ?: false);
+        Gondolyn::notification(Validation::errors('string'), 'danger');
 
         return view('account.login', $data);
     }
@@ -32,7 +32,7 @@ class AccountController extends BaseController
         $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login');
 
-        Session::flash('notification', Validation::errors('string') ?: false);
+        Gondolyn::notification(Validation::errors('string'), 'danger');
 
         return view('account.login-confirm-email', $data);
     }
@@ -182,16 +182,16 @@ class AccountController extends BaseController
     public function update()
     {
         $validation = Validation::check(Accounts::$rules);
-        Session::flash("notification", Lang::get("notification.profile.update_failed"));
+        Gondolyn::notification(Lang::get("notification.profile.update_failed"), 'danger');
 
         if ( ! $validation['errors']) {
             try {
                 $status = Accounts::updateAccount(Session::get("id"));
                 if ($status) {
-                    Session::flash("notification", Lang::get("notification.profile.update_success"));
+                    Gondolyn::notification(Lang::get("notification.profile.update_success"), 'success');
                 }
             } catch (Exception $e) {
-                Session::flash("notification", $e->getMessage());
+                Gondolyn::notification($e->getMessage(), 'danger');
             }
 
             return redirect('account/settings');
@@ -207,12 +207,12 @@ class AccountController extends BaseController
             $status = $users->updateMyPassword(Session::get("id"));
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.profile.password_success"));
+                Gondolyn::notification(Lang::get("notification.profile.password_success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.profile.password_failed"));
+                Gondolyn::notification(Lang::get("notification.profile.password_failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.error"));
+            Gondolyn::notification(Lang::get("notification.general.error"), 'danger');
             return redirect('errors/general');
         }
 
@@ -226,12 +226,12 @@ class AccountController extends BaseController
             $status = $users->setAccountSubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.subscription.success"));
+                Gondolyn::notification(Lang::get("notification.subscription.success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.subscription.failed"));
+                Gondolyn::notification(Lang::get("notification.subscription.failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", $e->getMessage());
+            Gondolyn::notification($e->getMessage(), 'danger');
             return redirect('errors/general');
         }
 
@@ -245,12 +245,12 @@ class AccountController extends BaseController
             $status = $users->updateAccountSubscription(Session::get("id"), Input::get("plan"));
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.subscription.success"));
+                Gondolyn::notification(Lang::get("notification.subscription.success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.subscription.failed"));
+                Gondolyn::notification(Lang::get("notification.subscription.failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.error"));
+            Gondolyn::notification(Lang::get("notification.general.error"), 'danger');
             return redirect('errors/general');
         }
 
@@ -264,12 +264,12 @@ class AccountController extends BaseController
             $status = $users->changeCardAccountSubscription(Session::get("id"), Input::get("stripeToken"));
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.subscription.success"));
+                Gondolyn::notification(Lang::get("notification.subscription.success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.subscription.failed"));
+                Gondolyn::notification(Lang::get("notification.subscription.failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.error"));
+            Gondolyn::notification(Lang::get("notification.general.error"), 'danger');
             return redirect('errors/general');
         }
 
@@ -283,12 +283,12 @@ class AccountController extends BaseController
             $status = $users->cancelSubscription(Session::get("id"));
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.subscription.cancel_success"));
+                Gondolyn::notification(Lang::get("notification.subscription.cancel_success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.subscription.cancel_failed"));
+                Gondolyn::notification(Lang::get("notification.subscription.cancel_failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.error"));
+            Gondolyn::notification(Lang::get("notification.general.error"), 'danger');
             return redirect('errors/general');
         }
 
@@ -332,7 +332,7 @@ class AccountController extends BaseController
                 return redirect('login/confirm-email');
             } else {
                 if ( ! $user) {
-                    Session::flash("notification", Lang::get("notification.login.fail"));
+                    Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
                     return redirect('errors/general');
                 } else {
                     $redirect = AccountServices::login($user);
@@ -340,11 +340,11 @@ class AccountController extends BaseController
                 }
             }
 
-            Session::flash("notification", Lang::get("notification.login.success"));
+            Gondolyn::notification(Lang::get("notification.login.success"), 'danger');
             return redirect('errors/general');
 
         } catch (Exception $e) {
-            Session::flash("notification", $e->getMessage());
+            Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }
     }
@@ -355,9 +355,9 @@ class AccountController extends BaseController
         $result = Accounts::modifyAccountStatus($user->id, 'active');
 
         if ($user && $result) {
-            Session::flash("notification", Lang::get("notification.login.confirm"));
+            Gondolyn::notification(Lang::get("notification.login.confirm"), 'success');
         } else {
-            Session::flash("notification", Lang::get("notification.login.not-confirmed"));
+            Gondolyn::notification(Lang::get("notification.login.not-confirmed"), 'danger');
         }
 
         return redirect('login/email');
@@ -377,7 +377,7 @@ class AccountController extends BaseController
                 $redirect = AccountServices::login($user);
                 return redirect($redirect);
             } catch (Exception $e) {
-                Session::flash("notification", $e->getMessage());
+                Gondolyn::notification($e->getMessage(), 'danger');
                 return redirect('errors/general');
             }
         } else {
@@ -406,7 +406,7 @@ class AccountController extends BaseController
                 $redirect = AccountServices::login($user);
                 return redirect($redirect);
             } catch (Exception $e) {
-                Session::flash("notification", $e->getMessage());
+                Gondolyn::notification($e->getMessage(), 'danger');
                 return redirect('errors/general');
             }
         } else {
@@ -437,7 +437,7 @@ class AccountController extends BaseController
 
         Session::flush();
 
-        Session::flash("notification", Lang::get("notification.login.deleted"));
+        Gondolyn::notification(Lang::get("notification.login.deleted"), 'success');
 
         return redirect("/");
     }
@@ -450,7 +450,7 @@ class AccountController extends BaseController
             $user = Accounts::getAccountByEmail(Input::get("email"));
             $newPassword = Accounts::generateNewPassword($user->id);
         } catch (Exception $e) {
-            Session::flash("notification", Lang::get("notification.general.cannot_find_user"));
+            Gondolyn::notification(Lang::get("notification.general.cannot_find_user"), 'danger');
             return redirect('errors/general');
         }
 
@@ -462,9 +462,9 @@ class AccountController extends BaseController
                 $message->to($user->user_email, $user->user_name)->subject('New Password!');
             });
 
-            Session::flash("notification", Lang::get("notification.general.new_password"));
+            Gondolyn::notification(Lang::get("notification.general.new_password"), 'success');
         } else {
-            Session::flash("notification", Lang::get("notification.general.failed_new_password"));
+            Gondolyn::notification(Lang::get("notification.general.failed_new_password"), 'danger');
         }
 
         return redirect('');

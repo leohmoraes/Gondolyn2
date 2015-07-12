@@ -110,7 +110,7 @@ class Before
         }
 
         if ( ! Session::get("logged_in")) {
-            Session::flash("notification", Lang::get("notification.login.expired-session"));
+            Gondolyn::notification(Lang::get("notification.login.expired-session"), 'warning');
 
             if (Gondolyn::is_api_call()) {
                 throw new ApiException(Lang::get("notification.login.expired-session"), 1);

@@ -112,7 +112,7 @@ class AdminController extends BaseController
             $user = $Users->makeNewAccount($account, 'email', false, true);
 
         } catch (Exception $e) {
-            Session::flash("notification", $e->getMessage());
+            Gondolyn::notification($e->getMessage(), 'danger');
             return redirect('errors/general');
         }
 
@@ -126,12 +126,12 @@ class AdminController extends BaseController
             $status = Accounts::updateAccount($user->id);
 
             if ($status) {
-                Session::flash("notification", Lang::get("notification.profile.admin_update_success"));
+                Gondolyn::notification(Lang::get("notification.profile.admin_update_success"), 'success');
             } else {
-                Session::flash("notification", Lang::get("notification.profile.admin_update_failed"));
+                Gondolyn::notification(Lang::get("notification.profile.admin_update_failed"), 'danger');
             }
         } catch (Exception $e) {
-            Session::flash("notification", $e->getMessage());
+            Gondolyn::notification($e->getMessage(), 'danger');
         }
 
         return redirect('admin/users/editor/'.Crypto::encrypt($user->id));
@@ -178,7 +178,7 @@ class AdminController extends BaseController
 
         Accounts::deleteAccount($user->id);
 
-        Session::flash("notification", "The user was successfully deleted");
+        Gondolyn::notification(Lang::get("notification.profile.admin_delete"), 'success');
 
         return redirect('admin/users');
     }

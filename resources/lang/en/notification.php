@@ -39,6 +39,7 @@ return array(
     "profile" => array(
         "update_success" => "Your profile was successfully updated.",
         "admin_update_success" => "Their profile was successfully updated.",
+        "admin_delete" => "The user was successfully deleted.",
         "update_failed" => "Your profile failed to update.",
         "admin_update_failed" => "Their profile failed to update.",
         "password_success" => "Your password was successfully updated.",

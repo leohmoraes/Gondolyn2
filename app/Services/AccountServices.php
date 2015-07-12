@@ -127,10 +127,10 @@ class AccountServices
         }
     }
 
-    public static function inAppNotification($notification)
+    public static function inAppNotification($notification, $notificationType)
     {
         if (Auth::user()->in_app_notifications === 'on') {
-            return 'gondolynNotify("'.$notification.'");';
+            return 'gondolynNotify("'.$notification.'", "'.$notificationType.'");';
         }
 
         return '';

@@ -1,11 +1,12 @@
 <?php
 
     $notification = Session::get("notification");
+    $notificationType = Session::get("notificationType");
 
     if ($notification) {
         if (AccountServices::isLoggedIn()) {
-            echo AccountServices::inAppNotification($notification);
+            echo AccountServices::inAppNotification($notification, $notificationType);
         } else {
-            echo 'gondolynNotify("'.$notification.'");';
+            echo 'gondolynNotify("'.$notification.'", "'.$notificationType.'");';
         }
     }
