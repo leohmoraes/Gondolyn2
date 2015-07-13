@@ -31,11 +31,15 @@ class AccountServices
 
     /**
      * Login a user
-     * @param  object $user User object
+     * @param  object|bool $user User object | false
      * @return string
      */
     public static function login($user)
     {
+        if ( ! $user) {
+            return 'errors/general';
+        }
+
         Auth::login($user);
 
         $username = ($user->user_name == "") ? $user->user_email : $user->user_name;
