@@ -228,7 +228,8 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
 
     /**
      * Change Credit Card for Subscription
-     * @param  string $token Token
+     * @param  integer $id User id
+     * @param  string $creditCardToken Credit Card token
      * @return bool
      */
     public function changeCardAccountSubscription($id, $creditCardToken)

@@ -31,7 +31,7 @@ class AccountServices
 
     /**
      * Login a user
-     * @param  User $user User object
+     * @param  object $user User object
      * @return string
      */
     public static function login($user)
@@ -65,7 +65,7 @@ class AccountServices
 
     /**
      * Two factor auth
-     * @param  User $user User object
+     * @param  object $user User object
      * @return bool
      */
     public static function authTwoFactors($user)
@@ -113,7 +113,7 @@ class AccountServices
 
     /**
      * Send email confirmation
-     * @param  User $user User object
+     * @param  object $user User object
      * @return void
      */
     public static function sendEmailConfirmation($user)

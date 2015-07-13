@@ -338,14 +338,13 @@ class AccountController extends BaseController
                     return redirect($redirect);
                 }
             }
-
-            Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
-            return redirect('errors/general');
-
         } catch (Exception $e) {
             Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }
+
+        Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
+        return redirect('errors/general');
     }
 
     public function confirmEmail($email)
