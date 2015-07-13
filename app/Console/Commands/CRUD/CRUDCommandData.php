@@ -44,6 +44,9 @@ class CRUDCommandData extends CommandData
     public static $COMMAND_TYPE_SCAFFOLD = 'scaffold';
     public static $COMMAND_TYPE_SCAFFOLD_API = 'scaffold_api';
 
+    /**
+     * @param \App\Console\Commands\crud $commandObj
+     */
     function __construct($commandObj, $commandType)
     {
         $this->commandObj = $commandObj;
@@ -58,7 +61,7 @@ class CRUDCommandData extends CommandData
         $this->tableName = strtolower(Str::snake($this->modelNamePlural));
         $this->modelNameCamel = Str::camel($this->modelName);
         $this->modelNamePluralCamel = Str::camel($this->modelNamePlural);
-        $this->modelNamespace = Config::get('generator.namespace_model', 'App') . "\\" . $this->modelName;
+        $this->modelNamespace = Config::get('generator.namespace_model', 'App')."\\".$this->modelName;
     }
 
     public function getInputFields()
@@ -68,14 +71,14 @@ class CRUDCommandData extends CommandData
         $this->commandObj->info("Specify fields for the model (skip id & timestamp fields, will be added automatically)");
         $this->commandObj->info("Left blank to finish");
 
-        while(true)
+        while (true)
         {
             $fieldInputStr = $this->commandObj->ask("Field:", '');
 
-            if(empty($fieldInputStr) || $fieldInputStr == false || $fieldInputStr == "exit")
+            if (empty($fieldInputStr) || $fieldInputStr == false || $fieldInputStr == "exit")
                 break;
 
-            if(!GeneratorUtils::validateFieldInput($fieldInputStr))
+            if ( ! GeneratorUtils::validateFieldInput($fieldInputStr))
             {
                 $this->commandObj->error("Invalid Input. Try again");
                 continue;
@@ -83,7 +86,7 @@ class CRUDCommandData extends CommandData
 
             $validations = $this->commandObj->ask("Enter validations: ", false);
 
-            $validations = ($validations == false) ? '': $validations;
+            $validations = ($validations == false) ? '' : $validations;
 
             $fields[] = GeneratorUtils::processFieldInput($fieldInputStr, $validations);
         }
