@@ -446,19 +446,6 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     }
 
     /**
-     * Delete user's personal account
-     * @param  integer $id User id
-     * @return bool
-     */
-    public function deleteMyAccount($id)
-    {
-        if (Session::get("id") == $id) {
-            $user = Accounts::find($id);
-            return $user->delete();
-        } else return false;
-    }
-
-    /**
      * Delete the account
      * @param  integer $id User ID
      * @return bool

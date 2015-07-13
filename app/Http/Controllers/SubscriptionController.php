@@ -41,7 +41,7 @@ class SubscriptionController extends BaseController
 
         $user = Accounts::getAccount(Session::get("id"));
 
-        $gravatarHash = md5( strtolower( trim( $user->user_email ) ) );
+        $gravatarHash = md5(strtolower(trim($user->user_email)));
         $profileImage = ($user->profile == "") ? null : Utilities::fileAsPublicAsset($user->profile);
 
         $data['profileImage']       = $profileImage ?: 'http://www.gravatar.com/avatar/'.$gravatarHash.'?s=300';
