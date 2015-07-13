@@ -327,28 +327,22 @@ class AccountController extends BaseController
             $user = $Users->loginWithEmail(Input::get('email'), Input::get('password'), Input::get('remember_me'));
 
             if ( ! $user) {
-                throw new Exception(Lang::get("notification.login.fail"), 1);
-            }
-
-            if (Config::get('autoConfirmEmail') && $user->user_active !== 'active') {
-                AccountServices::sendEmailConfirmation($user);
-                return redirect('login/confirm-email');
+                Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
+                return redirect('errors/general');
             } else {
-                if ( ! $user) {
-                    Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
-                    return redirect('errors/general');
+                if (Config::get('autoConfirmEmail') && $user->user_active !== 'active') {
+                    AccountServices::sendEmailConfirmation($user);
+                    return redirect('login/confirm-email');
                 } else {
                     $redirect = AccountServices::login($user);
                     return redirect($redirect);
                 }
             }
+
         } catch (Exception $e) {
             Gondolyn::notification($e->getMessage());
             return redirect('errors/general');
         }
-
-        Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
-        return redirect('errors/general');
     }
 
     public function confirmEmail($email)
@@ -378,10 +372,10 @@ class AccountController extends BaseController
 
                 if ( ! $user) {
                     throw new Exception(Lang::get("notification.login.fail"), 1);
+                } else {
+                    $redirect = AccountServices::login($user);
+                    return redirect($redirect);
                 }
-
-                $redirect = AccountServices::login($user);
-                return redirect($redirect);
             } catch (Exception $e) {
                 Gondolyn::notification($e->getMessage(), 'danger');
                 return redirect('errors/general');
