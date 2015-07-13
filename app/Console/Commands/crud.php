@@ -1,14 +1,8 @@
 <?php namespace App\Console\Commands;
 
-use Schema;
 use Config;
-use Artisan;
-use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Illuminate\Foundation\Application;
 use Mitul\Generator\Commands\BaseCommand;
 use Mitul\Generator\Generators\API\RepoAPIControllerGenerator;
 use Mitul\Generator\Generators\Common\MigrationGenerator;
@@ -93,8 +87,7 @@ class crud extends BaseCommand
             try {
                 if (file_exists($this->commandData->fieldsFile)) {
                     $filePath = $this->commandData->fieldsFile;
-                }
-                else {
+                } else {
                     $filePath = base_path($this->commandData->fieldsFile);
                 }
 
@@ -107,7 +100,7 @@ class crud extends BaseCommand
                 $fields = json_decode($fileContents, true);
 
                 $this->commandData->inputFields = GeneratorUtils::validateFieldsFile($fields);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $this->commandData->commandObj->error($e->getMessage());
                 exit;
             }
@@ -198,7 +191,9 @@ class crud extends BaseCommand
                 if (is_file($file)) {
                     $fileContents = file_get_contents($file);
                     $cleanedViews = str_replace("view('".lcfirst($model), "view('".lcfirst($platform)."::".lcfirst($model), $fileContents);
-                    if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                    if (lcfirst($platform) !== 'core') {
+                        $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                    }
                     file_put_contents($file, $cleanedViews);
                 }
             }
@@ -211,8 +206,12 @@ class crud extends BaseCommand
             foreach ($files as $file) {
                 $fileContents = file_get_contents($file);
                 $cleanedViews = str_replace("@include('".lcfirst($model), "@include('".lcfirst($platform)."::".lcfirst($model), $fileContents);
-                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
-                if (lcfirst($platform) !== 'core') $cleanedViews = str_replace("'route' => '".lcfirst($model), "'route' => '".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                if (lcfirst($platform) !== 'core') {
+                    $cleanedViews = str_replace("route('".lcfirst($model), "route('".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                }
+                if (lcfirst($platform) !== 'core') {
+                    $cleanedViews = str_replace("'route' => '".lcfirst($model), "'route' => '".lcfirst($platform).".".lcfirst($model), $cleanedViews);
+                }
                 file_put_contents($file, $cleanedViews);
             }
 
