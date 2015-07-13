@@ -14,8 +14,8 @@ class UserAdminTest extends TestCase
             $adminInfo = [
                 "user_role" => "admin",
                 "user_salt" => Utilities::addSalt(10),
-                "user_name" => "foo@bar.com",
-                "user_email" => "foo@bar.com",
+                "user_email" => "fooadmin@bar.com",
+                "user_name" => "fooadmin@bar.com",
                 "user_passwd" => "test",
                 "user_active" => "active",
                 "stripe_active" => false,
