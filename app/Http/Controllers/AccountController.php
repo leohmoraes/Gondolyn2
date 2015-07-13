@@ -326,6 +326,10 @@ class AccountController extends BaseController
             $Users = new Accounts;
             $user = $Users->loginWithEmail(Input::get('email'), Input::get('password'), Input::get('remember_me'));
 
+            if ( ! $user) {
+                throw new Exception(Lang::get("notification.login.fail"), 1);
+            }
+
             if (Config::get('autoConfirmEmail') && $user->user_active !== 'active') {
                 AccountServices::sendEmailConfirmation($user);
                 return redirect('login/confirm-email');
@@ -371,6 +375,10 @@ class AccountController extends BaseController
 
                 $Login = new Accounts;
                 $user = $Login->loginWithSocialMedia($result, "facebook");
+
+                if ( ! $user) {
+                    throw new Exception(Lang::get("notification.login.fail"), 1);
+                }
 
                 $redirect = AccountServices::login($user);
                 return redirect($redirect);

@@ -16,12 +16,11 @@ class SecurityGuard
     public function handle($request, Closure $next)
     {
         $content = $next($request);
+        $finalContent = $content;
 
-        // Check for non-laravel responses - i.e. Symfony
-        if ( ! method_exists($content, 'header')) {
-            return $content;
-        } else {
-            return $content
+        // Ensure that its a Laravel Response
+        if (method_exists($content, 'header')) {
+            $finalContent = $content
                 // CORS
                 ->header('Access-Control-Allow-Origin', Config::get('gondolyn.cors.access-control-allow-origin'))
                 ->header('Access-Control-Allow-Methods', Config::get('gondolyn.cors.access-control-allow-methods'))
@@ -39,5 +38,7 @@ class SecurityGuard
                 ->header('pragma', Config::get('gondolyn.security.browser-cache.pragma'))
                 ->header('expires', Config::get('gondolyn.security.browser-cache.expires'));
         }
+
+        return $finalContent;
     }
 }
