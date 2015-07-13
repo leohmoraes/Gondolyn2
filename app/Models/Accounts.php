@@ -465,10 +465,13 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     public static function deleteAccount($id)
     {
-        if (Session::get("role") == "admin") {
-            $user = Accounts::find($id);
+        $user = Accounts::find($id);
+
+        if (Session::get("id") == $id || Session::get("role") == "admin") {
             return $user->delete();
-        } else return false;
+        }
+
+        return false;
     }
 
     /*

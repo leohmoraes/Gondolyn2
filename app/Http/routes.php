@@ -105,22 +105,22 @@ Route::group(array('prefix' => 'account', 'before' => 'is_logged_in', 'role' => 
 
     Route::get('settings', "AccountController@settings");
     Route::get('settings/password', "AccountController@password");
-    Route::get('settings/subscription', "AccountController@subscription");
-    Route::get('settings/subscription/invoices', "AccountController@subscriptionInvoices");
-    Route::get('settings/subscription/change-card', array('uses' => 'AccountController@subscriptionChangeCard'));
-    Route::get('settings/subscription/download/{id}', array('uses' => 'AccountController@downloadInvoice'));
+    Route::get('settings/subscription', "SubscriptionController@subscription");
+    Route::get('settings/subscription/invoices', "SubscriptionController@subscriptionInvoices");
+    Route::get('settings/subscription/change-card', array('uses' => 'SubscriptionController@subscriptionChangeCard'));
+    Route::get('settings/subscription/download/{id}', array('uses' => 'SubscriptionController@downloadInvoice'));
 
     Route::post('settings/update', array('uses' => 'AccountController@update'));
     Route::post('settings/update/password', array('uses' => 'AccountController@updatePassword'));
-    Route::post('settings/set/subscription', array('uses' => 'AccountController@setSubscription'));
-    Route::post('settings/update/subscription', array('uses' => 'AccountController@updateSubscription'));
-    Route::post('settings/change-card/subscription', array('uses' => 'AccountController@changeCardSubscription'));
+    Route::post('settings/set/subscription', array('uses' => 'SubscriptionController@setSubscription'));
+    Route::post('settings/update/subscription', array('uses' => 'SubscriptionController@updateSubscription'));
+    Route::post('settings/change-card/subscription', array('uses' => 'SubscriptionController@changeCardSubscription'));
 
     Route::get('delete/account', "AccountController@deleteAccount");
-    Route::get('cancel/subscription', "AccountController@cancelSubscription");
+    Route::get('cancel/subscription', "SubscriptionController@cancelSubscription");
 
-    Route::get('two-factor', "AccountController@twoFactor");
-    Route::post('two-factor/authenticate', "AccountController@twoFactorAuthenticate");
+    Route::get('two-factor', "TwoFactorController@twoFactor");
+    Route::post('two-factor/authenticate', "TwoFactorController@twoFactorAuthenticate");
 });
 
 /*
