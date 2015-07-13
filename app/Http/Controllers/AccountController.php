@@ -371,7 +371,8 @@ class AccountController extends BaseController
                 $user = $Login->loginWithSocialMedia($result, "facebook");
 
                 if ( ! $user) {
-                    throw new Exception(Lang::get("notification.login.fail"), 1);
+                    Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
+                    return redirect('errors/general');
                 } else {
                     $redirect = AccountServices::login($user);
                     return redirect($redirect);

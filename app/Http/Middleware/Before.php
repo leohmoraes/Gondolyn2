@@ -92,6 +92,7 @@ class Before
 
     public function is_logged_in($request)
     {
+        // If remembered by cookies
         if (AccountServices::isAccountRemembered()) {
             $email      = $request->cookie("email");
             $password   = $request->cookie("password");
@@ -99,17 +100,16 @@ class Before
             $Users      = new Accounts;
             $user       = $Users->loginWithEmail($email, $password, false);
 
-            AccountServices::login($user);
+            if ($user) {
+                AccountServices::login($user);
+            }
         }
 
         if (time() - Session::get("last_activity") > Config::get("session.lifetime") * 60) {
             Session::flush();
-            Auth::logout();
-        } else {
-            Session::put("last_activity", time());
-        }
 
-        if ( ! Session::get("logged_in")) {
+            Auth::logout();
+
             Gondolyn::notification(Lang::get("notification.login.expired-session"), 'warning');
 
             if (Gondolyn::is_api_call($request)) {
@@ -117,6 +117,8 @@ class Before
             }
 
             return redirect("errors/general");
+        } else {
+            Session::put("last_activity", time());
         }
     }
 
