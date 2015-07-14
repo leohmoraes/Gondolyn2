@@ -90,7 +90,7 @@
 
                         @if ( ! isset($newAccount))
                         <div class="raw100 raw-left raw-margin-top-24">
-                            <h3>Billing/ Shipping Information</h3>
+                            <h3>Billing Information</h3>
                         </div>
                         {!! FormMaker::fromObject($billingColumns, 'account.settings-row', $user); !!}
                         @endif

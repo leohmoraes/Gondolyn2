@@ -13,7 +13,7 @@
         <input class="form-control typeahead" name="automobile" placeholder="Brand of Automobile" value="{!! Validation::value('automobile') !!}">
     </div>
 
-    {!! FormMaker::fromTable('users', null, Config::get('forms.shipping')); !!}
+    {!! FormMaker::fromTable('users', null, Config::get('forms.billing')); !!}
 
     {!! Form::submit('Submit') !!}
 
