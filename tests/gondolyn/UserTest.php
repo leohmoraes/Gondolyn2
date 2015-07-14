@@ -1,7 +1,7 @@
 <?php
 
-class AccountTest extends TestCase {
-
+class AccountTest extends TestCase
+{
     /**
      * Check the home page
      *
@@ -199,6 +199,8 @@ class AccountTest extends TestCase {
         $response = $this->call('POST', 'account/settings/update', [
             'user_email' => $user->user_email,
             'user_name' => 'mr. awesome',
+            'country' => 'CA',
+            'state' => 'Ontario',
             'user_alt_email' => 'mrawesome@bar.com',
             '_token' => Session::token(),
         ]);

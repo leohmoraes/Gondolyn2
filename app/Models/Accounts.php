@@ -55,7 +55,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
         $rates = Config::get('gondolyn.tax');
         $user = Auth::user();
 
-        if ($user->country === 'CA') {
+        if (isset($user) && $user->country === 'CA') {
             return $rates[strtolower($user->state)];
         }
 

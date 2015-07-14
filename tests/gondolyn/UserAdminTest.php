@@ -2,7 +2,6 @@
 
 class UserAdminTest extends TestCase
 {
-
     public function loginAdmin()
     {
         $admin = Accounts::find(2);

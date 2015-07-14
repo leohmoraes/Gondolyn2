@@ -1,7 +1,7 @@
 <?php
 
-class UserModelTest extends TestCase {
-
+class UserModelTest extends TestCase
+{
     /**
      * Get Profile
      *

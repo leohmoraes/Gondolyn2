@@ -1,6 +1,7 @@
 <?php
 
-class ErrorsTest extends TestCase {
+class ErrorsTest extends TestCase
+{
 
     /**
      * Main Error page
