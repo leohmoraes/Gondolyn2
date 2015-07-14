@@ -73,7 +73,22 @@ return array(
 
     'subscription' => TRUE,
 
-    'tax' => 0.00,
+    // Tax rates
+    'tax' => [
+        "alberta" => 5,
+        "british columbia" => 12,
+        "manitoba" => 13,
+        "new brunswick" => 13,
+        "newfoundland &amp; labrador" => 13,
+        "northwest territories" => 5,
+        "nova scotia" => 15,
+        "nunavut" => 5,
+        "ontario" => 13,
+        "prince edward island" => 14,
+        "quebec" => 14.98,
+        "saskatchewan" => 10,
+        "yukon" => 5,
+    ],
 
     // Invoice Details
     'company'   => '',

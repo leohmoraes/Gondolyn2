@@ -69,11 +69,11 @@
                     </div>
                     @endif
                     @if (isset($adminEditorMode) && ! isset($newAccount))
-                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/update') }}">
+                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/update') }}" autocomplete="false" autocomplete="off">
                     @elseif (isset($adminEditorMode) && isset($newAccount))
-                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/generate') }}">
+                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('admin/users/generate') }}" autocomplete="false" autocomplete="off">
                     @else
-                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('account/settings/update') }}">
+                    <form id="userSettings" method="post" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ URL::to('account/settings/update') }}" autocomplete="false" autocomplete="off">
                     @endif
                         <?= Form::token(); ?>
 
@@ -92,7 +92,7 @@
                         <div class="raw100 raw-left raw-margin-top-24">
                             <h3>Billing/ Shipping Information</h3>
                         </div>
-                        {!! FormMaker::fromObject($shippingColumns, 'account.settings-row', $user); !!}
+                        {!! FormMaker::fromObject($billingColumns, 'account.settings-row', $user); !!}
                         @endif
 
                         @if(Config::get('gondolyn.twoFactorAuthentication.enabled'))
@@ -106,13 +106,19 @@
                             <input id="update" type="submit" class="btn btn-primary raw-right raw-margin-top-24 raw-margin-left-24" value="Save Settings">
                         </div>
                     </form>
-
-                    <div class="raw50 raw-left raw-margin-top-24">
-
-            </div>
                 </div>
             </div>
         </div>
     </div>
+
+@stop
+
+@section('javascript')
+
+    @parent
+
+    {!! Minify::javascript(url('/js/typeahead.bundle.js')) !!}
+
+    {!! Minify::javascript('/js/accounts/settings.js') !!}
 
 @stop

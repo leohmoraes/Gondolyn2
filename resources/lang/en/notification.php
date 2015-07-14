@@ -49,6 +49,7 @@ return array(
     "subscription" => array(
         "success" => "Your subscription was successfully updated.",
         "failed" => "Your subscription failed to update.",
+        "missing_info" => "You're missing your billing information which is required for a subscription.",
         "cancel_success" => "Your subscription was successfully cancelled.",
         "cancel_failed" => "Your subscription failed to cancel.",
         "incorrect-subscription" => "Incorrect Subscription",

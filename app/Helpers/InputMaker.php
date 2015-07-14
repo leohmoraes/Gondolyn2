@@ -26,6 +26,10 @@ class InputMaker
         $config['class']     = $class;
         $config['field']     = $field;
 
+        if (isset($field['class'])) {
+            $config['class']     = $class.' '.$field['class'];
+        }
+
         $config['inputTypes'] = Config::get('form.maker');
 
         $config['inputs'] = Validation::inputs();

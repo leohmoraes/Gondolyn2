@@ -17,7 +17,7 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
     public static $rules = [
         'user_email' => 'email|required',
         'user_alt_email' => 'email',
-        'two_factor_phone' => 'required_if:two_factor_enabled,on'
+        'two_factor_phone' => 'required_if:two_factor_enabled,on',
     ];
 
     /**
@@ -52,7 +52,14 @@ class Accounts extends Eloquent implements AuthenticatableContract, CanResetPass
      */
     public function getTaxPercent()
     {
-        return Config::get('gondolyn.tax');
+        $rates = Config::get('gondolyn.tax');
+        $user = Auth::user();
+
+        if ($user->country === 'CA') {
+            return $rates[strtolower($user->state)];
+        }
+
+        return 0.00;
     }
 
     /**

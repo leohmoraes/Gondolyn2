@@ -35,16 +35,16 @@ return [
         ],
     ],
 
-    'shipping' => [
-
+    'billing' => [
+        'country'       => [
+            'type' => 'select',
+            'options' => include(__DIR__.'/countries.php'),
+        ],
         'street'        => [],
         'city'          => [],
         'state'         => [
             'type' => 'string',
-        ],
-        'country'       => [
-            'type' => 'select',
-            'options' => include(__DIR__.'/countries.php'),
+            'class' => 'typeahead'
         ],
         'postal'        => [
             'alt_name' => 'Postal Code'

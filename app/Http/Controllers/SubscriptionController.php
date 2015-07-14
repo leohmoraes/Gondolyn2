@@ -26,8 +26,10 @@ class SubscriptionController extends BaseController
         $data['packages'] = Config::get("gondolyn.packages");
         $data['subscriptionPostURL'] = URL::to('account/settings/set/subscription');
 
-        if ($data['user']->subscribed()) {
+        if ($data['user']->subscribed() && $user->stripe_active == 1) {
             $view = view('account.subscription-change', $data);
+        } else if ($data['user']->subscribed() && $user->stripe_active == 0) {
+            $view = view('account.subscription-set', $data);
         } else {
             $view = view('account.subscription-set', $data);
         }
@@ -78,6 +80,14 @@ class SubscriptionController extends BaseController
 
     public function setSubscription()
     {
+        $user = Auth::user();
+
+        if (empty($user->country) || empty($user->state)) {
+            Gondolyn::notification(Lang::get("notification.subscription.missing_info"), 'danger');
+            return redirect('account/settings');
+        }
+
+        // check if user has country and state set
         try {
             $users = new Accounts;
             $status = $users->setAccountSubscription(Session::get("id"), Input::get("plan"));
@@ -97,6 +107,13 @@ class SubscriptionController extends BaseController
 
     public function updateSubscription()
     {
+        $user = Auth::user();
+
+        if (empty($user->country) || empty($user->state)) {
+            Gondolyn::notification(Lang::get("notification.subscription.missing_info"), 'danger');
+            return redirect('account/settings');
+        }
+
         try {
             $users = new Accounts;
             $status = $users->updateAccountSubscription(Session::get("id"), Input::get("plan"));
@@ -116,6 +133,13 @@ class SubscriptionController extends BaseController
 
     public function changeCardSubscription()
     {
+        $user = Auth::user();
+
+        if (empty($user->country) || empty($user->state)) {
+            Gondolyn::notification(Lang::get("notification.subscription.missing_info"), 'danger');
+            return redirect('account/settings');
+        }
+
         try {
             $users = new Accounts;
             $status = $users->changeCardAccountSubscription(Session::get("id"), Input::get("stripeToken"));

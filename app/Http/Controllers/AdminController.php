@@ -81,7 +81,7 @@ class AdminController extends BaseController
         $data['notification']       = Session::get("notification") ?: "";
         $data['options']            = Config::get("permissions.matrix.roles");
         $data['adminEditorMode']    = true;
-        $data['shippingColumns']    = Config::get('forms.shipping');
+        $data['billingColumns']     = Config::get('forms.billing');
 
         return view('account.settings', $data);
     }
@@ -121,6 +121,14 @@ class AdminController extends BaseController
 
     public function update()
     {
+        // Validation
+        $validation = Validation::check('conditions.update_account');
+
+        // Validation errors
+        if ($validation['errors']) {
+            return $validation['redirect'];
+        }
+
         try {
             $user = Session::get("userInEditor");
             $status = Accounts::updateAccount($user->id);

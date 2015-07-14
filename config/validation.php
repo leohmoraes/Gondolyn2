@@ -15,6 +15,13 @@ return [
             'role' => ['required'],
         ],
 
+        'update_account' => [
+            'user_email' => ['required', 'email'],
+            'user_name' => ['required'],
+            'country' => ['required'],
+            'state' => ['required'],
+        ],
+
     ],
 
     'admin' => [

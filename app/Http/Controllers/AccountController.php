@@ -67,7 +67,7 @@ class AccountController extends BaseController
         $data['user']               = $user;
         $data['inAppNotifications'] = ($user->in_app_notifications === 'on') ? 'checked' : '';
         $data['options']            = Config::get("permissions.matrix.roles");
-        $data['shippingColumns']    = Config::get('forms.shipping');
+        $data['billingColumns']    = Config::get('forms.billing');
 
         return view('account.settings', $data);
     }
@@ -110,10 +110,14 @@ class AccountController extends BaseController
 
     public function update()
     {
-        $validation = Validation::check(Accounts::$rules);
-        Gondolyn::notification(Lang::get("notification.profile.update_failed"), 'danger');
+        // Validation
+        $validation = Validation::check('conditions.update_account');
 
-        if ( ! $validation['errors']) {
+        // Validation errors
+        if ($validation['errors']) {
+            Gondolyn::notification(Lang::get("notification.profile.update_failed"), 'danger');
+            return $validation['redirect'];
+        } else if ( ! $validation['errors']) {
             try {
                 $status = Accounts::updateAccount(Session::get("id"));
                 if ($status) {
