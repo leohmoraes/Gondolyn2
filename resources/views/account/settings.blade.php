@@ -117,8 +117,8 @@
 
     @parent
 
-    {!! Minify::javascript(url('/js/typeahead.bundle.js')) !!}
+    {!! Minify::javascript('/js/typeahead.bundle.js')->withFullUrl() !!}
 
-    {!! Minify::javascript('/js/accounts/settings.js') !!}
+    {!! Minify::javascript('/js/accounts/settings.js')->withFullUrl() !!}
 
 @stop

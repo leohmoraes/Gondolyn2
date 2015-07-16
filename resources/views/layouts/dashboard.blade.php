@@ -4,7 +4,7 @@
 
     <div class="overlay"></div>
 
-    {!! Minify::stylesheet(url('/css/dashboard.css')); !!}
+    {!! Minify::stylesheet('/css/dashboard.css')->withFullUrl() !!}
 
     <div class="raw100 raw-left raw-margin-top-50">
         @yield('content')
@@ -14,5 +14,5 @@
 @stop
 
 @section('javascript')
-    {!! Minify::javascript(url('/js/dashboard.js')); !!}
+    {!! Minify::javascript('/js/dashboard.js')->withFullUrl() !!}
 @stop

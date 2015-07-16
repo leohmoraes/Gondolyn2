@@ -42,6 +42,6 @@
 
 {!! $users !!}
 
-{!! Minify::javascript('/js/accounts/admin.js') !!}
+{!! Minify::javascript('/js/accounts/admin.js')->withFullUrl() !!}
 
 @stop

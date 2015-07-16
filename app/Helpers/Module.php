@@ -123,8 +123,12 @@ class Module
      * @param  string $contentType Asset type
      * @return string
      */
-    public static function asset($module, $path, $contentType = 'null')
+    public static function asset($module, $path, $contentType = 'null', $fullURL = true)
     {
+        if ( ! $fullURL) {
+            return '/../app/Modules/'.ucfirst($module).'/Assets/'.$path;
+        }
+
         return url('module-asset/'.lcfirst($module).'/'.Crypto::encrypt($path).'/'.Crypto::encrypt($contentType));
     }
 }

@@ -2,7 +2,7 @@
 
 @section('stylesheets')
 
-    {!! Minify::stylesheet(Module::asset('sample', 'css/sample.css')) !!}
+    {!! Minify::stylesheet(Module::asset('sample', 'css/sample.css', 'text/css')) !!}
 
 @stop
 

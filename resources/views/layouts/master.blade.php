@@ -13,31 +13,31 @@
         <link rel="stylesheet" type="text/css" href="<?= asset('css/bootstrap.min.css'); ?>">
 
         <!-- RAWCSS -->
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-desktop-large.css')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-desktop.css'), array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-tablet.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-mobile.css'), array("media" => 'screen and (max-width: 696px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid-offset.css')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-grid.css')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-t.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw-m.css'), array("media" => 'screen and (max-width: 732px)')) !!}
-        {!! Minify::stylesheet(url('/css/raw-grid/raw.min.css')) !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-desktop-large.css')->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-desktop.css', array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-tablet.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-mobile.css', array("media" => 'screen and (max-width: 696px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid-offset.css')->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-grid.css')->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-t.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw-m.css', array("media" => 'screen and (max-width: 732px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/raw-grid/raw.min.css')->withFullUrl() !!}
 
         <!-- App style -->
-        {!! Minify::stylesheet(url('/css/main.css')) !!}
-        {!! Minify::stylesheet(url('/css/loaders.css')) !!}
-        {!! Minify::stylesheet(url('/css/device-desktop.css'), array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)')) !!}
-        {!! Minify::stylesheet(url('/css/device-tablet.css'), array("media" => 'screen and (min-width: 696px) and (max-width: 984px)')) !!}
-        {!! Minify::stylesheet(url('/css/device-mobile.css'), array("media" => 'screen and (max-width: 696px)')) !!}
+        {!! Minify::stylesheet('/css/main.css')->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/loaders.css')->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/device-desktop.css', array("media" => 'screen and (min-width: 984px) and (max-width: 1272px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/device-tablet.css', array("media" => 'screen and (min-width: 696px) and (max-width: 984px)'))->withFullUrl() !!}
+        {!! Minify::stylesheet('/css/device-mobile.css', array("media" => 'screen and (max-width: 696px)'))->withFullUrl() !!}
 
         <!-- Card JS -->
-        {!! Minify::stylesheet(url('/css/card.css')) !!}
+        {!! Minify::stylesheet('/css/card.css')->withFullUrl() !!}
 
         <!-- Font Awesome -->
-        {!! Minify::stylesheet(url('/font-awesome/css/font-awesome.css')) !!}
+        <link rel="stylesheet" type="text/css" href="{!! url('/css/font-awesome.min.css') !!}">
 
         <!-- Bootstrap Theme -->
-        {!! Minify::stylesheet(url('/themes/bootstrap-cosmo.css')) !!}
+        {!! Minify::stylesheet('/themes/bootstrap-cosmo.css')->withFullUrl() !!}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -79,17 +79,17 @@
 
         @yield("navigation")
 
-        <div class="container-fluid">
+        <div class="container-fluid raw-margin-bottom-50">
             <div class="row">
                 @yield("page-content")
             </div>
         </div>
 
-        {!! Minify::javascript(url('/js/jquery.min.js')) !!}
-        {!! Minify::javascript(url('/js/bootstrap.min.js')) !!}
-        {!! Minify::javascript(url('/js/raw-grid.js')) !!}
-        {!! Minify::javascript(url('/js/card.js')) !!}
-        {!! Minify::javascript(url('/js/gondolyn.js')) !!}
+        {!! Minify::javascript('/js/jquery.min.js')->withFullUrl() !!}
+        {!! Minify::javascript('/js/bootstrap.min.js')->withFullUrl() !!}
+        {!! Minify::javascript('/js/raw-grid.js')->withFullUrl() !!}
+        {!! Minify::javascript('/js/card.js')->withFullUrl() !!}
+        {!! Minify::javascript('/js/gondolyn.js')->withFullUrl() !!}
 
         <script type="text/javascript">
 

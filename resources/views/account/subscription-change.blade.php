@@ -96,6 +96,6 @@
 
 @section('javascript')
 
-    {!! Minify::javascript(url('/js/accounts/subscriptions.js')) !!}
+    {!! Minify::javascript('/js/accounts/subscriptions.js')->withFullUrl() !!}
 
 @stop

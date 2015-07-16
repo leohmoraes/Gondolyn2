@@ -16,7 +16,7 @@ class SampleService implements SampleInterface
     {
         $data                   = $config;
         $data['notification']   = Session::get("notification");
-        $data['welcome']        = 'Welcome to the Sample module '.Session::get("username").' the sample module demonstrates the use of services which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to services, to views.';
+        $data['welcome']        = 'Welcome to the Sample module '.Session::get("username").', the sample module demonstrates the use of services which would perform the buisness logic of the application therefore allowing controllers to be reserved for framework actions and moving data from models, to services, to views.';
 
         return $data;
     }

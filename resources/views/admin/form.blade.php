@@ -25,7 +25,7 @@
 
 @section('javascript')
 
-    {!! Minify::javascript(url('/js/typeahead.bundle.js')) !!}
+    {!! Minify::javascript('/js/typeahead.bundle.js')->withFullUrl() !!}
 
     @parent
 
