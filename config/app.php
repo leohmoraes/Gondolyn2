@@ -157,6 +157,7 @@ return [
         'GrahamCampbell\Throttle\ThrottleServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         'Mitul\Generator\GeneratorServiceProvider',
+        'Spatie\Backup\BackupServiceProvider',
 
     ],
 
