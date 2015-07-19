@@ -28,6 +28,12 @@ class MainController extends BaseController
         return view('main.welcome', $data);
     }
 
+    public function pratt()
+    {
+        $data = Config::get("gondolyn.appInfo");
+        return view('main.pratt', $data);
+    }
+
     public function changelog()
     {
         $data = Config::get("gondolyn.appInfo");

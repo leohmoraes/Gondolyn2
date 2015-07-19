@@ -30,6 +30,7 @@ Route::group(array('prefix' => 'errors'), function() {
 */
 
 Route::get('/', "MainController@welcome");
+Route::get('/pratt', "MainController@pratt");
 Route::get('/change-log', "MainController@changelog");
 
 /*
