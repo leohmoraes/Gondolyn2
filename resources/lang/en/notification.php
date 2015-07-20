@@ -23,6 +23,7 @@ return array(
         "not-confirmed" => "Your email could not be confirmed.",
         "deleted" => "Your account was deleted",
         "expired-session" => "You're not currently logged in.",
+        "exceeded-login-attempts" => "You've attempted to log in too many times, please wait 60 minutes before trying again.",
         "missing" => "Missing login credentials",
         "deactivated" => "We're sorry either your account has been deactivated or you have not registered with us before.",
         "denied" => "We're sorry we cannot find you and this application is not currently accepting new accounts.",

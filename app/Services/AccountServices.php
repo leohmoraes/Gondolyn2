@@ -186,4 +186,41 @@ class AccountServices
         $leadingNumber = substr($id, 0, 1);
         return Config::get('gondolyn.authKeys')[$leadingNumber];
     }
+
+    /**
+     * Adds failed attempts with the login action
+     *
+     * @return  void
+     */
+    public static function addFailedAttempt()
+    {
+        if (Config::get('gondolyn.failedLogins')) {
+            $failedAttempts = Cookie::get('failed_attempts');
+
+            if (is_null($failedAttempts)) {
+                $failedAttempts = 0;
+            } else {
+                $failedAttempts++;
+            }
+
+            Cookie::queue('failed_attempts', $failedAttempts, 60);
+        }
+    }
+
+    /**
+     * Checks if there have been too many failed
+     * login attempts.
+     *
+     * @return  bool
+     */
+    public static function tooManyFailedLogins()
+    {
+        $failedAttempts = Cookie::get('failed_attempts');
+
+        if (Config::get('gondolyn.failedLogins') && ($failedAttempts >= Config::get('gondolyn.failedLoginsLimit'))) {
+            return true;
+        }
+
+        return false;
+    }
 }

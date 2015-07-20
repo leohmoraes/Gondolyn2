@@ -13,6 +13,10 @@ return array(
 
     'socialMediaLogin' => FALSE,
 
+    'failedLogins' => FALSE,
+
+    'failedLoginsLimit' => 2,
+
     'twoFactorAuthentication' => [
         'enabled' => FALSE,
         'duration' => '60days', // session, lifetime, 60days

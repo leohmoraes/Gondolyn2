@@ -19,6 +19,11 @@ class AccountController extends BaseController
 
     public function login()
     {
+        if (AccountServices::tooManyFailedLogins()) {
+            Gondolyn::notification(Lang::get('notification.login.exceeded-login-attempts'), 'danger');
+            return redirect('errors/general');
+        }
+
         $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.login');
 
@@ -167,6 +172,7 @@ class AccountController extends BaseController
 
             if ( ! $user) {
                 Gondolyn::notification(Lang::get("notification.login.fail"), 'danger');
+                AccountServices::addFailedAttempt();
                 return redirect('errors/general');
             } else {
                 if (Config::get('autoConfirmEmail') && $user->user_active !== 'active') {
