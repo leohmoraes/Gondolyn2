@@ -13,6 +13,10 @@ class MainController extends BaseController
 
     public function welcome()
     {
+        if (AccountServices::isAccountRemembered()) {
+            AccountServices::loginWithCookies();
+        }
+
         $data = Config::get("gondolyn.appInfo");
         $data['page_title'] = Lang::get('titles.main');
 

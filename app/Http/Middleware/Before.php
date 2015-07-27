@@ -94,15 +94,7 @@ class Before
     {
         // If remembered by cookies
         if (AccountServices::isAccountRemembered()) {
-            $email      = $request->cookie("email");
-            $password   = $request->cookie("password");
-
-            $Users      = new Accounts;
-            $user       = $Users->loginWithEmail($email, $password, false);
-
-            if ($user) {
-                AccountServices::login($user);
-            }
+            AccountServices::loginWithCookies();
         }
 
         if (time() - Session::get("last_activity") > Config::get("session.lifetime") * 60) {

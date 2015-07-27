@@ -68,6 +68,20 @@ class AccountServices
     }
 
     /**
+     * Login to app with Cookies
+     * @return void
+     */
+    public static function loginWithCookies()
+    {
+        $email      = Request::cookie("email");
+        $password   = Request::cookie("password");
+        $accounts   = new Accounts;
+
+        $user = $accounts->loginWithEmail($email, $password, true);
+        AccountServices::login($user);
+    }
+
+    /**
      * Two factor auth
      * @param  object $user User object
      * @return bool
